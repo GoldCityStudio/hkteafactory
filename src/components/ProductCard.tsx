@@ -59,8 +59,7 @@ export default function ProductCard({ product, language }: { product: Product; l
 
   const imageSrc = imgError ? getPlaceholderImage(product.name) : product.img;
 
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
+  const handleAddToCart = () => {
     addItem({
       id: product.name,
       name: product.name,

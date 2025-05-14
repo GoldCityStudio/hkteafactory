@@ -32,10 +32,10 @@ export async function POST(request: Request) {
       { error: 'Invalid credentials' },
       { status: 401 }
     );
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal server error' },
-      { status: 500 }
-    );
+  } catch {
+    return new Response(JSON.stringify({ message: 'Failed to create admin' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 } 

@@ -11,7 +11,7 @@ type TechnologyFeatureProps = {
   language: Language;
 };
 
-const TechnologyFeature = ({ title, description, image, language }: TechnologyFeatureProps) => {
+export default function TechnologyFeature({ title, description, image }: TechnologyFeatureProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -36,6 +36,4 @@ const TechnologyFeature = ({ title, description, image, language }: TechnologyFe
       </div>
     </motion.div>
   );
-};
-
-export default TechnologyFeature; 
+} 

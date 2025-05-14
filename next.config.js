@@ -54,8 +54,6 @@ const nextConfig = {
   },
   // Enable compression
   compress: true,
-  // Optimize production build
-  swcMinify: true,
   // Add video optimization headers
   async headers() {
     return [

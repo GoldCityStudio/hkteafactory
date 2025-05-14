@@ -706,7 +706,7 @@ function ProductDetailPopup({
               </svg>
             </div>
           ) : (
-            <Image
+          <Image
               src={product.img}
               alt={product.name}
               fill
@@ -797,7 +797,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState(0);
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const { items } = useCart();
+  const { totalItems } = useCart();
 
   useEffect(() => {
     sectionRefs.current = sectionRefs.current.slice(0, content[language].heroSections.length);
@@ -1131,9 +1131,9 @@ export default function Home() {
                 d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
               />
             </svg>
-            {items.length > 0 && (
+            {totalItems > 0 && (
               <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                {items.length}
+                {totalItems}
               </span>
             )}
           </div>

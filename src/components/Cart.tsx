@@ -11,7 +11,7 @@ type CartProps = {
 };
 
 export default function Cart({ isOpen, onClose }: CartProps) {
-  const { items, removeItem, updateQuantity, totalPrice, clearCart } = useCart();
+  const { items, totalItems, totalPrice, clearCart } = useCart();
 
   return (
     <AnimatePresence>

@@ -2,33 +2,25 @@
 
 import { useState } from 'react';
 
-interface Column<T> {
+interface Column {
   header: string;
-  accessor: keyof T | ((item: T) => string | number);
-  render?: (item: T) => React.ReactNode;
+  accessor: string;
 }
 
-interface DataTableProps<T extends Record<string, any>> {
-  columns: Column<T>[];
-  data: T[];
+interface DataTableProps {
+  columns: Column[];
+  data: Record<string, unknown>[];
   itemsPerPage?: number;
-  onRowClick?: (item: T) => void;
+  onRowClick?: (item: Record<string, unknown>) => void;
   searchable?: boolean;
   sortable?: boolean;
 }
 
-export default function DataTable<T extends Record<string, any>>({
-  columns,
-  data,
-  itemsPerPage = 10,
-  onRowClick,
-  searchable = true,
-  sortable = true,
-}: DataTableProps<T>) {
+export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick, searchable = true, sortable = true }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState<{
-    key: keyof T | null;
+    key: string | null;
     direction: 'asc' | 'desc';
   }>({ key: null, direction: 'asc' });
 
@@ -43,8 +35,8 @@ export default function DataTable<T extends Record<string, any>>({
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig.key) return 0;
 
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
+    const aValue = a[sortConfig.key as string];
+    const bValue = b[sortConfig.key as string];
 
     if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
     if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
@@ -58,7 +50,7 @@ export default function DataTable<T extends Record<string, any>>({
     currentPage * itemsPerPage
   );
 
-  const handleSort = (key: keyof T) => {
+  const handleSort = (key: string) => {
     setSortConfig({
       key,
       direction:
@@ -92,7 +84,7 @@ export default function DataTable<T extends Record<string, any>>({
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
                   onClick={() =>
                     sortable && typeof column.accessor === 'string'
-                      ? handleSort(column.accessor as keyof T)
+                      ? handleSort(column.accessor)
                       : undefined
                   }
                 >
@@ -117,16 +109,14 @@ export default function DataTable<T extends Record<string, any>>({
               <tr
                 key={index}
                 className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
-                onClick={() => onRowClick?.(item)}
+                onClick={() => onRowClick?.(item as Record<string, unknown>)}
               >
                 {columns.map((column, colIndex) => (
                   <td
                     key={colIndex}
                     className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                   >
-                    {column.render
-                      ? column.render(item)
-                      : typeof column.accessor === 'function'
+                    {typeof column.accessor === 'function'
                       ? column.accessor(item)
                       : String(item[column.accessor])}
                   </td>
