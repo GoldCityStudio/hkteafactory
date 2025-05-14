@@ -5,14 +5,17 @@ import { Product } from '@/lib/types/product';
 declare global {
   var products: Product[];
 }
-global.products = global.products || [];
+
+if (!global.products) {
+  global.products = [];
+}
 
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
   try {
-    const product = global.products.find((p) => p.id === params.id);
+    const product = global.products.find((p: Product) => p.id === params.id);
     
     if (!product) {
       return NextResponse.json(
@@ -37,7 +40,7 @@ export async function PUT(
 ) {
   try {
     const data = await request.json();
-    const index = global.products.findIndex((p) => p.id === params.id);
+    const index = global.products.findIndex((p: Product) => p.id === params.id);
     
     if (index === -1) {
       return NextResponse.json(
@@ -69,7 +72,7 @@ export async function DELETE(
   { params }: { params: { id: string } }
 ) {
   try {
-    const index = global.products.findIndex((p) => p.id === params.id);
+    const index = global.products.findIndex((p: Product) => p.id === params.id);
     
     if (index === -1) {
       return NextResponse.json(

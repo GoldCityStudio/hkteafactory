@@ -1,15 +1,13 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import type { Language } from '@/app/types';
 
 type TechnologyFeatureProps = {
   title: string;
   description: string;
   image: string;
-  language: Language;
 };
 
-export default function TechnologyFeature({ title, description, image, language }: TechnologyFeatureProps) {
+export default function TechnologyFeature({ title, description, image }: TechnologyFeatureProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}

@@ -791,38 +791,11 @@ function ProductDetailPopup({
 }
 
 export default function Home() {
-  const [language, setLanguage] = useState<Language>('en');
+  const [language] = useState<Language>('en');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const { scrollYProgress } = useScroll();
-  const [activeSection, setActiveSection] = useState(0);
-  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
-
-  useEffect(() => {
-    sectionRefs.current = sectionRefs.current.slice(0, content[language].heroSections.length);
-  }, [language]);
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY + window.innerHeight / 2;
-    const currentSection = sectionRefs.current.findIndex((ref) => {
-      if (!ref) return false;
-      const rect = ref.getBoundingClientRect();
-      return scrollPosition >= rect.top && scrollPosition <= rect.bottom;
-    });
-    if (currentSection !== -1) {
-      setActiveSection(currentSection);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (idx: number) => {
-    sectionRefs.current[idx]?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);

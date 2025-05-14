@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 interface Column {
   header: string;
@@ -16,13 +17,18 @@ interface DataTableProps {
   sortable?: boolean;
 }
 
+interface SortConfig {
+  key: string | null;
+  direction: 'ascending' | 'descending';
+}
+
 export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick, searchable = true, sortable = true }: DataTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortConfig, setSortConfig] = useState<{
-    key: string | null;
-    direction: 'asc' | 'desc';
-  }>({ key: null, direction: 'asc' });
+  const [sortConfig, setSortConfig] = useState<SortConfig>({
+    key: null,
+    direction: 'ascending',
+  });
 
   // Filter data based on search term
   const filteredData = data.filter((item) =>
@@ -35,12 +41,15 @@ export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick
   const sortedData = [...filteredData].sort((a, b) => {
     if (!sortConfig.key) return 0;
 
-    const aValue = a[sortConfig.key as string];
-    const bValue = b[sortConfig.key as string];
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
 
-    if (aValue < bValue) return sortConfig.direction === 'asc' ? -1 : 1;
-    if (aValue > bValue) return sortConfig.direction === 'asc' ? 1 : -1;
-    return 0;
+    if (aValue === bValue) return 0;
+    if (aValue === null || aValue === undefined) return 1;
+    if (bValue === null || bValue === undefined) return -1;
+
+    const comparison = aValue < bValue ? -1 : 1;
+    return sortConfig.direction === 'ascending' ? comparison : -comparison;
   });
 
   // Paginate data
@@ -51,13 +60,13 @@ export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick
   );
 
   const handleSort = (key: string) => {
-    setSortConfig({
+    setSortConfig((current) => ({
       key,
       direction:
-        sortConfig.key === key && sortConfig.direction === 'asc'
-          ? 'desc'
-          : 'asc',
-    });
+        current.key === key && current.direction === 'ascending'
+          ? 'descending'
+          : 'ascending',
+    }));
   };
 
   return (
@@ -78,25 +87,18 @@ export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
             <tr>
-              {columns.map((column, index) => (
+              {columns.map((column) => (
                 <th
-                  key={index}
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                  onClick={() =>
-                    sortable && typeof column.accessor === 'string'
-                      ? handleSort(column.accessor)
-                      : undefined
-                  }
+                  key={column.accessor}
+                  scope="col"
+                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleSort(column.accessor)}
                 >
                   <div className="flex items-center space-x-1">
                     <span>{column.header}</span>
-                    {sortable && typeof column.accessor === 'string' && (
+                    {sortConfig.key === column.accessor && (
                       <span>
-                        {sortConfig.key === column.accessor
-                          ? sortConfig.direction === 'asc'
-                            ? '↑'
-                            : '↓'
-                          : '↕'}
+                        {sortConfig.direction === 'ascending' ? '↑' : '↓'}
                       </span>
                     )}
                   </div>
@@ -105,23 +107,22 @@ export default function DataTable({ columns, data, itemsPerPage = 10, onRowClick
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
-            {paginatedData.map((item, index) => (
-              <tr
-                key={index}
-                className={onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}
-                onClick={() => onRowClick?.(item as Record<string, unknown>)}
+            {paginatedData.map((row, rowIndex) => (
+              <motion.tr
+                key={rowIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: rowIndex * 0.05 }}
               >
-                {columns.map((column, colIndex) => (
+                {columns.map((column) => (
                   <td
-                    key={colIndex}
-                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
+                    key={column.accessor}
+                    className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
                   >
-                    {typeof column.accessor === 'function'
-                      ? column.accessor(item)
-                      : String(item[column.accessor])}
+                    {row[column.accessor]?.toString() || ''}
                   </td>
                 ))}
-              </tr>
+              </motion.tr>
             ))}
           </tbody>
         </table>
