@@ -1,0 +1,126 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+const giftBoxes = [
+  {
+    id: 'premium-collection',
+    name: '尊貴茶葉禮盒',
+    description: '精選多款優質茶葉，包括龍井、鐵觀音、普洱等，搭配精美木盒包裝。',
+    price: 'HK$1,288',
+    image: '/images/gifts/premium-collection.jpg',
+    contents: [
+      '明前獅峰龍井 100g',
+      '鐵觀音 100g',
+      '班章宮廷普洱餅 200g',
+      '精選花茶 50g'
+    ]
+  },
+  {
+    id: 'green-tea-collection',
+    name: '綠茶禮盒',
+    description: '精選多款優質綠茶，包括龍井、碧螺春等，搭配精美陶瓷茶具。',
+    price: 'HK$988',
+    image: '/images/gifts/green-tea-collection.jpg',
+    contents: [
+      '明前獅峰龍井 100g',
+      '雨前龍井 100g',
+      '碧螺春 100g',
+      '精美陶瓷茶具一套'
+    ]
+  },
+  {
+    id: 'pu-erh-collection',
+    name: '普洱禮盒',
+    description: '精選多款優質普洱茶，包括生茶和熟茶，搭配精美茶具。',
+    price: 'HK$1,188',
+    image: '/images/gifts/pu-erh-collection.jpg',
+    contents: [
+      '班章宮廷普洱餅 200g',
+      '易武古樹普洱 200g',
+      '勐海熟茶 200g',
+      '精美茶具一套'
+    ]
+  }
+];
+
+export default function TeaGiftBoxPage() {
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12"
+      >
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">茶葉禮盒</h1>
+        <p className="text-lg text-gray-600">精選優質茶葉，搭配精美包裝，是送禮的最佳選擇</p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {giftBoxes.map((box, index) => (
+          <motion.div
+            key={box.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
+            className="bg-white rounded-lg shadow-lg overflow-hidden"
+          >
+            <div className="relative h-64">
+              <Image
+                src={box.image}
+                alt={box.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-6">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">
+                {box.name}
+              </h2>
+              <p className="text-gray-600 mb-4">
+                {box.description}
+              </p>
+              <div className="mb-4">
+                <h3 className="font-medium text-gray-900 mb-2">禮盒內容：</h3>
+                <ul className="list-disc list-inside text-gray-600 space-y-1">
+                  {box.contents.map((item, i) => (
+                    <li key={i}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-2xl font-bold text-emerald-600">
+                  {box.price}
+                </span>
+                <button className="bg-emerald-600 text-white px-6 py-2 rounded-md hover:bg-emerald-700 transition-colors">
+                  加入購物車
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Custom Gift Box Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="mt-16 bg-gray-50 rounded-lg p-8"
+      >
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">客製化禮盒</h2>
+          <p className="text-lg text-gray-600">
+            需要特別的茶葉組合？我們可以為您量身定制禮盒內容。
+          </p>
+        </div>
+        <div className="max-w-2xl mx-auto">
+          <button className="w-full bg-emerald-600 text-white py-3 px-6 rounded-md hover:bg-emerald-700 transition-colors">
+            聯絡我們訂製禮盒
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+} 
