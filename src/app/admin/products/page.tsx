@@ -73,7 +73,7 @@ export default function ProductsPage() {
       render: (value: ProductValue, item: Product): React.ReactNode => {
         const categories: Record<ProductCategory, string> = {
           tea: '茶葉',
-          honey: '蜂蜜',
+          'honey-product': '蜂蜜',
           teaware: '茶具',
           accessories: '配件',
           'gift-sets': '禮盒',
@@ -81,10 +81,11 @@ export default function ProductsPage() {
           'black-tea': '紅茶',
           'oolong-tea': '烏龍茶',
           'white-tea': '白茶',
-          'pu-erh': '普洱茶',
+          'pu-erh': '普洱',
           'flower-tea': '花茶',
           'taiwanese-tea': '台灣茶',
-          'honey-product': '蜂蜜',
+          'tea-bags': '茶包',
+          'qingcha-oolong': '青茶/烏龍',
         };
         return value && typeof value === 'string' && value in categories ? categories[value as ProductCategory] : '';
       },
