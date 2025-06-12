@@ -1,3 +1,4 @@
+// Update: Added a comment to force Vercel redeployment
 'use client';
 
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
@@ -565,9 +566,15 @@ function VideoCarousel() {
   useEffect(() => {
     const video = videoRef.current;
     const bgVideo = backgroundVideoRef.current;
-    let loadTimeout: NodeJS.Timeout;
-
     if (!video || !bgVideo) return;
+
+    // Set a timeout for video loading
+    const loadTimeout = setTimeout(() => {
+      if (!isVideoLoaded && !useFallback) {
+        console.warn('Video loading timeout, switching to fallback.');
+        setUseFallback(true);
+      }
+    }, 10000); // 10 seconds timeout
 
     const handleVideoLoad = () => {
       setIsVideoLoaded(true);
@@ -593,14 +600,6 @@ function VideoCarousel() {
     video.addEventListener('error', handleVideoError);
     video.addEventListener('ended', handleVideoEnd);
     bgVideo.addEventListener('error', handleVideoError);
-
-    // Set a timeout for video loading
-    loadTimeout = setTimeout(() => {
-      if (!isVideoLoaded && !useFallback) {
-        console.warn('Video loading timeout, switching to fallback.');
-        setUseFallback(true);
-      }
-    }, 10000); // 10 seconds timeout
 
     // Clean up event listeners
     return () => {
