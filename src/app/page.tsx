@@ -565,20 +565,23 @@ function VideoCarousel() {
   useEffect(() => {
     const video = videoRef.current;
     const bgVideo = backgroundVideoRef.current;
+    let loadTimeout: NodeJS.Timeout;
 
     if (!video || !bgVideo) return;
 
     const handleVideoLoad = () => {
       setIsVideoLoaded(true);
-      video.play().catch(() => {
-        console.log('Video play failed, switching to fallback');
+      clearTimeout(loadTimeout);
+      video.play().catch((e) => {
+        console.error('Video play failed, switching to fallback:', e);
         setUseFallback(true);
       });
     };
 
-    const handleVideoError = () => {
-      console.log('Video error, switching to fallback');
+    const handleVideoError = (e: Event) => {
+      console.error('Video error, switching to fallback:', e);
       setUseFallback(true);
+      clearTimeout(loadTimeout);
     };
 
     const handleVideoEnd = () => {
@@ -591,14 +594,23 @@ function VideoCarousel() {
     video.addEventListener('ended', handleVideoEnd);
     bgVideo.addEventListener('error', handleVideoError);
 
+    // Set a timeout for video loading
+    loadTimeout = setTimeout(() => {
+      if (!isVideoLoaded && !useFallback) {
+        console.warn('Video loading timeout, switching to fallback.');
+        setUseFallback(true);
+      }
+    }, 10000); // 10 seconds timeout
+
     // Clean up event listeners
     return () => {
       video.removeEventListener('loadeddata', handleVideoLoad);
       video.removeEventListener('error', handleVideoError);
       video.removeEventListener('ended', handleVideoEnd);
       bgVideo.removeEventListener('error', handleVideoError);
+      clearTimeout(loadTimeout);
     };
-  }, [currentVideo]);
+  }, [currentVideo, isVideoLoaded, useFallback]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden">
