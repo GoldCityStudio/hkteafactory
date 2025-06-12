@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { User } from '@/lib/types/user';
 
 // Temporary in-memory storage for users
@@ -21,7 +20,7 @@ export async function POST(request: Request) {
     const { email, password } = await request.json();
 
     // Find user
-    const user = global.users.find((u) => u.email === email);
+    const user = global.users.find((u: User & { password: string }) => u.email === email);
 
     if (!user || user.password !== password) {
       return NextResponse.json(

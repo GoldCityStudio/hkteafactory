@@ -10,50 +10,76 @@ const navItems = {
   zh: [
     { name: '首頁', href: '/' },
     { 
-      name: '所有茶包', 
+      name: '商店', 
       href: '/products',
       subItems: [
-        { name: '按系列分類', href: '/products?category=series' },
-        { name: '按茶類分類', href: '/products?category=type' },
-        { name: '按特色分類', href: '/products?category=features' }
+        { name: '綠茶', href: '/products/green-tea' },
+        { name: '紅茶', href: '/products/black-tea' },
+        { name: '青茶/烏龍', href: '/products/qingcha-oolong' },
+        { name: '普洱', href: '/products/pu-erh' },
+        { name: '花茶', href: '/products/flower-tea' },
+        { name: '台灣茶', href: '/products/taiwan-tea' },
+        { name: '茶包', href: '/products/tea-bags' },
+        { name: '蜂蜜', href: '/products/honey-product' },
+        { name: '白茶', href: '/products/white-tea' }
       ]
     },
-    { name: '茶機', href: '/tea-machine' },
-    { 
-      name: '茶具', 
-      href: '/teaware',
+    {
+      name: '皇牌產品',
+      href: '/star-products',
       subItems: [
-        { name: '禮品套裝', href: '/teaware/gift-sets' },
-        { name: '茶杯茶壺', href: '/teaware/cups-pots' },
-        { name: '茶機配件', href: '/teaware/accessories' }
+        { name: '龍井', href: '/star-products/longjing' },
+        { name: '鐵觀音', href: '/star-products/tieguanyin' },
+        { name: '蜂蜜', href: '/star-products/honey' }
       ]
     },
-    { name: '門市位置', href: '/store-location' },
-    { name: '關於我們', href: '/about' }
+    { name: '禮金定製', href: '/gift-customization', subItems: [ { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, { name: '宴會回禮', href: '/gift-customization/party-favors' }, { name: '散水禮物', href: '/gift-customization/water-gifts' } ] },
+    { name: '公司資訊', href: '/company-info' },
+    { 
+      name: '關於我們', 
+      href: '/about',
+      subItems: [
+        { name: '品牌故事', href: '/about/brand-story' },
+        { name: '創辦人介紹', href: '/about/founder-intro' }
+      ]
+    }
   ],
   en: [
     { name: 'Home', href: '/' },
     { 
-      name: 'All Capsules', 
+      name: 'Shop', 
       href: '/products',
       subItems: [
-        { name: 'Sort By Collection', href: '/products?category=series' },
-        { name: 'Sort By Tea Type', href: '/products?category=type' },
-        { name: 'Sort By Characteristics', href: '/products?category=features' }
+        { name: 'Green Tea', href: '/products/green-tea' },
+        { name: 'Black Tea', href: '/products/black-tea' },
+        { name: 'Qingcha/Oolong', href: '/products/qingcha-oolong' },
+        { name: 'Pu-erh', href: '/products/pu-erh' },
+        { name: 'Flower Tea', href: '/products/flower-tea' },
+        { name: 'Taiwan Tea', href: '/products/taiwan-tea' },
+        { name: 'Tea Bags', href: '/products/tea-bags' },
+        { name: 'Honey', href: '/products/honey-product' },
+        { name: 'White Tea', href: '/products/white-tea' }
       ]
     },
-    { name: 'Tea Machine', href: '/tea-machine' },
-    { 
-      name: 'Teaware', 
-      href: '/teaware',
+    {
+      name: 'Star Products',
+      href: '/star-products',
       subItems: [
-        { name: 'Gift Set', href: '/teaware/gift-sets' },
-        { name: 'Tea Cup & Tea Pot', href: '/teaware/cups-pots' },
-        { name: 'Tea Machine Accessories', href: '/teaware/accessories' }
+        { name: 'Longjing', href: '/star-products/longjing' },
+        { name: 'Tieguanyin', href: '/star-products/tieguanyin' },
+        { name: 'Honey', href: '/star-products/honey' }
       ]
     },
-    { name: 'Store Location', href: '/store-location' },
-    { name: 'About Us', href: '/about' }
+    { name: '禮金定製', href: '/gift-customization', subItems: [ { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, { name: 'Party Favors', href: '/gift-customization/party-favors' }, { name: 'Water Gifts', href: '/gift-customization/water-gifts' } ] },
+    { name: 'Company Info', href: '/company-info' },
+    { 
+      name: 'About Us', 
+      href: '/about',
+      subItems: [
+        { name: 'Brand Story', href: '/about/brand-story' },
+        { name: 'Founder Introduction', href: '/about/founder-intro' }
+      ]
+    }
   ]
 };
 
@@ -125,45 +151,45 @@ export default function Navbar() {
                   key={item.name}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="relative"
-                  onMouseEnter={() => item.subItems && setActiveDropdown(item.name)}
-                  onMouseLeave={() => setActiveDropdown(null)}
+                  className="relative group"
                 >
-                  <Link
-                    href={item.href}
-                    className="text-gray-700 hover:text-emerald-600 transition-colors relative group"
-                  >
-                    <motion.span
-                      className="absolute inset-0 bg-emerald-500/10 rounded-full blur-sm opacity-0 group-hover:opacity-100"
-                      animate={{
-                        scale: [1, 1.1, 1],
-                        opacity: [0, 0.5, 0],
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut"
-                      }}
-                    />
-                    <span className="relative z-10">{item.name}</span>
-                  </Link>
-                  {item.subItems && activeDropdown === item.name && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="absolute left-0 mt-2 w-48 bg-white/90 backdrop-blur-md rounded-md shadow-lg py-1 border border-emerald-100"
+                  <div className="relative">
+                    <Link
+                      href={item.href}
+                      className="text-gray-700 hover:text-emerald-600 transition-colors relative group"
                     >
-                      {item.subItems.map((subItem) => (
-                        <Link
-                          key={subItem.name}
-                          href={subItem.href}
-                          className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-all duration-300"
-                        >
-                          {subItem.name}
-                        </Link>
-                      ))}
-                    </motion.div>
-                  )}
+                      <motion.span
+                        className="absolute inset-0 bg-emerald-500/10 rounded-full blur-sm opacity-0 group-hover:opacity-100"
+                        animate={{
+                          scale: [1, 1.1, 1],
+                          opacity: [0, 0.5, 0],
+                        }}
+                        transition={{
+                          duration: 2,
+                          repeat: Infinity,
+                          ease: "easeInOut"
+                        }}
+                      />
+                      <span className="relative z-10">{item.name}</span>
+                    </Link>
+                    {item.subItems && (
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="absolute left-0 mt-2 w-48 bg-white/90 backdrop-blur-md rounded-md shadow-lg py-1 border border-emerald-100 invisible group-hover:visible"
+                      >
+                        {item.subItems.map((subItem) => (
+                          <Link
+                            key={subItem.name}
+                            href={subItem.href}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-all duration-300"
+                          >
+                            {subItem.name}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </div>
                 </motion.div>
               ))}
               <motion.button

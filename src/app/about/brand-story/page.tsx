@@ -2,10 +2,9 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
-export default function AboutPage() {
+export default function BrandStoryPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
       {/* Hero Section */}
@@ -16,8 +15,8 @@ export default function AboutPage() {
         className="relative h-96 flex items-center justify-center overflow-hidden"
       >
         <Image
-          src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=2070"
-          alt="About Us Hero"
+          src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
+          alt="Brand Story Hero"
           fill
           priority
           className="object-cover opacity-70"
@@ -30,10 +29,10 @@ export default function AboutPage() {
           className="relative z-20 text-center text-white p-4"
         >
           <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
-            關於我們
+            品牌故事
           </h1>
           <p className="text-xl md:text-2xl font-light opacity-90">
-            傳承茶道文化，創新現代品味
+            傳承百年茶道，創新現代品味
           </p>
         </motion.div>
       </motion.section>
@@ -51,63 +50,63 @@ export default function AboutPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.8 }}
             >
-              「烘茶源」始於一個簡單的願景：將傳統茶文化與現代生活完美融合。我們的故事，是一段關於傳承與創新的旅程，也是一個關於堅持與突破的故事。
+              「烘茶源」始於一個簡單的願景：將傳統茶文化與現代生活完美融合。我們的品牌故事，是一段關於傳承與創新的旅程，也是一個關於堅持與突破的故事。
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.0 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">品牌故事</h2>
-                <p className="text-gray-600">
-                  探索「烘茶源」的創立歷程，了解我們如何將傳統茶道文化與現代生活完美融合。
-                </p>
-                <Link 
-                  href="/about/brand-story"
-                  className="inline-block mt-4 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
-                >
-                  了解更多
-                </Link>
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
-                  alt="Brand Story"
-                  fill
-                  className="object-cover"
-                />
-              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">品牌理念</h2>
+              <ul className="list-disc list-inside space-y-2">
+                <li>
+                  <span className="font-semibold text-gray-900">傳承：</span>
+                  我們尊重並傳承傳統茶道文化，確保每一杯茶都蘊含著深厚的文化底蘊。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">創新：</span>
+                  我們不斷探索茶葉的新可能，為現代生活帶來更多便利與樂趣。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">品質：</span>
+                  我們堅持嚴選優質茶葉，確保每一款產品都達到最高標準。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">永續：</span>
+                  我們注重環保與永續發展，致力於為地球做出貢獻。
+                </li>
+              </ul>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 1.2 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
-              <div className="relative h-64 rounded-lg overflow-hidden order-2 md:order-1">
-                <Image
-                  src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=2070"
-                  alt="Founder Introduction"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="space-y-4 order-1 md:order-2">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">創辦人介紹</h2>
-                <p className="text-gray-600">
-                  認識「烘茶源」的創辦人，了解他對茶葉的熱情與專業，以及如何帶領團隊開創茶葉新紀元。
-                </p>
-                <Link 
-                  href="/about/founder-intro"
-                  className="inline-block mt-4 px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors"
-                >
-                  了解更多
-                </Link>
-              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">品牌歷程</h2>
+              <ol className="list-decimal list-inside space-y-2">
+                <li>
+                  <span className="font-semibold text-gray-900">2010年：</span>
+                  品牌創立，開始專注於優質茶葉的研發與推廣。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">2015年：</span>
+                  成功開發多款創新茶品，獲得市場認可。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">2018年：</span>
+                  建立自有茶園，實現從種植到銷售的全產業鏈。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">2020年：</span>
+                  推出定制化茶葉禮盒服務，滿足不同客戶需求。
+                </li>
+                <li>
+                  <span className="font-semibold text-gray-900">2023年：</span>
+                  品牌升級，推出全新形象與產品線。
+                </li>
+              </ol>
             </motion.div>
 
             <motion.div

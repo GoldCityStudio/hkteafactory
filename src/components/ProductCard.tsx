@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 import type { Language } from '@/app/types';
 import { useCart } from '@/app/context/CartContext';
+import type { Product as ProductType } from '@/lib/types/product';
 
 type Product = {
   name: string;
@@ -22,7 +23,7 @@ type Product = {
 const DEFAULT_PLACEHOLDER = '/images/placeholder.png';
 const FALLBACK_PLACEHOLDER = '/images/placeholder.jpg';
 
-export default function ProductCard({ product, language }: { product: Product; language: Language }) {
+export default function ProductCard({ product, language }: { product: ProductType; language: Language }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [placeholderError, setPlaceholderError] = useState(false);
@@ -57,15 +58,15 @@ export default function ProductCard({ product, language }: { product: Product; l
     return DEFAULT_PLACEHOLDER;
   };
 
-  const imageSrc = imgError ? getPlaceholderImage(product.name) : product.img;
+  const imageSrc = imgError ? getPlaceholderImage(product.name[language]) : product.thumbnail;
 
   const handleAddToCart = () => {
     addItem({
-      id: product.name,
-      name: product.name,
-      desc: product.desc,
-      price: product.price,
-      img: product.img
+      id: product.id,
+      name: product.name[language],
+      desc: product.description[language],
+      price: product.price.toString(),
+      img: product.thumbnail
     });
   };
 
@@ -80,64 +81,22 @@ export default function ProductCard({ product, language }: { product: Product; l
       className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
     >
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden">
-        <motion.div
-          animate={{
-            scale: isHovered ? 1.1 : 1,
-          }}
-          transition={{ duration: 0.5 }}
-          className="relative w-full h-full"
-        >
-          <Image
-            src={imageSrc}
-            alt={product.name}
-            fill
-            className="object-cover transition-transform duration-500"
-            loading="lazy"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-            onError={(e) => {
-              console.log('Image failed to load:', imageSrc);
-              if (imageSrc === DEFAULT_PLACEHOLDER) {
-                setPlaceholderError(true);
-              } else {
-                setImgError(true);
-              }
-            }}
-            priority={false}
-            quality={75}
-          />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        </motion.div>
-
-        {/* Status Badges */}
-        <div className="absolute top-4 left-4 flex flex-col gap-2">
-          {product.isNew && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg"
-            >
-              {language === 'zh' ? '新品' : 'New In'}
-            </motion.div>
-          )}
-          {product.isSale && (
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="bg-red-500 text-white text-xs px-3 py-1.5 rounded-full font-medium shadow-lg"
-            >
-              {language === 'zh' ? '特價' : 'Sale'}
-            </motion.div>
-          )}
-        </div>
-
-        {/* Sold Out Overlay */}
-        {product.soldOut && (
+      <div className="relative aspect-square">
+        <Image
+          src={imageSrc}
+          alt={product.name[language]}
+          fill
+          className="object-cover"
+          onError={() => setImgError(true)}
+        />
+        {product.isNew && (
+          <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+            New
+          </div>
+        )}
+        {product.status === 'out_of_stock' && (
           <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-            <span className="text-white text-lg font-medium bg-black/50 px-6 py-2 rounded-full">
-              {language === 'zh' ? '已售罄' : 'Sold Out'}
-            </span>
+            <span className="text-white text-lg font-medium">Sold Out</span>
           </div>
         )}
       </div>
@@ -162,28 +121,28 @@ export default function ProductCard({ product, language }: { product: Product; l
               animate={{ color: isHovered ? '#059669' : '#111827' }}
               transition={{ duration: 0.3 }}
             >
-              {product.name}
+              {product.name[language]}
             </motion.h3>
-            <p className="text-sm text-gray-500 mb-4 font-light line-clamp-2">{product.desc}</p>
+            <p className="text-sm text-gray-500 mb-4 font-light line-clamp-2">{product.description[language]}</p>
           </div>
           
           {/* Price and Action */}
           <div className="flex flex-col gap-3">
             <div className="flex flex-col">
-              {product.salePrice ? (
+              {product.originalPrice ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600 font-medium text-lg">{product.salePrice}</span>
-                  <span className="text-gray-400 line-through text-sm">{product.price}</span>
+                  <span className="text-red-600 font-medium text-lg">{product.price}</span>
+                  <span className="text-gray-400 line-through text-sm">{product.originalPrice}</span>
                 </div>
               ) : (
                 <span className="text-emerald-600 font-medium text-lg">{product.price}</span>
               )}
-              {product.unit && (
-                <span className="text-gray-500 text-xs mt-1">/ {product.unit}</span>
+              {product.specifications.weight && (
+                <span className="text-gray-500 text-xs mt-1">/ {product.specifications.weight}</span>
               )}
             </div>
             
-            {!product.soldOut && (
+            {product.status !== 'out_of_stock' && (
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

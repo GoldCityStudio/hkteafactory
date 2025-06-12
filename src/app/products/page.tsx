@@ -1,164 +1,124 @@
 'use client';
 
-import { useState } from 'react';
+import React from 'react';
 import Image from 'next/image';
-import { Product, ProductCategory } from '@/lib/types/product';
 import { motion } from 'framer-motion';
 
-// Temporary mock data
-const mockProducts: Product[] = [
-  {
-    id: '1',
-    name: {
-      zh: '龍井綠茶',
-      en: 'Longjing Green Tea'
-    },
-    description: {
-      zh: '精選西湖龍井，清香持久，回甘明顯。',
-      en: 'Premium West Lake Longjing, with lasting fragrance and sweet aftertaste.'
-    },
-    price: 280,
-    originalPrice: 320,
-    category: 'tea',
-    status: 'active',
-    stock: 100,
-    images: ['/products/longjing.jpg'],
-    thumbnail: '/products/longjing.jpg',
-    specifications: {
-      weight: '100g',
-      origin: 'Hangzhou, China',
-      storage: 'Store in a cool, dry place',
-      expiryDate: '24 months'
-    },
-    tags: ['green tea', 'premium', 'new'],
-    isNew: true,
-    isFeatured: true,
-    createdAt: new Date(),
-    updatedAt: new Date()
-  },
-  // Add more mock products here
-];
-
-const categories: ProductCategory[] = ['tea', 'honey', 'teaware', 'accessories'];
-
 export default function ProductsPage() {
-  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | 'all'>('all');
-  const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'newest'>('newest');
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const filteredProducts = mockProducts
-    .filter(product => 
-      (selectedCategory === 'all' || product.category === selectedCategory) &&
-      (product.name.zh.toLowerCase().includes(searchQuery.toLowerCase()) ||
-       product.name.en.toLowerCase().includes(searchQuery.toLowerCase()))
-    )
-    .sort((a, b) => {
-      switch (sortBy) {
-        case 'price-asc':
-          return a.price - b.price;
-        case 'price-desc':
-          return b.price - a.price;
-        case 'newest':
-          return b.createdAt.getTime() - a.createdAt.getTime();
-        default:
-          return 0;
-      }
-    });
-
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">精選產品</h1>
-        <p className="text-lg text-gray-600">探索我們的優質茶葉和相關產品</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative h-96 flex items-center justify-center overflow-hidden"
+      >
+        <Image
+          src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
+          alt="Products Hero"
+          fill
+          priority
+          className="object-cover opacity-70"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent z-10" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-20 text-center text-white p-4"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+            商店
+          </h1>
+          <p className="text-xl md:text-2xl font-light opacity-90">
+            嚴選優質茶葉，為您帶來最純正的茶香體驗
+          </p>
+        </motion.div>
+      </motion.section>
 
-      {/* Filters and Search */}
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="flex-1">
-          <input
-            type="text"
-            placeholder="搜尋產品..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-        <div className="flex gap-4">
-          <select
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            value={selectedCategory}
-            onChange={(e) => setSelectedCategory(e.target.value as ProductCategory | 'all')}
-          >
-            <option value="all">所有類別</option>
-            {categories.map(category => (
-              <option key={category} value={category}>
-                {category === 'tea' ? '茶葉' :
-                 category === 'honey' ? '蜂蜜' :
-                 category === 'teaware' ? '茶具' : '配件'}
-              </option>
-            ))}
-          </select>
-          <select
-            className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as 'price-asc' | 'price-desc' | 'newest')}
-          >
-            <option value="newest">最新上架</option>
-            <option value="price-asc">價格由低至高</option>
-            <option value="price-desc">價格由高至低</option>
-          </select>
-        </div>
-      </div>
+      <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="bg-white p-8 rounded-lg shadow-xl"
+        >
+          <div className="space-y-8 text-lg text-gray-700 leading-relaxed">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              歡迎來到「烘茶源」的線上商店。我們嚴選來自世界各地的優質茶葉，為您帶來最純正的茶香體驗。無論是傳統名茶還是創新茶品，都能在這裡找到。
+            </motion.p>
 
-      {/* Product Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.map((product) => (
-          <motion.div
-            key={product.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            whileHover={{ y: -5 }}
-            className="bg-white rounded-lg shadow-md overflow-hidden"
-          >
-            <div className="relative aspect-square">
-              <Image
-                src={product.thumbnail}
-                alt={product.name.zh}
-                fill
-                className="object-cover"
-              />
-              {product.isNew && (
-                <div className="absolute top-2 right-2 bg-emerald-500 text-white px-2 py-1 rounded-full text-sm">
-                  新品
-                </div>
-              )}
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                {product.name.zh}
-              </h3>
-              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
-                {product.description.zh}
-              </p>
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-lg font-bold text-emerald-600">
-                    ${product.price}
-                  </span>
-                  {product.originalPrice && (
-                    <span className="ml-2 text-sm text-gray-500 line-through">
-                      ${product.originalPrice}
-                    </span>
-                  )}
-                </div>
-                <button className="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors">
-                  加入購物車
-                </button>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              <div className="space-y-4">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">茶葉系列</h2>
+                <ul className="list-disc list-inside space-y-2">
+                  <li>綠茶</li>
+                  <li>紅茶</li>
+                  <li>烏龍茶</li>
+                  <li>白茶</li>
+                  <li>普洱茶</li>
+                  <li>花茶</li>
+                </ul>
               </div>
-            </div>
-          </motion.div>
-        ))}
+              <div className="relative h-64 rounded-lg overflow-hidden">
+                <Image
+                  src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=2070"
+                  alt="Tea Collection"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.2 }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8"
+            >
+              <div className="relative h-64 rounded-lg overflow-hidden order-2 md:order-1">
+                <Image
+                  src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2015"
+                  alt="Honey Products"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              <div className="space-y-4 order-1 md:order-2">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">蜂蜜系列</h2>
+                <ul className="list-disc list-inside space-y-2">
+                  <li>有機蜂蜜</li>
+                  <li>茶葉禮盒</li>
+                  <li>茶包系列</li>
+                </ul>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.4 }}
+              className="text-center mt-12"
+            >
+              <p className="font-semibold text-xl text-emerald-700 mb-4">
+                立即選購，體驗「烘茶源」的優質產品！
+              </p>
+              <p className="text-lg text-gray-600">
+                電話：(852) 1234 5678 | 電郵：info@hkteafactory.com
+              </p>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </div>
   );

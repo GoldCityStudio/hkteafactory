@@ -10,18 +10,7 @@ import { useRouter } from 'next/navigation';
 import { AnimatePresence } from 'framer-motion';
 import { useCart } from '@/app/context/CartContext';
 import Cart from '@/components/Cart';
-
-type Product = {
-  name: string;
-  img: string;
-  desc: string;
-  price: string;
-  salePrice?: string;
-  isNew?: boolean;
-  isSale?: boolean;
-  unit?: string;
-  soldOut?: boolean;
-};
+import type { Product } from '@/lib/types/product';
 
 type HeroSectionType = {
   headline: string;
@@ -51,38 +40,96 @@ const content: Record<Language, ContentType> = {
   zh: {
     products: [
       {
-        name: '多功能茶機',
-        desc: '買茶機送9盒茶',
-        price: 'HK$1,999.00',
-        img: '/images/tea-machine.jpg',
+        id: 'tea-machine',
+        name: { zh: '多功能茶機', en: 'Multifunctional Tea Machine' },
+        description: { zh: '買茶機送9盒茶', en: 'Buy Tea Machine Get 9 Boxes of Tea' },
+        price: 1999,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
         isNew: true,
-        soldOut: true
+        specifications: {
+          weight: '1.5kg',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: '桂花薏米茶',
-        desc: '新品上市',
-        price: 'HK$119.00',
-        img: '/images/osmanthus-coix.jpg',
-        isNew: true
+        id: 'osmanthus-coix',
+        name: { zh: '桂花薏米茶', en: 'Osmanthus Coix Seed' },
+        description: { zh: '新品上市', en: 'New In' },
+        price: 119,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: '凍齡茶',
-        desc: '養顏抗衰老',
-        price: 'HK$119.00',
-        img: '/images/anti-aging.jpg'
+        id: 'anti-aging',
+        name: { zh: '凍齡茶', en: 'Freeze Your Age' },
+        description: { zh: '養顏抗衰老', en: 'Anti-aging Tea' },
+        price: 119,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: '茉莉龍珠',
-        desc: '清香怡人',
-        price: 'HK$99.00',
-        img: '/images/jasmine-pearl.jpg'
-      },
-      {
-        name: '煎茶',
-        desc: '清新淡雅',
-        price: 'HK$99.00',
-        img: '/images/sencha.jpg',
-        soldOut: true
+        id: 'jasmine-pearl',
+        name: { zh: '茉莉龍珠', en: 'Dragon Pearl Jasmine' },
+        description: { zh: '清香怡人', en: 'Fragrant & Refreshing' },
+        price: 99,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       }
     ],
     heroSections: [
@@ -93,30 +140,6 @@ const content: Record<Language, ContentType> = {
         leafColor: '#8fc7a2',
         bg: 'from-darkgreen-700 via-darkgreen-800 to-darkgreen-900',
         bgImage: '/images/hero-1.jpg'
-      },
-      {
-        headline: '西湖龍井',
-        subheadline: '明前龍井，一芽一葉，清香持久，回甘生津。',
-        button: '了解更多',
-        leafColor: '#388d54',
-        bg: 'from-darkgreen-800 via-darkgreen-900 to-darkgreen-700',
-        bgImage: '/images/hero-2.jpg'
-      },
-      {
-        headline: '安溪鐵觀音',
-        subheadline: '濃香型鐵觀音，七泡有餘香，醇厚回甘。',
-        button: '立即選購',
-        leafColor: '#c3e3ce',
-        bg: 'from-darkgreen-900 via-darkgreen-700 to-darkgreen-800',
-        bgImage: '/images/hero-3.jpg'
-      },
-      {
-        headline: '紫椴蜂蜜',
-        subheadline: '來自東北原始森林的天然紫椴蜂蜜，清香怡人，營養豐富。',
-        button: '探索蜂蜜',
-        leafColor: '#5ba976',
-        bg: 'from-darkgreen-700 via-darkgreen-900 to-darkgreen-800',
-        bgImage: '/images/hero-4.jpg'
       }
     ],
     technology: {
@@ -144,38 +167,96 @@ const content: Record<Language, ContentType> = {
   en: {
     products: [
       {
-        name: 'Genie Multifunctional Tea Machine',
-        desc: 'Buy Genie Tea Machine Get 9 Boxes of Tea',
-        price: 'HK$1,999.00',
-        img: '/images/tea-machine.jpg',
+        id: 'tea-machine',
+        name: { zh: '多功能茶機', en: 'Multifunctional Tea Machine' },
+        description: { zh: '買茶機送9盒茶', en: 'Buy Tea Machine Get 9 Boxes of Tea' },
+        price: 1999,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
         isNew: true,
-        soldOut: true
+        specifications: {
+          weight: '1.5kg',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 0,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: 'Osmanthus Coix Seed',
-        desc: 'New In',
-        price: 'HK$119.00',
-        img: '/images/osmanthus-coix.jpg',
-        isNew: true
+        id: 'osmanthus-coix',
+        name: { zh: '桂花薏米茶', en: 'Osmanthus Coix Seed' },
+        description: { zh: '新品上市', en: 'New In' },
+        price: 119,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: 'Freeze Your Age',
-        desc: 'Anti-aging Tea',
-        price: 'HK$119.00',
-        img: '/images/anti-aging.jpg'
+        id: 'anti-aging',
+        name: { zh: '凍齡茶', en: 'Freeze Your Age' },
+        description: { zh: '養顏抗衰老', en: 'Anti-aging Tea' },
+        price: 119,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       },
       {
-        name: 'Dragon Pearl Jasmine',
-        desc: 'Fragrant & Refreshing',
-        price: 'HK$99.00',
-        img: '/images/jasmine-pearl.jpg'
-      },
-      {
-        name: 'Sencha',
-        desc: 'Fresh & Delicate',
-        price: 'HK$99.00',
-        img: '/images/sencha.jpg',
-        soldOut: true
+        id: 'jasmine-pearl',
+        name: { zh: '茉莉龍珠', en: 'Dragon Pearl Jasmine' },
+        description: { zh: '清香怡人', en: 'Fragrant & Refreshing' },
+        price: 99,
+        originalPrice: undefined,
+        thumbnail: '/images/placeholder.webp',
+        images: ['/images/placeholder.webp'],
+        category: 'tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
       }
     ],
     heroSections: [
@@ -186,30 +267,6 @@ const content: Record<Language, ContentType> = {
         leafColor: '#8fc7a2',
         bg: 'from-darkgreen-700 via-darkgreen-800 to-darkgreen-900',
         bgImage: '/images/hero-1.jpg'
-      },
-      {
-        headline: '西湖龍井',
-        subheadline: '明前龍井，一芽一葉，清香持久，回甘生津。',
-        button: '了解更多',
-        leafColor: '#388d54',
-        bg: 'from-darkgreen-800 via-darkgreen-900 to-darkgreen-700',
-        bgImage: '/images/hero-2.jpg'
-      },
-      {
-        headline: '安溪鐵觀音',
-        subheadline: '濃香型鐵觀音，七泡有餘香，醇厚回甘。',
-        button: '立即選購',
-        leafColor: '#c3e3ce',
-        bg: 'from-darkgreen-900 via-darkgreen-700 to-darkgreen-800',
-        bgImage: '/images/hero-3.jpg'
-      },
-      {
-        headline: '紫椴蜂蜜',
-        subheadline: '來自東北原始森林的天然紫椴蜂蜜，清香怡人，營養豐富。',
-        button: '探索蜂蜜',
-        leafColor: '#5ba976',
-        bg: 'from-darkgreen-700 via-darkgreen-900 to-darkgreen-800',
-        bgImage: '/images/hero-4.jpg'
       }
     ],
     technology: {
@@ -471,13 +528,13 @@ function VideoCarousel() {
       fallback: '/images/hero-1.jpg'
     },
     {
-      src: '/videos/longjing.mov',
-      type: 'video/quicktime',
+      src: '/videos/longjing.mp4',
+      type: 'video/mp4',
       fallback: '/images/hero-2.jpg'
     },
     {
-      src: '/videos/tieguanyin.mov',
-      type: 'video/quicktime',
+      src: '/videos/tieguanyin.mp4',
+      type: 'video/mp4',
       fallback: '/images/hero-3.jpg'
     },
     {
@@ -675,9 +732,11 @@ function VideoCarousel() {
 // Update ProductDetailPopup component
 function ProductDetailPopup({ 
   product, 
+  language, 
   onClose 
 }: { 
   product: Product; 
+  language: Language; 
   onClose: () => void;
 }) {
   const [imageError, setImageError] = useState(false);
@@ -706,9 +765,9 @@ function ProductDetailPopup({
               </svg>
             </div>
           ) : (
-          <Image
-              src={product.img}
-              alt={product.name}
+            <Image
+              src={product.thumbnail}
+              alt={product.name[language]}
               fill
               className="object-cover"
               sizes="(max-width: 768px) 100vw, 50vw"
@@ -717,12 +776,12 @@ function ProductDetailPopup({
           )}
           {product.isNew && (
             <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              新品上市
+              {language === 'zh' ? '新品上市' : 'New'}
             </div>
           )}
-          {product.isSale && (
+          {product.originalPrice && (
             <div className="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              特價優惠
+              {language === 'zh' ? '特價優惠' : 'Sale'}
             </div>
           )}
         </div>
@@ -731,29 +790,24 @@ function ProductDetailPopup({
         <div className="w-full md:w-1/2 p-6 md:p-8 flex flex-col">
           <div className="flex-1">
             <h2 className="text-3xl font-serif font-bold text-gray-900 mb-4">
-              {product.name}
+              {product.name[language]}
             </h2>
             <p className="text-lg text-gray-600 mb-6">
-              {product.desc}
+              {product.description[language]}
             </p>
             <div className="flex items-baseline gap-4 mb-8">
-              {product.salePrice ? (
+              {product.originalPrice ? (
                 <>
                   <span className="text-2xl font-bold text-rose-600">
-                    {product.salePrice}
+                    ${product.price}
                   </span>
                   <span className="text-lg text-gray-500 line-through">
-                    {product.price}
+                    ${product.originalPrice}
                   </span>
                 </>
               ) : (
                 <span className="text-2xl font-bold text-gray-900">
-                  {product.price}
-                </span>
-              )}
-              {product.unit && (
-                <span className="text-sm text-gray-500">
-                  / {product.unit}
+                  ${product.price}
                 </span>
               )}
             </div>
@@ -763,15 +817,15 @@ function ProductDetailPopup({
           <div className="flex flex-col gap-4">
             <button
               className="w-full bg-emerald-600 text-white px-6 py-3 rounded-full text-lg font-medium hover:bg-emerald-700 transition-colors duration-300"
-              disabled={product.soldOut}
+              disabled={product.stock === 0}
             >
-              {product.soldOut ? '已售罄' : '加入購物車'}
+              {product.stock === 0 ? (language === 'zh' ? '已售罄' : 'Sold Out') : (language === 'zh' ? '加入購物車' : 'Add to Cart')}
             </button>
             <button
               className="w-full border-2 border-gray-300 text-gray-600 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors duration-300"
               onClick={onClose}
             >
-              關閉
+              {language === 'zh' ? '關閉' : 'Close'}
             </button>
           </div>
         </div>
@@ -791,15 +845,44 @@ function ProductDetailPopup({
 }
 
 export default function Home() {
-  const [language] = useState<Language>('en');
+  const [language, setLanguage] = useState<'en' | 'zh'>('en');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState('hero');
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const sections = sectionRefs.current;
+
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        if (!section) continue;
+
+        const { top, bottom } = section.getBoundingClientRect();
+        const sectionTop = top + window.scrollY;
+        const sectionBottom = bottom + window.scrollY;
+
+        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+          setActiveSection(section.id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <main className="min-h-screen">
@@ -824,48 +907,72 @@ export default function Home() {
                 探索我們精心挑選的優質茶葉和茶具系列
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-              {[
-                {
-                  name: '多功能茶機',
-                  desc: '買茶機送9盒茶',
-                  price: 'HK$1,999.00',
-                  img: '/images/tea-machine.jpg',
-                  isNew: true,
-                  soldOut: true
-                },
-                {
-                  name: '桂花薏米茶',
-                  desc: '新品上市',
-                  price: 'HK$119.00',
-                  img: '/images/osmanthus-coix.jpg',
-                  isNew: true
-                },
-                {
-                  name: '凍齡茶',
-                  desc: '養顏抗衰老',
-                  price: 'HK$119.00',
-                  img: '/images/anti-aging.jpg'
-                },
-                {
-                  name: '茉莉龍珠',
-                  desc: '清香怡人',
-                  price: 'HK$99.00',
-                  img: '/images/jasmine-pearl.jpg'
-                }
-              ].map((product, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  onClick={() => handleProductClick(product)}
-                  className="cursor-pointer"
-                >
-                  <ProductCard product={product} language={language} />
-                </motion.div>
-              ))}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-64">
+                  <Image
+                    src="/images/placeholder.png"
+                    alt="精選茶葉"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">精選茶葉</h3>
+                  <p className="text-gray-600">
+                    嚴選優質茶葉，為您帶來最純正的茶香體驗。
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-64">
+                  <Image
+                    src="/images/placeholder.png"
+                    alt="有機蜂蜜"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">有機蜂蜜</h3>
+                  <p className="text-gray-600">
+                    100%純天然有機蜂蜜，營養豐富，口感醇厚。
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-64">
+                  <Image
+                    src="/images/placeholder.png"
+                    alt="禮盒定制"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">禮盒定制</h3>
+                  <p className="text-gray-600">
+                    為您量身定制獨一無二的茶葉禮盒，傳遞心意。
+                  </p>
+                </div>
+              </motion.div>
             </div>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -884,6 +991,159 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Six Categories of Tea Section */}
+        <section className="py-32 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="text-center mb-20"
+            >
+              <h2 className="text-5xl font-serif font-bold text-gray-900 mb-8 tracking-wide">
+                六大茶類
+              </h2>
+              <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light tracking-wide">
+                深入了解中國傳統六大茶類，品味千年茶文化
+              </p>
+            </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {/* Green Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/green-tea.jpg"
+                    alt="綠茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">綠茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  綠茶是一種不發酵茶。綠茶類的品質特徵：「三綠」，乾茶綠、茶湯綠、葉底綠。內質上要求香氣高爽，滋味鮮醇。市場上常見的名優綠茶有西湖龍井、黃山毛峰、洞庭碧螺春、六安瓜片、信陽毛尖、太平猴魁、廬山雲霧、四川蒙頂、等等。
+                </p>
+              </motion.div>
+
+              {/* White Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/white-tea.jpg"
+                    alt="白茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">白茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  白茶屬微發酵茶。白茶的品質特徵：以白牡丹為代表，外形芽葉連枝，兩葉合抱心，綠葉夾銀芽，形似牡丹花朵，故稱白牡丹。內質香氣清鮮，毫香顯，滋味鮮醇，湯色杏黃而滋味甘甜。白茶主要產於福建省的福鼎、政和、松溪和建陽等。
+                </p>
+              </motion.div>
+
+              {/* Flower Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/flower-tea.jpg"
+                    alt="花茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">花茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  獨特的花香不經烘焙直接溶入葉子中，清新芬芳開放大方，飲後餘韻長存
+                </p>
+              </motion.div>
+
+              {/* Black Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/dark-tea.jpg"
+                    alt="紅茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">紅茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  紅茶是全發酵茶。茶葉在製作過程中經過發酵，茶多酚氧化，形成茶黃素、茶紅素等，使茶葉色澤烏黑，茶湯呈紅色。紅茶茶性溫和，具有暖胃、助消化的功效。常見的紅茶有祁門紅茶、滇紅、正山小種等。
+                </p>
+              </motion.div>
+
+              {/* Oolong Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/blue-tea.jpg"
+                    alt="青茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">青茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  青茶（烏龍茶）是半發酵茶。它結合了綠茶的清香和紅茶的醇厚，茶葉在製作過程中經過部分發酵，因此具有獨特的風味。青茶的茶性介於綠茶和紅茶之間，不寒不熱，適合各種體質的人飲用。著名的青茶有鐵觀音、大紅袍、凍頂烏龍等。
+                </p>
+              </motion.div>
+
+              {/* Dark Tea */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
+                  <Image
+                    src="/images/black-tea.jpg"
+                    alt="黑茶"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">黑茶</h3>
+                <p className="text-base text-gray-700 leading-relaxed">
+                  黑茶是後發酵茶。其獨特之處在於茶葉在殺青、揉捻後，堆積發酵，形成特殊的風味和色澤。黑茶的茶性溫和，具有降脂、助消化、暖胃的功效，適合長期飲用。最著名的黑茶是普洱茶。
+                </p>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Remaining Hero Sections */}
         {content[language].heroSections.slice(1).map((section, idx) => (
           <div key={idx + 1}>
@@ -892,186 +1152,6 @@ export default function Home() {
               idx={idx + 1}
               sectionRef={(el) => (sectionRefs.current[idx + 1] = el)}
             />
-            {idx === 0 && (
-              <motion.section 
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.8 }}
-                className="py-32 bg-gradient-to-b from-emerald-50 to-white"
-              >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-20"
-                  >
-                    <h2 className="text-5xl font-serif font-bold text-gray-900 mb-8 tracking-wide">
-                      西湖龍井系列
-                    </h2>
-                    <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light tracking-wide">
-                      明前龍井，一芽一葉，清香持久，回甘生津
-                    </p>
-                  </motion.div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                      {
-                        name: "特級龍井",
-                        desc: "明前採摘，一芽一葉，清香持久",
-                        price: "HK$ 298.00",
-                        img: "/images/longjing-premium.jpg"
-                      },
-                      {
-                        name: "一級龍井",
-                        desc: "雨前採摘，一芽二葉，醇厚回甘",
-                        price: "HK$ 198.00",
-                        img: "/images/longjing-first.jpg"
-                      },
-                      {
-                        name: "龍井禮盒",
-                        desc: "特級龍井，精美包裝，送禮首選",
-                        price: "HK$ 398.00",
-                        img: "/images/longjing-gift.jpg"
-                      },
-                      {
-                        name: "龍井組合裝",
-                        desc: "特級龍井 + 一級龍井，雙重享受",
-                        price: "HK$ 458.00",
-                        img: "/images/longjing-combo.jpg"
-                      }
-                    ].map((product, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <ProductCard product={product} language={language} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.section>
-            )}
-            {idx === 1 && (
-              <section className="py-24 bg-amber-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                  >
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                      安溪鐵觀音系列
-                    </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                      濃香型鐵觀音，七泡有餘香，醇厚回甘
-                    </p>
-                  </motion.div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                      {
-                        name: '特級鐵觀音',
-                        desc: '濃香型，七泡有餘香，醇厚回甘',
-                        price: 'HK$ 268.00',
-                        img: '/images/tieguanyin-premium.jpg'
-                      },
-                      {
-                        name: '一級鐵觀音',
-                        desc: '清香型，五泡有餘香，清爽怡人',
-                        price: 'HK$ 198.00',
-                        img: '/images/tieguanyin-first.jpg'
-                      },
-                      {
-                        name: '鐵觀音禮盒',
-                        desc: '特級鐵觀音，精美包裝，送禮首選',
-                        price: 'HK$ 368.00',
-                        img: '/images/tieguanyin-gift.jpg'
-                      },
-                      {
-                        name: '鐵觀音組合裝',
-                        desc: '特級鐵觀音 + 一級鐵觀音，雙重享受',
-                        price: 'HK$ 428.00',
-                        img: '/images/tieguanyin-combo.jpg'
-                      }
-                    ].map((product, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <ProductCard product={product} language={language} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            )}
-            {idx === 2 && (
-              <section className="py-24 bg-rose-50">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-12"
-                  >
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                      紫椴蜂蜜系列
-                    </h2>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-                      來自東北原始森林的天然紫椴蜂蜜，清香怡人，營養豐富
-                    </p>
-                  </motion.div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[
-                      {
-                        name: '特級紫椴蜂蜜',
-                        desc: '純天然，無添加，清香怡人',
-                        price: 'HK$ 198.00',
-                        img: '/images/honey-premium.jpg'
-                      },
-                      {
-                        name: '蜂蜜組合裝',
-                        desc: '紫椴蜂蜜 + 龍眼蜜，營養加倍',
-                        price: 'HK$ 298.00',
-                        img: '/images/honey-combo.jpg'
-                      },
-                      {
-                        name: '蜂蜜禮盒',
-                        desc: '特級紫椴蜂蜜，精美包裝，送禮首選',
-                        price: 'HK$ 268.00',
-                        img: '/images/honey-gift.jpg'
-                      },
-                      {
-                        name: '蜂蜜家庭裝',
-                        desc: '大容量，經濟實惠，全家共享',
-                        price: 'HK$ 398.00',
-                        img: '/images/honey-family.jpg'
-                      }
-                    ].map((product, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: index * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <ProductCard product={product} language={language} />
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </section>
-            )}
           </div>
         ))}
 
@@ -1080,6 +1160,7 @@ export default function Home() {
           <AnimatePresence>
             <ProductDetailPopup
               product={selectedProduct}
+              language={language}
               onClose={() => setSelectedProduct(null)}
             />
           </AnimatePresence>
@@ -1117,6 +1198,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
+      {/*
       <footer className="bg-darkgreen-900 text-white py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
@@ -1189,6 +1271,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      */}
     </main>
   );
 }

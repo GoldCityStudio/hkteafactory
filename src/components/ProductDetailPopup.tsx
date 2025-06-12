@@ -4,22 +4,18 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useState } from 'react';
 import { useCart } from '@/app/context/CartContext';
+import type { Product } from '@/lib/types/product';
+import type { Language } from '@/app/types';
 
 type ProductDetailPopupProps = {
-  product: {
-    name: string;
-    desc: string;
-    price: string;
-    img: string;
-    isSale?: boolean;
-  };
-  isOpen: boolean;
+  product: Product;
+  language: Language;
   onClose: () => void;
 };
 
 export default function ProductDetailPopup({
   product,
-  isOpen,
+  language,
   onClose,
 }: ProductDetailPopupProps) {
   const { addItem } = useCart();
@@ -27,18 +23,18 @@ export default function ProductDetailPopup({
 
   const handleAddToCart = () => {
     addItem({
-      id: product.name,
-      name: product.name,
-      desc: product.desc,
-      price: product.price,
-      img: product.img,
+      id: product.id,
+      name: product.name[language],
+      desc: product.description[language],
+      price: product.price.toString(),
+      img: product.thumbnail
     });
     onClose();
   };
 
   return (
     <AnimatePresence>
-      {isOpen && (
+      {product && (
         <>
           {/* Backdrop */}
           <motion.div
@@ -63,40 +59,47 @@ export default function ProductDetailPopup({
             >
               <div className="relative aspect-video">
                 <Image
-                  src={imgError ? '/placeholder.jpg' : product.img}
-                  alt={product.name}
+                  src={imgError ? '/placeholder.jpg' : product.thumbnail}
+                  alt={product.name[language]}
                   fill
                   className="object-cover"
                   onError={() => setImgError(true)}
                 />
-                {product.isSale && (
+                {product.originalPrice && (
                   <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    特價
+                    {language === 'zh' ? '特價' : 'Sale'}
                   </div>
                 )}
               </div>
               <div className="p-6">
                 <h2 className="text-2xl font-bold text-gray-900 mb-2">
-                  {product.name}
+                  {product.name[language]}
                 </h2>
-                <p className="text-gray-600 mb-4">{product.desc}</p>
+                <p className="text-gray-600 mb-4">{product.description[language]}</p>
                 <div className="flex items-center justify-between mb-6">
-                  <span className="text-3xl font-bold text-emerald-600">
-                    {product.price}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-3xl font-bold text-emerald-600">
+                      ${product.price}
+                    </span>
+                    {product.originalPrice && (
+                      <span className="text-lg text-gray-500 line-through">
+                        ${product.originalPrice}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="flex gap-4">
                   <button
                     onClick={handleAddToCart}
                     className="flex-1 bg-emerald-600 text-white px-6 py-3 rounded-full text-lg font-medium hover:bg-emerald-700 transition-colors duration-300"
                   >
-                    加入購物車
+                    {language === 'zh' ? '加入購物車' : 'Add to Cart'}
                   </button>
                   <button
                     onClick={onClose}
                     className="flex-1 border-2 border-gray-300 text-gray-600 px-6 py-3 rounded-full text-lg font-medium hover:bg-gray-50 transition-colors duration-300"
                   >
-                    關閉
+                    {language === 'zh' ? '關閉' : 'Close'}
                   </button>
                 </div>
               </div>

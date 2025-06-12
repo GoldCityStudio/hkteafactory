@@ -1,4 +1,4 @@
-export type ProductCategory = 'tea' | 'honey' | 'teaware' | 'accessories';
+export type ProductCategory = 'tea' | 'honey' | 'teaware' | 'accessories' | 'gift-sets' | 'green-tea' | 'black-tea' | 'oolong-tea' | 'white-tea' | 'pu-erh' | 'flower-tea' | 'taiwanese-tea';
 
 export type ProductStatus = 'active' | 'inactive' | 'out_of_stock';
 

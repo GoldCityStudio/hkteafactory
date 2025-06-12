@@ -4,53 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
-const farewellGifts = [
-  {
-    id: 'tea-honey-set',
-    name: '茶葉蜂蜜禮盒',
-    description: '精選茶葉搭配有機蜂蜜，讓同事帶走美好的回憶。',
-    price: 'HK$168',
-    image: '/images/gifts/tea-honey-set.jpg',
-    contents: [
-      '精選茶葉 100g',
-      '有機蜂蜜 200g',
-      '精美禮盒包裝',
-      '客製化感謝卡'
-    ],
-    minOrder: 20
-  },
-  {
-    id: 'tea-set',
-    name: '茶具禮盒',
-    description: '精美茶具套裝，實用又美觀，適合送給愛茶的同事。',
-    price: 'HK$288',
-    image: '/images/gifts/tea-set.jpg',
-    contents: [
-      '精美茶具一套',
-      '精選茶葉 100g',
-      '精美禮盒包裝',
-      '客製化感謝卡'
-    ],
-    minOrder: 10
-  },
-  {
-    id: 'premium-tea-box',
-    name: '尊貴茶葉禮盒',
-    description: '精選多款優質茶葉，搭配精美包裝，是送禮的最佳選擇。',
-    price: 'HK$388',
-    image: '/images/gifts/premium-tea-box.jpg',
-    contents: [
-      '明前獅峰龍井 100g',
-      '鐵觀音 100g',
-      '班章宮廷普洱餅 200g',
-      '精美禮盒包裝',
-      '客製化感謝卡'
-    ],
-    minOrder: 5
-  }
-];
-
-export default function FarewellGiftsPage() {
+export default function WaterGiftsPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
       {/* Hero Section */}
@@ -61,8 +15,8 @@ export default function FarewellGiftsPage() {
         className="relative h-96 flex items-center justify-center overflow-hidden"
       >
         <Image
-          src="/images/hero-gifts.jpg"
-          alt="Scatter Water Gifts Hero"
+          src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2070"
+          alt="Water Gifts Hero"
           fill
           priority
           className="object-cover opacity-70"
@@ -178,3 +132,4 @@ export default function FarewellGiftsPage() {
     </div>
   );
 } 
+

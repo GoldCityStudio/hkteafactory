@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Product } from '@/lib/types/product';
 
-// Temporary in-memory storage for products (shared with the main products route)
+// Temporary in-memory storage for products
 declare global {
   var products: Product[];
 }
@@ -14,81 +14,53 @@ export async function GET(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const product = global.products.find((p: Product) => p.id === params.id);
-    
-    if (!product) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json(product);
-  } catch (error) {
-    console.error('Error fetching product:', error);
+  const product = global.products.find((p: Product) => p.id === params.id);
+  if (!product) {
     return NextResponse.json(
-      { error: 'Failed to fetch product' },
-      { status: 500 }
+      { message: 'Product not found' },
+      { status: 404 }
     );
   }
+  return NextResponse.json(product);
 }
 
 export async function PUT(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const data = await request.json();
-    const index = global.products.findIndex((p: Product) => p.id === params.id);
-    
-    if (index === -1) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
-    }
-
-    const updatedProduct: Product = {
-      ...global.products[index],
-      ...data,
-      updatedAt: new Date().toISOString(),
-    };
-
-    global.products[index] = updatedProduct;
-
-    return NextResponse.json(updatedProduct);
-  } catch (error) {
-    console.error('Error updating product:', error);
+  const updates = await request.json();
+  const index = global.products.findIndex((p: Product) => p.id === params.id);
+  
+  if (index === -1) {
     return NextResponse.json(
-      { error: 'Failed to update product' },
-      { status: 500 }
+      { message: 'Product not found' },
+      { status: 404 }
     );
   }
+
+  global.products[index] = {
+    ...global.products[index],
+    ...updates,
+  };
+
+  return NextResponse.json(global.products[index]);
 }
 
 export async function DELETE(
   request: Request,
   { params }: { params: { id: string } }
 ) {
-  try {
-    const index = global.products.findIndex((p: Product) => p.id === params.id);
-    
-    if (index === -1) {
-      return NextResponse.json(
-        { error: 'Product not found' },
-        { status: 404 }
-      );
-    }
-
-    global.products.splice(index, 1);
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error('Error deleting product:', error);
+  const index = global.products.findIndex((p: Product) => p.id === params.id);
+  
+  if (index === -1) {
     return NextResponse.json(
-      { error: 'Failed to delete product' },
-      { status: 500 }
+      { message: 'Product not found' },
+      { status: 404 }
     );
   }
+
+  const deletedProduct = global.products[index];
+  global.products.splice(index, 1);
+
+  return NextResponse.json(deletedProduct);
 } 
