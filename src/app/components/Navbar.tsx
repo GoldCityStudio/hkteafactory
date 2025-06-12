@@ -84,7 +84,8 @@ const navItems = {
 };
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const [language, setLanguage] = useState<Language>('zh');
 
@@ -238,7 +239,7 @@ export default function Navbar() {
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.98 }}
-                onClick={() => setIsOpen(!isOpen)}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="text-gray-700 relative"
               >
                 <motion.div
@@ -262,7 +263,7 @@ export default function Navbar() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  {isOpen ? (
+                  {isMenuOpen ? (
                     <path d="M6 18L18 6M6 6l12 12" />
                   ) : (
                     <path d="M4 6h16M4 12h16M4 18h16" />
@@ -278,8 +279,8 @@ export default function Navbar() {
       <motion.div
         initial={{ opacity: 0, height: 0 }}
         animate={{
-          opacity: isOpen ? 1 : 0,
-          height: isOpen ? 'auto' : 0,
+          opacity: isMenuOpen ? 1 : 0,
+          height: isMenuOpen ? 'auto' : 0,
         }}
         transition={{ duration: 0.3 }}
         className="md:hidden bg-white/90 backdrop-blur-md border-t border-white/70 relative"

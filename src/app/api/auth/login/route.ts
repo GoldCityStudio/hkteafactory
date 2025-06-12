@@ -12,19 +12,24 @@ if (!global.users) {
 
 // This is a temporary solution for development
 // In production, you should use a proper database and secure this endpoint
-const ADMIN_EMAIL = 'admin@hkteafactory.com';
-const ADMIN_PASSWORD = 'admin123'; // In production, use a secure password
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'admin@hkteafactory.com';
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123'; // In production, use a secure password
 
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const body = await request.json();
+    const { email, password } = body;
+
+    if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
+      return NextResponse.json({ success: true });
+    }
 
     // Find user
     const user = global.users.find((u: User & { password: string }) => u.email === email);
 
     if (!user || user.password !== password) {
       return NextResponse.json(
-        { message: 'Invalid email or password' },
+        { error: 'Invalid credentials' },
         { status: 401 }
       );
     }
@@ -59,7 +64,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('Login error:', error);
     return NextResponse.json(
-      { message: 'Failed to login' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

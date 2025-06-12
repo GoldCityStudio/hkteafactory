@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { Product } from '@/lib/types/product';
 
 // Temporary in-memory storage for products
-let products: Product[] = [];
+const products: Product[] = [];
 
 export async function POST(request: Request) {
   try {
@@ -30,13 +30,5 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  try {
-    return NextResponse.json(products);
-  } catch (error) {
-    console.error('Error fetching products:', error);
-    return NextResponse.json(
-      { error: 'Failed to fetch products' },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(products);
 } 

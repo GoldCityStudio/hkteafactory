@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import DataTable from '@/app/components/admin/DataTable';
+import { DataTable } from '@/app/components/admin/DataTable';
 import { Product, ProductCategory } from '@/lib/types/product';
 
 export default function ProductsPage() {
