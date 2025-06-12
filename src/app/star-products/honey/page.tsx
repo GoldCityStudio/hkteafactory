@@ -35,7 +35,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         originalPrice: undefined,
         thumbnail: '/images/honey-acacia.jpg',
         images: ['/images/honey-acacia.jpg'],
-        category: 'honey',
+        category: 'honey-product',
         status: 'active',
         isNew: true,
         specifications: {
@@ -58,7 +58,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         originalPrice: undefined,
         thumbnail: '/images/honey-linden.jpg',
         images: ['/images/honey-linden.jpg'],
-        category: 'honey',
+        category: 'honey-product',
         status: 'active',
         isNew: false,
         specifications: {
@@ -93,7 +93,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         originalPrice: undefined,
         thumbnail: '/images/honey-acacia.jpg',
         images: ['/images/honey-acacia.jpg'],
-        category: 'honey',
+        category: 'honey-product',
         status: 'active',
         isNew: true,
         specifications: {
@@ -116,7 +116,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         originalPrice: undefined,
         thumbnail: '/images/honey-linden.jpg',
         images: ['/images/honey-linden.jpg'],
-        category: 'honey',
+        category: 'honey-product',
         status: 'active',
         isNew: false,
         specifications: {

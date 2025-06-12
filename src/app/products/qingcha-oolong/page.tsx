@@ -4,6 +4,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import type { Language } from '@/app/types';
+import type { Product } from '@/lib/types/product';
 
 type HeroSectionType = {
   headline: string;
@@ -15,21 +17,184 @@ type HeroSectionType = {
   bgVideo?: string;
 };
 
+const content: Record<Language, { heroSection: HeroSectionType; products: Product[] }> = {
+  zh: {
+    heroSection: {
+      headline: '青茶/烏龍精選',
+      subheadline: '探索獨特韻味的青茶與烏龍茶系列',
+      button: '立即探索',
+      leafColor: '#a2b98e', // A light greenish-brown color for oolong tea
+      bg: 'from-emerald-800 via-emerald-900 to-emerald-700',
+      bgImage: '/images/hero-qingcha-oolong.jpg'
+    },
+    products: [
+      {
+        id: 'tieguanyin-qingcha',
+        name: { zh: '清香型鐵觀音', en: 'Light Aroma Tieguanyin' },
+        description: { zh: '安溪清香型鐵觀音，香氣清雅，回甘持久', en: 'Anxi light aroma Tieguanyin, elegant aroma, lasting aftertaste' },
+        price: 220,
+        originalPrice: undefined,
+        thumbnail: '/images/tieguanyin-qingcha.jpg',
+        images: ['/images/tieguanyin-qingcha.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: true
+      },
+      {
+        id: 'maoxie-oolong',
+        name: { zh: '毛蟹烏龍', en: 'Mao Xie Oolong' },
+        description: { zh: '安溪毛蟹烏龍，香氣高揚，滋味醇厚', en: 'Anxi Mao Xie Oolong, high aroma, mellow taste' },
+        price: 180,
+        originalPrice: undefined,
+        thumbnail: '/images/maoxie-oolong.jpg',
+        images: ['/images/maoxie-oolong.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'huangjin-gui',
+        name: { zh: '黃金桂', en: 'Huang Jin Gui' },
+        description: { zh: '安溪黃金桂，香氣濃郁，滋味甘醇', en: 'Anxi Huang Jin Gui, rich aroma, sweet taste' },
+        price: 160,
+        originalPrice: undefined,
+        thumbnail: '/images/huangjin-gui.jpg',
+        images: ['/images/huangjin-gui.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      }
+    ]
+  },
+  en: {
+    heroSection: {
+      headline: 'Qingcha & Oolong Selection',
+      subheadline: 'Explore our unique collection of Qingcha and Oolong teas.',
+      button: 'Explore Now',
+      leafColor: '#a2b98e',
+      bg: 'from-emerald-800 via-emerald-900 to-emerald-700',
+      bgImage: '/images/hero-qingcha-oolong.jpg'
+    },
+    products: [
+      {
+        id: 'tieguanyin-qingcha',
+        name: { zh: '清香型鐵觀音', en: 'Light Aroma Tieguanyin' },
+        description: { zh: '安溪清香型鐵觀音，香氣清雅，回甘持久', en: 'Anxi light aroma Tieguanyin, elegant aroma, lasting aftertaste' },
+        price: 220,
+        originalPrice: undefined,
+        thumbnail: '/images/tieguanyin-qingcha.jpg',
+        images: ['/images/tieguanyin-qingcha.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: true
+      },
+      {
+        id: 'maoxie-oolong',
+        name: { zh: '毛蟹烏龍', en: 'Mao Xie Oolong' },
+        description: { zh: '安溪毛蟹烏龍，香氣高揚，滋味醇厚', en: 'Anxi Mao Xie Oolong, high aroma, mellow taste' },
+        price: 180,
+        originalPrice: undefined,
+        thumbnail: '/images/maoxie-oolong.jpg',
+        images: ['/images/maoxie-oolong.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'huangjin-gui',
+        name: { zh: '黃金桂', en: 'Huang Jin Gui' },
+        description: { zh: '安溪黃金桂，香氣濃郁，滋味甘醇', en: 'Anxi Huang Jin Gui, rich aroma, sweet taste' },
+        price: 160,
+        originalPrice: undefined,
+        thumbnail: '/images/huangjin-gui.jpg',
+        images: ['/images/huangjin-gui.jpg'],
+        category: 'oolong-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      }
+    ]
+  }
+};
+
 function FloatingLeaf({ className, style, color = '#206e3a', opacity = 0.3 }: { className?: string; style?: React.CSSProperties; color?: string; opacity?: number }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
+    <motion.div
+      className={`absolute ${className}`}
       style={style}
+      initial={{ opacity: 0, scale: 0 }}
+      animate={{ opacity, scale: 1 }}
+      transition={{ duration: 1, ease: 'easeOut' }}
     >
-      <path
-        d="M16 2C10 10 2 18 16 30C30 18 22 10 16 2Z"
-        fill={color}
-        fillOpacity={opacity}
-      />
-    </svg>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill={color} />
+      </svg>
+    </motion.div>
   );
 }
 
@@ -223,20 +388,52 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
   );
 }
 
-const QingchaOolongPage = () => {
+function ProductGrid({ products }: { products: Product[] }) {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {products.map((product) => (
+        <motion.div
+          key={product.id}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="bg-white rounded-lg shadow-lg overflow-hidden"
+        >
+          <div className="relative h-48">
+            <Image
+              src={product.thumbnail}
+              alt={product.name.en}
+              fill
+              className="object-cover"
+            />
+          </div>
+          <div className="p-6">
+            <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name.en}</h3>
+            <p className="text-gray-600 mb-4">{product.description.en}</p>
+            <div className="flex justify-between items-center">
+              <span className="text-2xl font-bold text-emerald-600">${product.price}</span>
+              <Link
+                href={`/products/${product.id}`}
+                className="bg-emerald-600 text-white px-4 py-2 rounded-full hover:bg-emerald-700 transition-colors"
+              >
+                View Details
+              </Link>
+            </div>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
+export default function QingchaOolongPage() {
   const heroSectionRef = useRef<HTMLDivElement[]>([]);
   const setHeroSectionRef = (el: HTMLDivElement | null, idx: number) => {
     if (el) heroSectionRef.current[idx] = el;
   };
 
-  const qingchaOolongHeroSection = {
-    headline: '青茶/烏龍精選',
-    subheadline: '探索獨特韻味的青茶與烏龍茶系列',
-    button: '立即探索',
-    leafColor: '#a2b98e', // A light greenish-brown color for oolong tea
-    bg: 'from-emerald-800 via-emerald-900 to-emerald-700',
-    bgImage: '/images/hero-qingcha-oolong.jpg'
-  };
+  const [language, setLanguage] = useState<Language>('en');
+  const { heroSection, products } = content[language];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
@@ -339,9 +536,11 @@ const QingchaOolongPage = () => {
           </div>
         </motion.div>
       </div>
+
+      <div className="container mx-auto px-4 py-16">
+        <ProductGrid products={products} />
+      </div>
     </div>
   );
-};
-
-export default QingchaOolongPage; 
+} 
 

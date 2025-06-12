@@ -18,7 +18,7 @@ const navItems = {
         { name: '青茶/烏龍', href: '/products/qingcha-oolong' },
         { name: '普洱', href: '/products/pu-erh' },
         { name: '花茶', href: '/products/flower-tea' },
-        { name: '台灣茶', href: '/products/taiwan-tea' },
+        { name: '台灣茶', href: '/products/taiwanese-tea' },
         { name: '茶包', href: '/products/tea-bags' },
         { name: '蜂蜜', href: '/products/honey-product' },
         { name: '白茶', href: '/products/white-tea' }
@@ -55,7 +55,7 @@ const navItems = {
         { name: 'Qingcha/Oolong', href: '/products/qingcha-oolong' },
         { name: 'Pu-erh', href: '/products/pu-erh' },
         { name: 'Flower Tea', href: '/products/flower-tea' },
-        { name: 'Taiwan Tea', href: '/products/taiwan-tea' },
+        { name: 'Taiwan Tea', href: '/products/taiwanese-tea' },
         { name: 'Tea Bags', href: '/products/tea-bags' },
         { name: 'Honey', href: '/products/honey-product' },
         { name: 'White Tea', href: '/products/white-tea' }

@@ -15,6 +15,15 @@ const categories: Record<ProductCategory, string> = {
   honey: '蜂蜜',
   teaware: '茶具',
   accessories: '配件',
+  'gift-sets': '禮盒',
+  'green-tea': '綠茶',
+  'black-tea': '紅茶',
+  'oolong-tea': '烏龍茶',
+  'white-tea': '白茶',
+  'pu-erh': '普洱茶',
+  'flower-tea': '花茶',
+  'taiwanese-tea': '台灣茶',
+  'honey-product': '蜂蜜',
 };
 
 const statuses: Record<ProductStatus, string> = {

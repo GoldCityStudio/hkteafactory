@@ -6,6 +6,8 @@ import { useRouter } from 'next/navigation';
 import { DataTable } from '@/app/components/admin/DataTable';
 import { Product, ProductCategory } from '@/lib/types/product';
 
+type ProductValue = string | number | boolean | { zh: string; en: string } | string[] | { weight?: string; origin?: string; ingredients?: string[]; storage?: string; expiryDate?: string } | Date | undefined;
+
 export default function ProductsPage() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
@@ -56,62 +58,55 @@ export default function ProductsPage() {
 
   const columns = [
     {
-      header: '商品名稱',
-      accessor: (product: Product) => product.name.zh,
+      key: 'name' as keyof Product,
+      label: '商品名稱',
+      render: (value: ProductValue, item: Product): React.ReactNode => (value && typeof value === 'object' && 'zh' in value ? value.zh : ''),
     },
     {
-      header: '價格',
-      accessor: (product: Product) => `NT$ ${product.price}`,
+      key: 'price' as keyof Product,
+      label: '價格',
+      render: (value: ProductValue, item: Product): React.ReactNode => (typeof value === 'number' ? `NT$ ${value}` : ''),
     },
     {
-      header: '類別',
-      accessor: (product: Product) => {
+      key: 'category' as keyof Product,
+      label: '類別',
+      render: (value: ProductValue, item: Product): React.ReactNode => {
         const categories: Record<ProductCategory, string> = {
           tea: '茶葉',
           honey: '蜂蜜',
           teaware: '茶具',
           accessories: '配件',
+          'gift-sets': '禮盒',
+          'green-tea': '綠茶',
+          'black-tea': '紅茶',
+          'oolong-tea': '烏龍茶',
+          'white-tea': '白茶',
+          'pu-erh': '普洱茶',
+          'flower-tea': '花茶',
+          'taiwanese-tea': '台灣茶',
+          'honey-product': '蜂蜜',
         };
-        return categories[product.category];
+        return value && typeof value === 'string' && value in categories ? categories[value as ProductCategory] : '';
       },
     },
     {
-      header: '庫存',
-      accessor: 'stock' as keyof Product,
+      key: 'stock' as keyof Product,
+      label: '庫存',
+      render: (value: ProductValue, item: Product): React.ReactNode => (typeof value === 'number' ? value : ''),
     },
     {
-      header: '狀態',
-      accessor: 'status' as keyof Product,
-      render: (product: Product) => (
+      key: 'status' as keyof Product,
+      label: '狀態',
+      render: (value: ProductValue, item: Product): React.ReactNode => (
         <span
           className={`px-2 py-1 text-xs font-medium rounded-full ${
-            product.status === 'active'
+            value === 'active'
               ? 'bg-green-100 text-green-800'
               : 'bg-gray-100 text-gray-800'
           }`}
         >
-          {product.status === 'active' ? '上架中' : '下架中'}
+          {value === 'active' ? '上架中' : '下架中'}
         </span>
-      ),
-    },
-    {
-      header: '操作',
-      accessor: (product: Product) => product.id,
-      render: (product: Product) => (
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => router.push(`/admin/products/${product.id}/edit`)}
-            className="text-indigo-600 hover:text-indigo-900"
-          >
-            編輯
-          </button>
-          <button
-            onClick={() => handleDelete(product.id)}
-            className="text-red-600 hover:text-red-900"
-          >
-            刪除
-          </button>
-        </div>
       ),
     },
   ];
@@ -156,9 +151,6 @@ export default function ProductsPage() {
       <DataTable
         columns={columns}
         data={products}
-        searchable
-        sortable
-        itemsPerPage={10}
       />
     </div>
   );
