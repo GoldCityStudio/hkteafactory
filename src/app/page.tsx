@@ -522,7 +522,6 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
 function VideoCarousel() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
-  const [useFallback, setUseFallback] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
@@ -559,7 +558,6 @@ function VideoCarousel() {
 
   const loadNextVideo = () => {
     setIsVideoLoaded(false);
-    setUseFallback(false);
     setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
@@ -568,37 +566,33 @@ function VideoCarousel() {
     const bgVideo = backgroundVideoRef.current;
     if (!video || !bgVideo) return;
 
-    // Set a timeout for video loading
-    const loadTimeout = setTimeout(() => {
-      if (!isVideoLoaded && !useFallback) {
-        console.warn('Video loading timeout, switching to fallback.');
-        setUseFallback(true);
-      }
-    }, 10000); // 10 seconds timeout
-
     const handleVideoLoad = () => {
       setIsVideoLoaded(true);
-      clearTimeout(loadTimeout);
       video.play().catch((e) => {
         console.error('Video play failed, switching to fallback:', e);
-        setUseFallback(true);
       });
+      console.log('Video loaded and playing:', videos[currentVideo].src);
     };
 
     const handleVideoError = (e: Event) => {
       console.error('Video error, switching to fallback:', e);
-      setUseFallback(true);
-      clearTimeout(loadTimeout);
     };
 
     const handleVideoEnd = () => {
+      console.log('Video ended, loading next:', videos[currentVideo].src);
       loadNextVideo();
     };
+
+    // Set up additional event listeners for debugging
+    const handleVideoPlay = () => console.log('Video playing:', videos[currentVideo].src);
+    const handleVideoPause = () => console.log('Video paused:', videos[currentVideo].src);
 
     // Set up event listeners
     video.addEventListener('loadeddata', handleVideoLoad);
     video.addEventListener('error', handleVideoError);
     video.addEventListener('ended', handleVideoEnd);
+    video.addEventListener('play', handleVideoPlay);
+    video.addEventListener('pause', handleVideoPause);
     bgVideo.addEventListener('error', handleVideoError);
 
     // Clean up event listeners
@@ -606,10 +600,11 @@ function VideoCarousel() {
       video.removeEventListener('loadeddata', handleVideoLoad);
       video.removeEventListener('error', handleVideoError);
       video.removeEventListener('ended', handleVideoEnd);
+      video.removeEventListener('play', handleVideoPlay);
+      video.removeEventListener('pause', handleVideoPause);
       bgVideo.removeEventListener('error', handleVideoError);
-      clearTimeout(loadTimeout);
     };
-  }, [currentVideo, isVideoLoaded, useFallback]);
+  }, [currentVideo]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden">
@@ -617,82 +612,53 @@ function VideoCarousel() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 backdrop-blur-[10px] bg-black/30">
-            {useFallback ? (
-              <Image
-                src={videos[currentVideo].fallback}
-                alt="Background"
-                fill
-                className="object-cover scale-110"
-                style={{ 
-                  filter: 'blur(10px)',
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.3s ease-out'
-                }}
-                priority
+            <video
+              ref={backgroundVideoRef}
+              key={`bg-${currentVideo}`}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="absolute top-0 left-0 w-full h-full object-cover scale-110"
+              style={{ 
+                filter: 'blur(10px)',
+                transform: 'scale(1.1)',
+                transition: 'transform 0.3s ease-out'
+              }}
+            >
+              <source 
+                src={videos[currentVideo].src} 
+                type={videos[currentVideo].type} 
               />
-            ) : (
-              <video
-                ref={backgroundVideoRef}
-                key={`bg-${currentVideo}`}
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="absolute top-0 left-0 w-full h-full object-cover scale-110"
-                style={{ 
-                  filter: 'blur(10px)',
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.3s ease-out'
-                }}
-              >
-                <source 
-                  src={videos[currentVideo].src} 
-                  type={videos[currentVideo].type} 
-                />
-              </video>
-            )}
+            </video>
           </div>
         </div>
       </div>
 
       {/* Video/Image Overlay */}
       <div className="absolute inset-0 z-10">
-        {useFallback ? (
-          <Image
-            src={videos[currentVideo].fallback}
-            alt="Hero"
-            fill
-            className="object-cover"
-            style={{
-              transform: 'scale(0.8)',
-              transition: 'transform 0.3s ease-out'
-            }}
-            priority
+        <video
+          ref={videoRef}
+          key={`video-${currentVideo}`}
+          autoPlay
+          muted
+          playsInline
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          style={{
+            transform: 'scale(0.8)',
+            transition: 'transform 0.3s ease-out'
+          }}
+        >
+          <source 
+            src={videos[currentVideo].src} 
+            type={videos[currentVideo].type} 
           />
-        ) : (
-          <video
-            ref={videoRef}
-            key={`video-${currentVideo}`}
-            autoPlay
-            muted
-            playsInline
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{
-              transform: 'scale(0.8)',
-              transition: 'transform 0.3s ease-out'
-            }}
-          >
-            <source 
-              src={videos[currentVideo].src} 
-              type={videos[currentVideo].type} 
-            />
-            您的瀏覽器不支持視頻播放。
-          </video>
-        )}
+          您的瀏覽器不支持視頻播放。
+        </video>
       </div>
 
       {/* Loading Indicator */}
-      {!isVideoLoaded && !useFallback && (
+      {!isVideoLoaded && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
