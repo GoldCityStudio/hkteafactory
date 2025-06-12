@@ -440,9 +440,14 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
             fill
             sizes="100vw"
             className="object-cover object-center"
-            priority={idx === 0}
-            quality={75}
-            loading={idx === 0 ? "eager" : "lazy"}
+            priority={true}
+            quality={90}
+            loading="eager"
+            onError={(e) => {
+              console.error('Error loading hero image:', e);
+              const target = e.target as HTMLImageElement;
+              target.src = '/images/placeholder.jpg';
+            }}
           />
         )}
         <motion.div 
