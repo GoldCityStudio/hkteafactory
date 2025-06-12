@@ -1,5 +1,7 @@
 # HK Tea Factory
 
+Last updated: 2024-03-12 18:35
+
 A modern e-commerce website for premium tea products, built with Next.js and TypeScript.
 
 ## Features
