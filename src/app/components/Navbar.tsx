@@ -8,7 +8,23 @@ import type { Language } from '@/app/types';
 
 const navItems = {
   zh: [
-    { name: '首頁', href: '/' },
+    { 
+      name: '關於我們', 
+      href: '/about',
+      subItems: [
+        { name: '品牌故事', href: '/about/brand-story' },
+        { name: '創辦人介紹', href: '/about/founder-intro' }
+      ]
+    },
+    {
+      name: '皇牌產品',
+      href: '/star-products',
+      subItems: [
+        { name: '龍井', href: '/star-products/longjing' },
+        { name: '鐵觀音', href: '/star-products/tieguanyin' },
+        { name: '蜂蜜', href: '/star-products/honey' }
+      ]
+    },
     { 
       name: '商店', 
       href: '/products',
@@ -24,28 +40,27 @@ const navItems = {
         { name: '白茶', href: '/products/white-tea' }
       ]
     },
-    {
-      name: '皇牌產品',
-      href: '/star-products',
-      subItems: [
-        { name: '龍井', href: '/star-products/longjing' },
-        { name: '鐵觀音', href: '/star-products/tieguanyin' },
-        { name: '蜂蜜', href: '/star-products/honey' }
-      ]
-    },
-    { name: '禮金定製', href: '/gift-customization', subItems: [ { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, { name: '宴會回禮', href: '/gift-customization/party-favors' }, { name: '散水禮物', href: '/gift-customization/water-gifts' } ] },
+    { name: '禮盒訂製', href: '/gift-customization', subItems: [ { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, { name: '宴會回禮', href: '/gift-customization/party-favors' }, { name: '散水禮物', href: '/gift-customization/water-gifts' } ] },
     { name: '公司資訊', href: '/company-info' },
-    { 
-      name: '關於我們', 
-      href: '/about',
-      subItems: [
-        { name: '品牌故事', href: '/about/brand-story' },
-        { name: '創辦人介紹', href: '/about/founder-intro' }
-      ]
-    }
   ],
   en: [
-    { name: 'Home', href: '/' },
+    { 
+      name: 'About Us', 
+      href: '/about',
+      subItems: [
+        { name: 'Brand Story', href: '/about/brand-story' },
+        { name: 'Founder Introduction', href: '/about/founder-intro' }
+      ]
+    },
+    {
+      name: 'Star Products',
+      href: '/star-products',
+      subItems: [
+        { name: 'Longjing', href: '/star-products/longjing' },
+        { name: 'Tieguanyin', href: '/star-products/tieguanyin' },
+        { name: 'Honey', href: '/star-products/honey' }
+      ]
+    },
     { 
       name: 'Shop', 
       href: '/products',
@@ -61,25 +76,8 @@ const navItems = {
         { name: 'White Tea', href: '/products/white-tea' }
       ]
     },
-    {
-      name: 'Star Products',
-      href: '/star-products',
-      subItems: [
-        { name: 'Longjing', href: '/star-products/longjing' },
-        { name: 'Tieguanyin', href: '/star-products/tieguanyin' },
-        { name: 'Honey', href: '/star-products/honey' }
-      ]
-    },
-    { name: '禮金定製', href: '/gift-customization', subItems: [ { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, { name: 'Party Favors', href: '/gift-customization/party-favors' }, { name: 'Water Gifts', href: '/gift-customization/water-gifts' } ] },
+    { name: 'Gift Customization', href: '/gift-customization', subItems: [ { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, { name: 'Party Favors', href: '/gift-customization/party-favors' }, { name: 'Water Gifts', href: '/gift-customization/water-gifts' } ] },
     { name: 'Company Info', href: '/company-info' },
-    { 
-      name: 'About Us', 
-      href: '/about',
-      subItems: [
-        { name: 'Brand Story', href: '/about/brand-story' },
-        { name: 'Founder Introduction', href: '/about/founder-intro' }
-      ]
-    }
   ]
 };
 
@@ -99,6 +97,33 @@ export default function Navbar() {
       animate={{ y: 0 }}
       className="fixed w-full z-50 bg-white/80 backdrop-blur-md shadow-[0_0_25px_rgba(255,255,255,0.7)] border-b-2 border-white/70"
     >
+      {/* Social Media Bar - Topmost */}
+      <div className="w-full bg-white/90 border-b border-emerald-100 flex items-center justify-between py-1 z-50 px-4">
+        {/* Language Switcher - Left */}
+        <button
+          onClick={toggleLanguage}
+          className="text-emerald-700 hover:text-emerald-900 font-semibold px-2 py-1 rounded transition-colors border border-emerald-200 bg-white/70"
+          aria-label="切換語言"
+        >
+          {language === 'zh' ? 'EN' : '中文'}
+        </button>
+        {/* Social Icons - Right */}
+        <div className="flex space-x-4">
+          <a href="https://www.facebook.com/hkteafactory/" target="_blank" rel="noopener noreferrer" title="Facebook" className="hover:opacity-80">
+            <Image src="/social-icons/facebook.svg" alt="Facebook" width={22} height={22} className="w-6 h-6" />
+          </a>
+          <a href="https://www.youtube.com/@hongkongteafactory" target="_blank" rel="noopener noreferrer" title="YouTube" className="hover:opacity-80">
+            <Image src="/social-icons/youtube.svg" alt="YouTube" width={22} height={22} className="w-6 h-6" />
+          </a>
+          <a href="https://www.xiaohongshu.com/user/profile/65301554000000002a018aec?xhsshare=CopyLink&appuid=65301554000000002a018aec&apptime=1712463690" target="_blank" rel="noopener noreferrer" title="小紅書" className="hover:opacity-80">
+            <Image src="/social-icons/xiaohongshu.svg" alt="小紅書" width={22} height={22} className="w-6 h-6" />
+          </a>
+          <a href="https://www.instagram.com/hkteafactory/" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:opacity-80">
+            <Image src="/social-icons/instagram.svg" alt="Instagram" width={22} height={22} className="w-6 h-6" />
+          </a>
+        </div>
+      </div>
+
       {/* Main Navigation */}
       <div className="bg-white/50 relative">
         <div className="absolute inset-x-0 bottom-0 h-[2px] bg-gradient-to-r from-transparent via-white/90 to-transparent" />
@@ -193,50 +218,10 @@ export default function Navbar() {
                   </div>
                 </motion.div>
               ))}
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={toggleLanguage}
-                className="relative text-gray-700 hover:text-emerald-600 transition-colors px-3 py-1 rounded-full border border-emerald-200 hover:border-emerald-300 overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-emerald-500/10"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                <span className="relative z-10">{language === 'zh' ? 'EN' : '中文'}</span>
-              </motion.button>
             </div>
 
             {/* Mobile Navigation Button */}
             <div className="md:hidden flex items-center space-x-4">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={toggleLanguage}
-                className="relative text-gray-700 hover:text-emerald-600 transition-colors px-3 py-1 rounded-full border border-emerald-200 hover:border-emerald-300 overflow-hidden"
-              >
-                <motion.div
-                  className="absolute inset-0 bg-emerald-500/10"
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    opacity: [0.3, 0.5, 0.3],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-                <span className="relative z-10">{language === 'zh' ? 'EN' : '中文'}</span>
-              </motion.button>
               <motion.button
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}

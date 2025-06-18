@@ -1151,7 +1151,7 @@ export default function Home() {
         {/* Cart Button */}
         <button
           onClick={() => setIsCartOpen(true)}
-          className="fixed bottom-6 right-6 bg-emerald-600 text-white p-4 rounded-full shadow-lg hover:bg-emerald-700 transition-colors duration-300 z-30"
+          className="fixed bottom-6 right-24 bg-emerald-600 text-white p-4 rounded-full shadow-lg hover:bg-emerald-700 transition-colors duration-300 z-30"
         >
           <div className="relative">
             <svg

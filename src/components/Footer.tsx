@@ -33,14 +33,17 @@ export default function Footer() {
               「烘茶源」致力於傳承中國千年茶文化，結合現代創新工藝，為您呈現獨一無二的品茶體驗。我們堅持從源頭把控品質，精選全球優質茶葉，讓每一滴茶湯都散發著大自然的芬芳與匠人的心意。
             </p>
             <div className="flex space-x-4">
-              <a href="#" className="text-emerald-300 hover:text-white transition-colors">
-                <i className="fab fa-facebook-f"></i> {/* Replace with actual icons */}
+              <a href="https://www.facebook.com/hkteafactory/" target="_blank" rel="noopener noreferrer" title="Facebook" className="hover:text-white">
+                <Image src="/social-icons/facebook.svg" alt="Facebook" width={28} height={28} className="w-7 h-7" />
               </a>
-              <a href="#" className="text-emerald-300 hover:text-white transition-colors">
-                <i className="fab fa-instagram"></i>
+              <a href="https://www.youtube.com/@hongkongteafactory" target="_blank" rel="noopener noreferrer" title="YouTube" className="hover:text-white">
+                <Image src="/social-icons/youtube.svg" alt="YouTube" width={28} height={28} className="w-7 h-7" />
               </a>
-              <a href="#" className="text-emerald-300 hover:text-white transition-colors">
-                <i className="fab fa-wechat"></i>
+              <a href="https://www.xiaohongshu.com/user/profile/65301554000000002a018aec?xhsshare=CopyLink&appuid=65301554000000002a018aec&apptime=1712463690" target="_blank" rel="noopener noreferrer" title="小紅書" className="hover:text-white">
+                <Image src="/social-icons/xiaohongshu.svg" alt="小紅書" width={28} height={28} className="w-7 h-7" />
+              </a>
+              <a href="https://www.instagram.com/hkteafactory/" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:text-white">
+                <Image src="/social-icons/instagram.svg" alt="Instagram" width={28} height={28} className="w-7 h-7" />
               </a>
             </div>
           </div>
@@ -71,7 +74,7 @@ export default function Footer() {
           <div>
             <h3 className="text-lg font-semibold text-white mb-5">聯絡我們</h3>
             <ul className="space-y-3 text-emerald-200 text-sm">
-              <li><i className="fas fa-map-marker-alt mr-2"></i> 香港九龍灣臨興街19號同力工業中心B座1樓11室</li>
+              <li><i className="fas fa-map-marker-alt mr-2"></i> 香港尖沙咀金巴利道74-76號奇盛中心16樓B室<br/>Flat B, 16/F, Kee Shing Centre, 74-76 Kimberley Road, Tsim Sha Tsui, Hong Kong</li>
               <li><i className="fas fa-phone-alt mr-2"></i> +852 2321 0288</li>
               <li><i className="fas fa-envelope mr-2"></i> info@hkteafactory.com</li>
               <li><i className="fas fa-clock mr-2"></i> 週一至週五：上午9時至下午6時</li>
@@ -79,7 +82,35 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-emerald-700 pt-8 text-center">
+        {/* Google Maps for Sales Point and Office */}
+        <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
+          <div className="flex-1 min-w-[260px]">
+            <div className="font-semibold text-emerald-200 mb-2">銷售點</div>
+            <iframe
+              src="https://www.google.com/maps?q=又一城TASTE&output=embed"
+              width="100%"
+              height="220"
+              style={{ border: 0, borderRadius: '12px', marginBottom: '1rem' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+          <div className="flex-1 min-w-[260px]">
+            <div className="font-semibold text-emerald-200 mb-2">辦公室</div>
+            <iframe
+              src="https://www.google.com/maps?q=Kee+Shing+Centre,+74-76+Kimberley+Road,+Tsim+Sha+Tsui&output=embed"
+              width="100%"
+              height="220"
+              style={{ border: 0, borderRadius: '12px' }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
+        {/* Copyright at the very bottom */}
+        <div className="pt-8 text-center">
           <p className="text-emerald-300 text-sm">&copy; {new Date().getFullYear()} 烘茶源. 版權所有.</p>
         </div>
       </div>

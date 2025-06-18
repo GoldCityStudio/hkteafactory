@@ -92,7 +92,8 @@ export default function CompanyInfoPage() {
                 <div className="space-y-4">
                   <p className="text-gray-600">
                     <span className="font-semibold text-gray-900">地址：</span>
-                    香港中環德輔道中123號
+                    香港尖沙咀金巴利道74-76號奇盛中心16樓B室<br/>
+                    Flat B, 16/F, Kee Shing Centre, 74-76 Kimberley Road, Tsim Sha Tsui, Hong Kong
                   </p>
                   <p className="text-gray-600">
                     <span className="font-semibold text-gray-900">電話：</span>
@@ -117,6 +118,34 @@ export default function CompanyInfoPage() {
                 </div>
               </div>
             </motion.div>
+
+            {/* Google Maps for Sales Point and Office */}
+            <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
+              <div className="flex-1 min-w-[260px]">
+                <div className="font-semibold text-emerald-700 mb-2">銷售點</div>
+                <iframe
+                  src="https://www.google.com/maps?q=又一城TASTE&output=embed"
+                  width="100%"
+                  height="220"
+                  style={{ border: 0, borderRadius: '12px', marginBottom: '1rem' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+              <div className="flex-1 min-w-[260px]">
+                <div className="font-semibold text-emerald-700 mb-2">辦公室</div>
+                <iframe
+                  src="https://www.google.com/maps?q=Kee+Shing+Centre,+74-76+Kimberley+Road,+Tsim+Sha+Tsui&output=embed"
+                  width="100%"
+                  height="220"
+                  style={{ border: 0, borderRadius: '12px' }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            </div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
