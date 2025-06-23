@@ -14,6 +14,7 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     domains: ['images.unsplash.com'],
+    unoptimized: false,
   },
   // Enable React strict mode for better development experience
   reactStrictMode: true,
@@ -21,7 +22,7 @@ const nextConfig = {
   webpack: (config, { isServer }) => {
     // Optimize video loading
     config.module.rules.push({
-      test: /\.(mov|mp4)$/i,
+      test: /\.(mov|mp4|webm)$/i,
       type: 'asset/resource',
       generator: {
         filename: 'static/media/[name][ext]'
@@ -71,10 +72,30 @@ const nextConfig = {
             key: 'Accept-Ranges',
             value: 'bytes',
           },
+          {
+            key: 'Content-Type',
+            value: 'video/mp4',
+          },
+        ],
+      },
+      {
+        source: '/images/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
         ],
       },
     ];
   },
+  // Experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['framer-motion'],
+  },
+  // Output configuration for better static optimization
+  output: 'standalone',
 };
 
 module.exports = nextConfig

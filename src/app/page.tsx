@@ -522,6 +522,8 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
 function VideoCarousel() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
   const router = useRouter();
@@ -556,8 +558,25 @@ function VideoCarousel() {
     }
   };
 
+  const handleUserInteraction = () => {
+    setHasUserInteracted(true);
+    // Try to play video after user interaction
+    if (videoRef.current) {
+      videoRef.current.play().catch((e) => {
+        console.error('Video play failed after user interaction:', e);
+        setVideoError(true);
+      });
+    }
+    if (backgroundVideoRef.current) {
+      backgroundVideoRef.current.play().catch((e) => {
+        console.error('Background video play failed after user interaction:', e);
+      });
+    }
+  };
+
   const loadNextVideo = () => {
     setIsVideoLoaded(false);
+    setVideoError(false);
     setCurrentVideo((prev) => (prev + 1) % videos.length);
   };
 
@@ -568,14 +587,19 @@ function VideoCarousel() {
 
     const handleVideoLoad = () => {
       setIsVideoLoaded(true);
-      video.play().catch((e) => {
-        console.error('Video play failed, switching to fallback:', e);
-      });
-      console.log('Video loaded and playing:', videos[currentVideo].src);
+      // Only try to autoplay if user has interacted or if we're in a development environment
+      if (hasUserInteracted || process.env.NODE_ENV === 'development') {
+        video.play().catch((e) => {
+          console.error('Video play failed, switching to fallback:', e);
+          setVideoError(true);
+        });
+      }
+      console.log('Video loaded:', videos[currentVideo].src);
     };
 
     const handleVideoError = (e: Event) => {
       console.error('Video error, switching to fallback:', e);
+      setVideoError(true);
     };
 
     const handleVideoEnd = () => {
@@ -583,16 +607,10 @@ function VideoCarousel() {
       loadNextVideo();
     };
 
-    // Set up additional event listeners for debugging
-    const handleVideoPlay = () => console.log('Video playing:', videos[currentVideo].src);
-    const handleVideoPause = () => console.log('Video paused:', videos[currentVideo].src);
-
     // Set up event listeners
     video.addEventListener('loadeddata', handleVideoLoad);
     video.addEventListener('error', handleVideoError);
     video.addEventListener('ended', handleVideoEnd);
-    video.addEventListener('play', handleVideoPlay);
-    video.addEventListener('pause', handleVideoPause);
     bgVideo.addEventListener('error', handleVideoError);
 
     // Clean up event listeners
@@ -600,11 +618,19 @@ function VideoCarousel() {
       video.removeEventListener('loadeddata', handleVideoLoad);
       video.removeEventListener('error', handleVideoError);
       video.removeEventListener('ended', handleVideoEnd);
-      video.removeEventListener('play', handleVideoPlay);
-      video.removeEventListener('pause', handleVideoPause);
       bgVideo.removeEventListener('error', handleVideoError);
     };
-  }, [currentVideo]);
+  }, [currentVideo, hasUserInteracted]);
+
+  // Auto-advance videos every 8 seconds if no user interaction
+  useEffect(() => {
+    if (!hasUserInteracted) {
+      const interval = setInterval(() => {
+        loadNextVideo();
+      }, 8000);
+      return () => clearInterval(interval);
+    }
+  }, [hasUserInteracted]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden">
@@ -612,55 +638,101 @@ function VideoCarousel() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 backdrop-blur-[10px] bg-black/30">
-            <video
-              ref={backgroundVideoRef}
-              key={`bg-${currentVideo}`}
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="absolute top-0 left-0 w-full h-full object-cover scale-110"
-              style={{ 
-                filter: 'blur(10px)',
-                transform: 'scale(1.1)',
-                transition: 'transform 0.3s ease-out'
-              }}
-            >
-              <source 
-                src={videos[currentVideo].src} 
-                type={videos[currentVideo].type} 
+            {!videoError ? (
+              <video
+                ref={backgroundVideoRef}
+                key={`bg-${currentVideo}`}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="absolute top-0 left-0 w-full h-full object-cover scale-110"
+                style={{ 
+                  filter: 'blur(10px)',
+                  transform: 'scale(1.1)',
+                  transition: 'transform 0.3s ease-out'
+                }}
+              >
+                <source 
+                  src={videos[currentVideo].src} 
+                  type={videos[currentVideo].type} 
+                />
+              </video>
+            ) : (
+              <Image
+                src={videos[currentVideo].fallback}
+                alt="Background"
+                fill
+                className="absolute top-0 left-0 w-full h-full object-cover scale-110"
+                style={{ 
+                  filter: 'blur(10px)',
+                  transform: 'scale(1.1)',
+                  transition: 'transform 0.3s ease-out'
+                }}
+                priority
               />
-            </video>
+            )}
           </div>
         </div>
       </div>
 
       {/* Video/Image Overlay */}
       <div className="absolute inset-0 z-10">
-        <video
-          ref={videoRef}
-          key={`video-${currentVideo}`}
-          autoPlay
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover"
-          style={{
-            transform: 'scale(0.8)',
-            transition: 'transform 0.3s ease-out'
-          }}
-        >
-          <source 
-            src={videos[currentVideo].src} 
-            type={videos[currentVideo].type} 
+        {!videoError ? (
+          <video
+            ref={videoRef}
+            key={`video-${currentVideo}`}
+            autoPlay
+            muted
+            playsInline
+            preload="metadata"
+            className="absolute top-0 left-0 w-full h-full object-cover"
+            style={{
+              transform: 'scale(0.8)',
+              transition: 'transform 0.3s ease-out'
+            }}
+          >
+            <source 
+              src={videos[currentVideo].src} 
+              type={videos[currentVideo].type} 
+            />
+            您的瀏覽器不支持視頻播放。
+          </video>
+        ) : (
+          <Image
+            src={videos[currentVideo].fallback}
+            alt="Hero"
+            fill
+            className="absolute top-0 left-0 w-full h-full object-cover"
+            style={{
+              transform: 'scale(0.8)',
+              transition: 'transform 0.3s ease-out'
+            }}
+            priority
           />
-          您的瀏覽器不支持視頻播放。
-        </video>
+        )}
       </div>
 
       {/* Loading Indicator */}
-      {!isVideoLoaded && (
+      {!isVideoLoaded && !videoError && (
         <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50">
           <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+        </div>
+      )}
+
+      {/* Play Button for User Interaction */}
+      {!hasUserInteracted && !videoError && (
+        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/30">
+          <button
+            onClick={handleUserInteraction}
+            className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 flex items-center gap-3"
+          >
+            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
+            </svg>
+            點擊播放視頻
+          </button>
         </div>
       )}
 
