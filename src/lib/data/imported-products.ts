@@ -36,8 +36,8 @@ export const importedProducts: Product[] = [
     ],
     "isNew": true,
     "isFeatured": true,
-    "createdAt": "2025-06-25T11:29:33.724Z",
-    "updatedAt": "2025-06-25T11:29:33.724Z"
+    "createdAt": new Date("2025-06-25T11:29:33.724Z"),
+    "updatedAt": new Date("2025-06-25T11:29:33.724Z")
   },
   {
     "id": "tieguanyin-premium",
@@ -71,8 +71,8 @@ export const importedProducts: Product[] = [
     ],
     "isNew": false,
     "isFeatured": true,
-    "createdAt": "2025-06-25T11:29:33.725Z",
-    "updatedAt": "2025-06-25T11:29:33.725Z"
+    "createdAt": new Date("2025-06-25T11:29:33.725Z"),
+    "updatedAt": new Date("2025-06-25T11:29:33.725Z")
   },
   {
     "id": "honey-premium",
@@ -106,8 +106,8 @@ export const importedProducts: Product[] = [
     ],
     "isNew": true,
     "isFeatured": false,
-    "createdAt": "2025-06-25T11:29:33.726Z",
-    "updatedAt": "2025-06-25T11:29:33.726Z"
+    "createdAt": new Date("2025-06-25T11:29:33.726Z"),
+    "updatedAt": new Date("2025-06-25T11:29:33.726Z")
   }
 ];
 
