@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile } from 'fs/promises';
 import { join } from 'path';
 import { importProducts } from '../../../../scripts/import-products';
+import { excelToCsv } from '../../../../scripts/excel-to-csv';
+import fs from 'fs';
 
 export async function POST(request: NextRequest) {
   try {
@@ -49,9 +51,8 @@ export async function POST(request: NextRequest) {
     // Ensure temp directory exists
     try {
       await writeFile(tempFilePath, buffer);
-    } catch (error) {
+    } catch {
       // Create temp directory if it doesn't exist
-      const fs = require('fs');
       if (!fs.existsSync(tempDir)) {
         fs.mkdirSync(tempDir, { recursive: true });
       }
@@ -65,14 +66,12 @@ export async function POST(request: NextRequest) {
       products = await importProducts(tempFilePath);
     } else {
       // Excel file - convert to CSV first
-      const { excelToCsv } = require('../../../../scripts/excel-to-csv');
       const csvPath = tempFilePath.replace(/\.(xlsx|xls)$/, '.csv');
       await excelToCsv(tempFilePath, csvPath);
       products = await importProducts(csvPath);
     }
 
     // Clean up temporary files
-    const fs = require('fs');
     try {
       fs.unlinkSync(tempFilePath);
       if (tempFilePath !== tempFilePath.replace(/\.(xlsx|xls)$/, '.csv')) {

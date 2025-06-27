@@ -1,9 +1,9 @@
 'use client';
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
 
@@ -850,44 +850,46 @@ function ProductGrid({ products }: { products: Product[] }) {
 }
 
 export default function BlackTeaPage() {
-  const [language, setLanguage] = useState<Language>('en');
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
+  const [language] = useState<Language>('zh');
+  const { heroSection, products } = content[language];
 
   return (
-    <main className="min-h-screen">
-      <motion.div
-        style={{ opacity, scale }}
-        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+    <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative h-96 flex items-center justify-center overflow-hidden"
       >
-        <FloatingLeaf
-          className="top-1/4 left-1/4"
-          color={content[language].heroSection.leafColor}
+        <Image
+          src={heroSection.bgImage}
+          alt="Black Tea Hero"
+          fill
+          priority
+          className="object-cover opacity-70"
         />
-        <FloatingLeaf
-          className="top-1/3 right-1/4"
-          color={content[language].heroSection.leafColor}
-          opacity={0.2}
-        />
-        <FloatingLeaf
-          className="bottom-1/4 left-1/3"
-          color={content[language].heroSection.leafColor}
-          opacity={0.15}
-        />
-      </motion.div>
-
-      <HeroSection section={content[language].heroSection} />
-
-      <section id="products" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            {language === 'en' ? 'Our Black Tea Collection' : '我們的紅茶系列'}
-          </h2>
-          <ProductGrid products={content[language].products} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-red-900/60 to-transparent z-10" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-20 text-center text-white p-4"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+            {heroSection.headline}
+          </h1>
+          <p className="text-xl md:text-2xl font-light opacity-90">
+            {heroSection.subheadline}
+          </p>
+        </motion.div>
+      </motion.section>
+      
+      {/* Products Section */}
+      <section id="products">
+        <ProductGrid products={products} />
       </section>
-    </main>
+    </div>
   );
 } 
  
