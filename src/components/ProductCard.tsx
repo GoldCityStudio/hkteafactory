@@ -60,12 +60,20 @@ export default function ProductCard({ product, language }: { product: ProductTyp
 
   const imageSrc = imgError ? getPlaceholderImage(product.name[language]) : product.thumbnail;
 
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('zh-HK', {
+      style: 'currency',
+      currency: 'HKD',
+      minimumFractionDigits: 0,
+    }).format(price);
+  };
+
   const handleAddToCart = () => {
     addItem({
       id: product.id,
       name: product.name[language],
       desc: product.description[language],
-      price: product.price.toString(),
+      price: formatPrice(product.price),
       img: product.thumbnail
     });
   };
@@ -131,11 +139,11 @@ export default function ProductCard({ product, language }: { product: ProductTyp
             <div className="flex flex-col">
               {product.originalPrice ? (
                 <div className="flex items-center gap-2">
-                  <span className="text-red-600 font-medium text-lg">{product.price}</span>
-                  <span className="text-gray-400 line-through text-sm">{product.originalPrice}</span>
+                  <span className="text-red-600 font-medium text-lg">{formatPrice(product.price)}</span>
+                  <span className="text-gray-400 line-through text-sm">{formatPrice(product.originalPrice)}</span>
                 </div>
               ) : (
-                <span className="text-emerald-600 font-medium text-lg">{product.price}</span>
+                <span className="text-emerald-600 font-medium text-lg">{formatPrice(product.price)}</span>
               )}
               {product.specifications.weight && (
                 <span className="text-gray-500 text-xs mt-1">/ {product.specifications.weight}</span>

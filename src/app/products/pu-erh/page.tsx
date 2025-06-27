@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -29,73 +30,349 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'sheng-pu-erh',
-        name: { zh: '生普洱', en: 'Raw Pu-erh' },
-        description: { zh: '雲南大葉種曬青毛茶為原料，自然發酵', en: 'Made from Yunnan large-leaf sun-dried green tea, naturally fermented' },
-        price: 250,
+        id: 'premium-raw-puerh',
+        name: { zh: '特級生普洱', en: 'Premium Raw Pu-erh Tea' },
+        description: { zh: '特級生普洱，清香持久，滋味醇厚', en: 'Premium Raw Pu-erh Tea, lasting fresh aroma, mellow flavor' },
+        price: 588,
         originalPrice: undefined,
-        thumbnail: '/images/sheng-pu-erh.jpg',
-        images: ['/images/sheng-pu-erh.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '357g',
+          weight: '250g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: true
+      },
+      {
+        id: 'superior-raw-puerh',
+        name: { zh: '一級生普洱', en: 'Superior Raw Pu-erh Tea' },
+        description: { zh: '一級生普洱，品質優良，香氣持久', en: 'Superior Raw Pu-erh Tea, excellent quality, lasting aroma' },
+        price: 388,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
-        isFeatured: true
+        isFeatured: false
       },
       {
-        id: 'shou-pu-erh',
-        name: { zh: '熟普洱', en: 'Ripe Pu-erh' },
-        description: { zh: '經過人工渥堆發酵，滋味醇厚', en: 'Artificially fermented, mellow and rich flavor' },
-        price: 200,
+        id: 'raw-puerh-small',
+        name: { zh: '生普洱', en: 'Raw Pu-erh Tea' },
+        description: { zh: '生普洱小包裝，方便攜帶', en: 'Raw Pu-erh Tea, convenient small package' },
+        price: 128,
         originalPrice: undefined,
-        thumbnail: '/images/shou-pu-erh.jpg',
-        images: ['/images/shou-pu-erh.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-ripe-puerh',
+        name: { zh: '特級熟普洱', en: 'Premium Ripe Pu-erh Tea' },
+        description: { zh: '特級熟普洱，陳香濃郁，滋味醇厚', en: 'Premium Ripe Pu-erh Tea, rich aged aroma, mellow flavor' },
+        price: 468,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-ripe-puerh',
+        name: { zh: '一級熟普洱', en: 'Superior Ripe Pu-erh Tea' },
+        description: { zh: '一級熟普洱，陳香持久，回甘明顯', en: 'Superior Ripe Pu-erh Tea, lasting aged aroma, obvious aftertaste' },
+        price: 318,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe'],
+        isFeatured: false
+      },
+      {
+        id: 'ripe-puerh-small',
+        name: { zh: '熟普洱', en: 'Ripe Pu-erh Tea' },
+        description: { zh: '熟普洱小包裝，方便攜帶', en: 'Ripe Pu-erh Tea, convenient small package' },
+        price: 108,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-aged-puerh',
+        name: { zh: '特級陳年普洱', en: 'Premium Aged Pu-erh Tea' },
+        description: { zh: '特級陳年普洱，陳香濃郁，滋味醇厚', en: 'Premium Aged Pu-erh Tea, rich aged aroma, mellow flavor' },
+        price: 888,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-aged-puerh',
+        name: { zh: '一級陳年普洱', en: 'Superior Aged Pu-erh Tea' },
+        description: { zh: '一級陳年普洱，陳香持久，回甘明顯', en: 'Superior Aged Pu-erh Tea, lasting aged aroma, obvious aftertaste' },
+        price: 588,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged'],
+        isFeatured: false
+      },
+      {
+        id: 'aged-puerh-small',
+        name: { zh: '陳年普洱', en: 'Aged Pu-erh Tea' },
+        description: { zh: '陳年普洱小包裝，方便攜帶', en: 'Aged Pu-erh Tea, convenient small package' },
+        price: 168,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-cake-puerh',
+        name: { zh: '特級普洱餅茶', en: 'Premium Pu-erh Cake Tea' },
+        description: { zh: '特級普洱餅茶，餅形完整，香氣濃郁', en: 'Premium Pu-erh Cake Tea, complete cake shape, rich aroma' },
+        price: 688,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
           weight: '357g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
-        stock: 45,
+        stock: 20,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['cake'],
         isFeatured: false
       },
       {
-        id: 'lao-ban-zhang',
-        name: { zh: '老班章普洱', en: 'Lao Ban Zhang Pu-erh' },
-        description: { zh: '普洱茶之王，茶氣強勁，回甘持久', en: 'King of Pu-erh tea, strong tea energy, lasting aftertaste' },
-        price: 500,
+        id: 'superior-cake-puerh',
+        name: { zh: '一級普洱餅茶', en: 'Superior Pu-erh Cake Tea' },
+        description: { zh: '一級普洱餅茶，餅形完整，香氣持久', en: 'Superior Pu-erh Cake Tea, complete cake shape, lasting aroma' },
+        price: 468,
         originalPrice: undefined,
-        thumbnail: '/images/lao-ban-zhang.jpg',
-        images: ['/images/lao-ban-zhang.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '200g',
+          weight: '357g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
-        stock: 15,
+        stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['cake'],
         isFeatured: false
+      },
+      {
+        id: 'premium-tuo-puerh',
+        name: { zh: '特級普洱沱茶', en: 'Premium Pu-erh Tuo Tea' },
+        description: { zh: '特級普洱沱茶，沱形完整，香氣濃郁', en: 'Premium Pu-erh Tuo Tea, complete tuo shape, rich aroma' },
+        price: 428,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tuo'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-tuo-puerh',
+        name: { zh: '一級普洱沱茶', en: 'Superior Pu-erh Tuo Tea' },
+        description: { zh: '一級普洱沱茶，沱形完整，香氣持久', en: 'Superior Pu-erh Tuo Tea, complete tuo shape, lasting aroma' },
+        price: 298,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tuo'],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-aged-puerh',
+        name: { zh: '稀有特級陳年普洱', en: 'Rare Premium Aged Pu-erh Tea' },
+        description: { zh: '稀有特級陳年普洱，極品中的極品', en: 'Rare Premium Aged Pu-erh Tea, the finest of the finest' },
+        price: 6800,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium', 'aged'],
+        isFeatured: true
+      },
+      {
+        id: 'rare-premium-cake-puerh',
+        name: { zh: '稀有特級普洱餅茶', en: 'Rare Premium Pu-erh Cake Tea' },
+        description: { zh: '稀有特級普洱餅茶，極品普洱餅茶', en: 'Rare Premium Pu-erh Cake Tea, premium quality' },
+        price: 4800,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '357g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium', 'cake'],
+        isFeatured: true
       }
     ]
   },
@@ -110,73 +387,349 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'sheng-pu-erh',
-        name: { zh: '生普洱', en: 'Raw Pu-erh' },
-        description: { zh: '雲南大葉種曬青毛茶為原料，自然發酵', en: 'Made from Yunnan large-leaf sun-dried green tea, naturally fermented' },
-        price: 250,
+        id: 'premium-raw-puerh',
+        name: { zh: '特級生普洱', en: 'Premium Raw Pu-erh Tea' },
+        description: { zh: '特級生普洱，清香持久，滋味醇厚', en: 'Premium Raw Pu-erh Tea, lasting fresh aroma, mellow flavor' },
+        price: 588,
         originalPrice: undefined,
-        thumbnail: '/images/sheng-pu-erh.jpg',
-        images: ['/images/sheng-pu-erh.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '357g',
+          weight: '250g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: true
+      },
+      {
+        id: 'superior-raw-puerh',
+        name: { zh: '一級生普洱', en: 'Superior Raw Pu-erh Tea' },
+        description: { zh: '一級生普洱，品質優良，香氣持久', en: 'Superior Raw Pu-erh Tea, excellent quality, lasting aroma' },
+        price: 388,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
-        isFeatured: true
+        isFeatured: false
       },
       {
-        id: 'shou-pu-erh',
-        name: { zh: '熟普洱', en: 'Ripe Pu-erh' },
-        description: { zh: '經過人工渥堆發酵，滋味醇厚', en: 'Artificially fermented, mellow and rich flavor' },
-        price: 200,
+        id: 'raw-puerh-small',
+        name: { zh: '生普洱', en: 'Raw Pu-erh Tea' },
+        description: { zh: '生普洱小包裝，方便攜帶', en: 'Raw Pu-erh Tea, convenient small package' },
+        price: 128,
         originalPrice: undefined,
-        thumbnail: '/images/shou-pu-erh.jpg',
-        images: ['/images/shou-pu-erh.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-ripe-puerh',
+        name: { zh: '特級熟普洱', en: 'Premium Ripe Pu-erh Tea' },
+        description: { zh: '特級熟普洱，陳香濃郁，滋味醇厚', en: 'Premium Ripe Pu-erh Tea, rich aged aroma, mellow flavor' },
+        price: 468,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-ripe-puerh',
+        name: { zh: '一級熟普洱', en: 'Superior Ripe Pu-erh Tea' },
+        description: { zh: '一級熟普洱，陳香持久，回甘明顯', en: 'Superior Ripe Pu-erh Tea, lasting aged aroma, obvious aftertaste' },
+        price: 318,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe'],
+        isFeatured: false
+      },
+      {
+        id: 'ripe-puerh-small',
+        name: { zh: '熟普洱', en: 'Ripe Pu-erh Tea' },
+        description: { zh: '熟普洱小包裝，方便攜帶', en: 'Ripe Pu-erh Tea, convenient small package' },
+        price: 108,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['ripe', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-aged-puerh',
+        name: { zh: '特級陳年普洱', en: 'Premium Aged Pu-erh Tea' },
+        description: { zh: '特級陳年普洱，陳香濃郁，滋味醇厚', en: 'Premium Aged Pu-erh Tea, rich aged aroma, mellow flavor' },
+        price: 888,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-aged-puerh',
+        name: { zh: '一級陳年普洱', en: 'Superior Aged Pu-erh Tea' },
+        description: { zh: '一級陳年普洱，陳香持久，回甘明顯', en: 'Superior Aged Pu-erh Tea, lasting aged aroma, obvious aftertaste' },
+        price: 588,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged'],
+        isFeatured: false
+      },
+      {
+        id: 'aged-puerh-small',
+        name: { zh: '陳年普洱', en: 'Aged Pu-erh Tea' },
+        description: { zh: '陳年普洱小包裝，方便攜帶', en: 'Aged Pu-erh Tea, convenient small package' },
+        price: 168,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['aged', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-cake-puerh',
+        name: { zh: '特級普洱餅茶', en: 'Premium Pu-erh Cake Tea' },
+        description: { zh: '特級普洱餅茶，餅形完整，香氣濃郁', en: 'Premium Pu-erh Cake Tea, complete cake shape, rich aroma' },
+        price: 688,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
           weight: '357g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
-        stock: 45,
+        stock: 20,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['cake'],
         isFeatured: false
       },
       {
-        id: 'lao-ban-zhang',
-        name: { zh: '老班章普洱', en: 'Lao Ban Zhang Pu-erh' },
-        description: { zh: '普洱茶之王，茶氣強勁，回甘持久', en: 'King of Pu-erh tea, strong tea energy, lasting aftertaste' },
-        price: 500,
+        id: 'superior-cake-puerh',
+        name: { zh: '一級普洱餅茶', en: 'Superior Pu-erh Cake Tea' },
+        description: { zh: '一級普洱餅茶，餅形完整，香氣持久', en: 'Superior Pu-erh Cake Tea, complete cake shape, lasting aroma' },
+        price: 468,
         originalPrice: undefined,
-        thumbnail: '/images/lao-ban-zhang.jpg',
-        images: ['/images/lao-ban-zhang.jpg'],
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
         category: 'pu-erh',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '200g',
+          weight: '357g',
           origin: 'Yunnan, China',
-          storage: 'Store in a cool, dry, well-ventilated place',
+          storage: 'Store in a cool, dry place',
           expiryDate: 'Long-term aging'
         },
-        stock: 15,
+        stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['cake'],
         isFeatured: false
+      },
+      {
+        id: 'premium-tuo-puerh',
+        name: { zh: '特級普洱沱茶', en: 'Premium Pu-erh Tuo Tea' },
+        description: { zh: '特級普洱沱茶，沱形完整，香氣濃郁', en: 'Premium Pu-erh Tuo Tea, complete tuo shape, rich aroma' },
+        price: 428,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tuo'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-tuo-puerh',
+        name: { zh: '一級普洱沱茶', en: 'Superior Pu-erh Tuo Tea' },
+        description: { zh: '一級普洱沱茶，沱形完整，香氣持久', en: 'Superior Pu-erh Tuo Tea, complete tuo shape, lasting aroma' },
+        price: 298,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tuo'],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-aged-puerh',
+        name: { zh: '稀有特級陳年普洱', en: 'Rare Premium Aged Pu-erh Tea' },
+        description: { zh: '稀有特級陳年普洱，極品中的極品', en: 'Rare Premium Aged Pu-erh Tea, the finest of the finest' },
+        price: 6800,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium', 'aged'],
+        isFeatured: true
+      },
+      {
+        id: 'rare-premium-cake-puerh',
+        name: { zh: '稀有特級普洱餅茶', en: 'Rare Premium Pu-erh Cake Tea' },
+        description: { zh: '稀有特級普洱餅茶，極品普洱餅茶', en: 'Rare Premium Pu-erh Cake Tea, premium quality' },
+        price: 4800,
+        originalPrice: undefined,
+        thumbnail: '/images/dark-tea.jpg',
+        images: ['/images/dark-tea.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '357g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: 'Long-term aging'
+        },
+        stock: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium', 'cake'],
+        isFeatured: true
       }
     ]
   }
@@ -259,36 +812,14 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
     <div className="container mx-auto px-4 py-16">
       <h2 className="text-3xl font-bold text-center mb-12">精選產品</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
-          <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="relative h-64">
-              <Image
-                src={product.thumbnail}
-                alt={product.name.zh}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">{product.name.zh}</h3>
-              <p className="text-gray-600 mb-4">{product.description.zh}</p>
-              <div className="flex justify-between items-center">
-                <div>
-                  <span className="text-2xl font-bold text-darkgreen-900">${product.price}</span>
-                  {product.originalPrice && (
-                    <span className="ml-2 text-gray-500 line-through">${product.originalPrice}</span>
-                  )}
-                </div>
-                <button className="bg-darkgreen-900 text-white px-4 py-2 rounded-full hover:bg-opacity-90 transition-all">
-                  加入購物車
-                </button>
-              </div>
-            </div>
-          </div>
+          <ProductCard key={product.id} product={product} language={language} />
         ))}
       </div>
     </div>
@@ -302,104 +833,12 @@ export default function PuErhPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
       {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0, y: -50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="relative h-96 flex items-center justify-center overflow-hidden"
-      >
-        <Image
-          src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=2070"
-          alt="Pu-erh Tea Hero"
-          fill
-          priority
-          className="object-cover opacity-70"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent z-10" />
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="relative z-20 text-center text-white p-4"
-        >
-          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
-            普洱茶
-          </h1>
-          <p className="text-xl md:text-2xl font-light opacity-90">
-            醇厚濃郁，回味無窮
-          </p>
-        </motion.div>
-      </motion.section>
-
-      <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white p-8 rounded-lg shadow-xl"
-        >
-          <div className="space-y-8 text-lg text-gray-700 leading-relaxed">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              普洱茶以其獨特的發酵工藝和豐富的口感層次而聞名。我們的普洱茶精選來自各大名茶產區的優質茶葉，為您帶來最純正的普洱茶體驗。
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            >
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">產品特色</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>
-                    <span className="font-semibold text-gray-900">嚴選茶葉：</span>
-                    精選各大名茶產區的優質茶葉
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">傳統工藝：</span>
-                    採用傳統製茶工藝，保留茶葉原味
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">品質保證：</span>
-                    嚴格把控每個環節，確保茶葉品質
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">多樣選擇：</span>
-                    提供多種普洱茶品種，滿足不同口味需求
-                  </li>
-                </ul>
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
-                  alt="Pu-erh Tea Collection"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              className="text-center mt-12"
-            >
-              <p className="font-semibold text-xl text-emerald-700 mb-4">
-                立即選購，體驗「烘茶源」的優質普洱茶！
-              </p>
-              <p className="text-lg text-gray-600">
-                電話：(852) 1234 5678 | 電郵：info@hkteafactory.com
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
+      <HeroSection section={heroSection} />
+      
+      {/* Products Section */}
+      <section id="products">
+        <ProductGrid products={products} />
+      </section>
     </div>
   );
 } 

@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -29,64 +30,133 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'rose-tea',
-        name: { zh: '玫瑰花茶', en: 'Rose Tea' },
-        description: { zh: '美容養顏，芳香怡人', en: 'Beauty and relaxation, pleasant aroma' },
-        price: 90,
+        id: 'premium-jasmine-pearl',
+        name: { zh: '特級茉莉花茶', en: 'Premium Jasmine Pearl Tea' },
+        description: { zh: '特級茉莉花茶，花香濃郁，滋味醇厚', en: 'Premium Jasmine Pearl Tea, rich floral aroma, mellow flavor' },
+        price: 318,
         originalPrice: undefined,
-        thumbnail: '/images/rose-tea.jpg',
-        images: ['/images/rose-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'China',
           storage: 'Store in a cool, dry place',
-          expiryDate: '18 months'
+          expiryDate: '24 months'
         },
-        stock: 70,
+        stock: 25,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['premium'],
         isFeatured: true
       },
       {
-        id: 'chrysanthemum-tea',
-        name: { zh: '胎菊王', en: 'Emperor Chrysanthemum Tea' },
-        description: { zh: '清熱解毒，明目養肝', en: 'Detoxifying, vision and liver nourishing' },
-        price: 80,
+        id: 'superior-jasmine-pearl',
+        name: { zh: '一級茉莉花茶', en: 'Superior Jasmine Pearl Tea' },
+        description: { zh: '一級茉莉花茶，品質優良，香氣持久', en: 'Superior Jasmine Pearl Tea, excellent quality, lasting aroma' },
+        price: 218,
         originalPrice: undefined,
-        thumbnail: '/images/chrysanthemum-tea.jpg',
-        images: ['/images/chrysanthemum-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'China',
           storage: 'Store in a cool, dry place',
-          expiryDate: '18 months'
+          expiryDate: '24 months'
         },
-        stock: 65,
+        stock: 35,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
       },
       {
-        id: 'jasmine-tea',
-        name: { zh: '茉莉花茶', en: 'Jasmine Tea' },
-        description: { zh: '香氣清幽，提神醒腦', en: 'Elegant aroma, refreshing and invigorating' },
-        price: 100,
+        id: 'jasmine-pearl-small',
+        name: { zh: '茉莉花茶', en: 'Jasmine Pearl Tea' },
+        description: { zh: '茉莉花茶小包裝，方便攜帶', en: 'Jasmine Pearl Tea, convenient small package' },
+        price: 98,
         originalPrice: undefined,
-        thumbnail: '/images/jasmine-tea.jpg',
-        images: ['/images/jasmine-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '70g (10x7g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-osmanthus',
+        name: { zh: '特級桂花茶', en: 'Premium Osmanthus Tea' },
+        description: { zh: '特級桂花茶，桂花香濃郁，滋味醇厚', en: 'Premium Osmanthus Tea, rich osmanthus aroma, mellow flavor' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-osmanthus',
+        name: { zh: '一級桂花茶', en: 'Superior Osmanthus Tea' },
+        description: { zh: '一級桂花茶，桂花香持久，回甘明顯', en: 'Superior Osmanthus Tea, lasting osmanthus aroma, obvious aftertaste' },
+        price: 188,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-small',
+        name: { zh: '桂花茶', en: 'Osmanthus Tea' },
+        description: { zh: '桂花茶小包裝，方便攜帶', en: 'Osmanthus Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
           origin: 'China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -94,7 +164,214 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         stock: 55,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['osmanthus', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-rose-tea',
+        name: { zh: '特級玫瑰花茶', en: 'Premium Rose Tea' },
+        description: { zh: '特級玫瑰花茶，玫瑰香濃郁，滋味醇厚', en: 'Premium Rose Tea, rich rose aroma, mellow flavor' },
+        price: 288,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-rose-tea',
+        name: { zh: '一級玫瑰花茶', en: 'Superior Rose Tea' },
+        description: { zh: '一級玫瑰花茶，玫瑰香持久，回甘明顯', en: 'Superior Rose Tea, lasting rose aroma, obvious aftertaste' },
+        price: 198,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose'],
+        isFeatured: false
+      },
+      {
+        id: 'rose-tea-small',
+        name: { zh: '玫瑰花茶', en: 'Rose Tea' },
+        description: { zh: '玫瑰花茶小包裝，方便攜帶', en: 'Rose Tea, convenient small package' },
+        price: 98,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-chrysanthemum',
+        name: { zh: '特級菊花茶', en: 'Premium Chrysanthemum Tea' },
+        description: { zh: '特級菊花茶，菊花香濃郁，滋味醇厚', en: 'Premium Chrysanthemum Tea, rich chrysanthemum aroma, mellow flavor' },
+        price: 248,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-chrysanthemum',
+        name: { zh: '一級菊花茶', en: 'Superior Chrysanthemum Tea' },
+        description: { zh: '一級菊花茶，菊花香持久，回甘明顯', en: 'Superior Chrysanthemum Tea, lasting chrysanthemum aroma, obvious aftertaste' },
+        price: 168,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum'],
+        isFeatured: false
+      },
+      {
+        id: 'chrysanthemum-small',
+        name: { zh: '菊花茶', en: 'Chrysanthemum Tea' },
+        description: { zh: '菊花茶小包裝，方便攜帶', en: 'Chrysanthemum Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-lavender',
+        name: { zh: '特級薰衣草茶', en: 'Premium Lavender Tea' },
+        description: { zh: '特級薰衣草茶，薰衣草香濃郁，滋味醇厚', en: 'Premium Lavender Tea, rich lavender aroma, mellow flavor' },
+        price: 228,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-lavender',
+        name: { zh: '一級薰衣草茶', en: 'Superior Lavender Tea' },
+        description: { zh: '一級薰衣草茶，薰衣草香持久，回甘明顯', en: 'Superior Lavender Tea, lasting lavender aroma, obvious aftertaste' },
+        price: 158,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender'],
+        isFeatured: false
+      },
+      {
+        id: 'lavender-small',
+        name: { zh: '薰衣草茶', en: 'Lavender Tea' },
+        description: { zh: '薰衣草茶小包裝，方便攜帶', en: 'Lavender Tea, convenient small package' },
+        price: 78,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender', 'small-package'],
         isFeatured: false
       }
     ]
@@ -110,64 +387,133 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'rose-tea',
-        name: { zh: '玫瑰花茶', en: 'Rose Tea' },
-        description: { zh: '美容養顏，芳香怡人', en: 'Beauty and relaxation, pleasant aroma' },
-        price: 90,
+        id: 'premium-jasmine-pearl',
+        name: { zh: '特級茉莉花茶', en: 'Premium Jasmine Pearl Tea' },
+        description: { zh: '特級茉莉花茶，花香濃郁，滋味醇厚', en: 'Premium Jasmine Pearl Tea, rich floral aroma, mellow flavor' },
+        price: 318,
         originalPrice: undefined,
-        thumbnail: '/images/rose-tea.jpg',
-        images: ['/images/rose-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'China',
           storage: 'Store in a cool, dry place',
-          expiryDate: '18 months'
+          expiryDate: '24 months'
         },
-        stock: 70,
+        stock: 25,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['premium'],
         isFeatured: true
       },
       {
-        id: 'chrysanthemum-tea',
-        name: { zh: '胎菊王', en: 'Emperor Chrysanthemum Tea' },
-        description: { zh: '清熱解毒，明目養肝', en: 'Detoxifying, vision and liver nourishing' },
-        price: 80,
+        id: 'superior-jasmine-pearl',
+        name: { zh: '一級茉莉花茶', en: 'Superior Jasmine Pearl Tea' },
+        description: { zh: '一級茉莉花茶，品質優良，香氣持久', en: 'Superior Jasmine Pearl Tea, excellent quality, lasting aroma' },
+        price: 218,
         originalPrice: undefined,
-        thumbnail: '/images/chrysanthemum-tea.jpg',
-        images: ['/images/chrysanthemum-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'China',
           storage: 'Store in a cool, dry place',
-          expiryDate: '18 months'
+          expiryDate: '24 months'
         },
-        stock: 65,
+        stock: 35,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
       },
       {
-        id: 'jasmine-tea',
-        name: { zh: '茉莉花茶', en: 'Jasmine Tea' },
-        description: { zh: '香氣清幽，提神醒腦', en: 'Elegant aroma, refreshing and invigorating' },
-        price: 100,
+        id: 'jasmine-pearl-small',
+        name: { zh: '茉莉花茶', en: 'Jasmine Pearl Tea' },
+        description: { zh: '茉莉花茶小包裝，方便攜帶', en: 'Jasmine Pearl Tea, convenient small package' },
+        price: 98,
         originalPrice: undefined,
-        thumbnail: '/images/jasmine-tea.jpg',
-        images: ['/images/jasmine-tea.jpg'],
+        thumbnail: '/images/jasmine-pearl.jpg',
+        images: ['/images/jasmine-pearl.jpg'],
         category: 'flower-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '70g (10x7g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-osmanthus',
+        name: { zh: '特級桂花茶', en: 'Premium Osmanthus Tea' },
+        description: { zh: '特級桂花茶，桂花香濃郁，滋味醇厚', en: 'Premium Osmanthus Tea, rich osmanthus aroma, mellow flavor' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-osmanthus',
+        name: { zh: '一級桂花茶', en: 'Superior Osmanthus Tea' },
+        description: { zh: '一級桂花茶，桂花香持久，回甘明顯', en: 'Superior Osmanthus Tea, lasting osmanthus aroma, obvious aftertaste' },
+        price: 188,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-small',
+        name: { zh: '桂花茶', en: 'Osmanthus Tea' },
+        description: { zh: '桂花茶小包裝，方便攜帶', en: 'Osmanthus Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
           origin: 'China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -175,7 +521,214 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         stock: 55,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['osmanthus', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-rose-tea',
+        name: { zh: '特級玫瑰花茶', en: 'Premium Rose Tea' },
+        description: { zh: '特級玫瑰花茶，玫瑰香濃郁，滋味醇厚', en: 'Premium Rose Tea, rich rose aroma, mellow flavor' },
+        price: 288,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-rose-tea',
+        name: { zh: '一級玫瑰花茶', en: 'Superior Rose Tea' },
+        description: { zh: '一級玫瑰花茶，玫瑰香持久，回甘明顯', en: 'Superior Rose Tea, lasting rose aroma, obvious aftertaste' },
+        price: 198,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose'],
+        isFeatured: false
+      },
+      {
+        id: 'rose-tea-small',
+        name: { zh: '玫瑰花茶', en: 'Rose Tea' },
+        description: { zh: '玫瑰花茶小包裝，方便攜帶', en: 'Rose Tea, convenient small package' },
+        price: 98,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-chrysanthemum',
+        name: { zh: '特級菊花茶', en: 'Premium Chrysanthemum Tea' },
+        description: { zh: '特級菊花茶，菊花香濃郁，滋味醇厚', en: 'Premium Chrysanthemum Tea, rich chrysanthemum aroma, mellow flavor' },
+        price: 248,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-chrysanthemum',
+        name: { zh: '一級菊花茶', en: 'Superior Chrysanthemum Tea' },
+        description: { zh: '一級菊花茶，菊花香持久，回甘明顯', en: 'Superior Chrysanthemum Tea, lasting chrysanthemum aroma, obvious aftertaste' },
+        price: 168,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum'],
+        isFeatured: false
+      },
+      {
+        id: 'chrysanthemum-small',
+        name: { zh: '菊花茶', en: 'Chrysanthemum Tea' },
+        description: { zh: '菊花茶小包裝，方便攜帶', en: 'Chrysanthemum Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-lavender',
+        name: { zh: '特級薰衣草茶', en: 'Premium Lavender Tea' },
+        description: { zh: '特級薰衣草茶，薰衣草香濃郁，滋味醇厚', en: 'Premium Lavender Tea, rich lavender aroma, mellow flavor' },
+        price: 228,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-lavender',
+        name: { zh: '一級薰衣草茶', en: 'Superior Lavender Tea' },
+        description: { zh: '一級薰衣草茶，薰衣草香持久，回甘明顯', en: 'Superior Lavender Tea, lasting lavender aroma, obvious aftertaste' },
+        price: 158,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender'],
+        isFeatured: false
+      },
+      {
+        id: 'lavender-small',
+        name: { zh: '薰衣草茶', en: 'Lavender Tea' },
+        description: { zh: '薰衣草茶小包裝，方便攜帶', en: 'Lavender Tea, convenient small package' },
+        price: 78,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea.jpg',
+        images: ['/images/flower-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['lavender', 'small-package'],
         isFeatured: false
       }
     ]
@@ -259,83 +812,61 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <div className="relative h-64">
-            <Image
-              src={product.thumbnail}
-              alt={product.name.en}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="p-6">
-            <h3 className="text-xl font-semibold mb-2">{product.name.en}</h3>
-            <p className="text-gray-600 mb-4">{product.description.en}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold">${product.price}</span>
-              <Link
-                href={`/products/${product.category}/${product.id}`}
-                className="bg-darkgreen-600 text-white px-4 py-2 rounded hover:bg-darkgreen-700 transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+    <div className="container mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-12">精選花茶產品</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} language={language} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function FlowerTeaPage() {
-  const [language, setLanguage] = useState<Language>('en');
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
+  const [language] = useState<Language>('zh');
+  const { heroSection, products } = content[language];
 
   return (
-    <main className="min-h-screen">
-      <motion.div
-        style={{ opacity, scale }}
-        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+    <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative h-96 flex items-center justify-center overflow-hidden"
       >
-        <FloatingLeaf
-          className="top-1/4 left-1/4"
-          color={content[language].heroSection.leafColor}
+        <Image
+          src={heroSection.bgImage}
+          alt="Flower Tea Hero"
+          fill
+          priority
+          className="object-cover opacity-70"
         />
-        <FloatingLeaf
-          className="top-1/3 right-1/4"
-          color={content[language].heroSection.leafColor}
-          opacity={0.2}
-        />
-        <FloatingLeaf
-          className="bottom-1/4 left-1/3"
-          color={content[language].heroSection.leafColor}
-          opacity={0.15}
-        />
-      </motion.div>
-
-      <HeroSection section={content[language].heroSection} />
-
-      <section id="products" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            {language === 'en' ? 'Our Flower Tea Collection' : '我們的花茶系列'}
-          </h2>
-          <ProductGrid products={content[language].products} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-pink-900/60 to-transparent z-10" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-20 text-center text-white p-4"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+            {heroSection.headline}
+          </h1>
+          <p className="text-xl md:text-2xl font-light opacity-90">
+            {heroSection.subheadline}
+          </p>
+        </motion.div>
+      </motion.section>
+      
+      {/* Products Section */}
+      <section id="products">
+        <ProductGrid products={products} />
       </section>
-    </main>
+    </div>
   );
 } 
 

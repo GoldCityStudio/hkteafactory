@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -29,73 +30,303 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'baihao-yinzhen',
-        name: { zh: '白毫銀針', en: 'Baihao Yinzhen' },
-        description: { zh: '福建福鼎白毫銀針，芽頭肥壯，毫香顯著', en: 'Fuding Baihao Yinzhen from Fujian, plump buds, prominent silvery down aroma' },
-        price: 280,
+        id: 'premium-baihao-yinzhen',
+        name: { zh: '特級白毫銀針', en: 'Premium Baihao Yinzhen White Tea' },
+        description: { zh: '特級白毫銀針，銀白如雪，清香高雅', en: 'Premium Baihao Yinzhen White Tea, silver-white like snow, elegant fresh aroma' },
+        price: 688,
         originalPrice: undefined,
-        thumbnail: '/images/baihao-yinzhen.jpg',
-        images: ['/images/baihao-yinzhen.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: true
+      },
+      {
+        id: 'superior-baihao-yinzhen',
+        name: { zh: '一級白毫銀針', en: 'Superior Baihao Yinzhen White Tea' },
+        description: { zh: '一級白毫銀針，品質優良，香氣持久', en: 'Superior Baihao Yinzhen White Tea, excellent quality, lasting aroma' },
+        price: 468,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
-        isFeatured: true
+        isFeatured: false
       },
       {
-        id: 'bai-mudan',
-        name: { zh: '白牡丹', en: 'Bai Mudan' },
-        description: { zh: '福建福鼎白牡丹，一芽兩葉，清鮮醇爽', en: 'Fuding Bai Mudan from Fujian, one bud two leaves, fresh and mellow' },
-        price: 180,
+        id: 'baihao-yinzhen-small',
+        name: { zh: '白毫銀針', en: 'Baihao Yinzhen White Tea' },
+        description: { zh: '白毫銀針小包裝，方便攜帶', en: 'Baihao Yinzhen White Tea, convenient small package' },
+        price: 138,
         originalPrice: undefined,
-        thumbnail: '/images/bai-mudan.jpg',
-        images: ['/images/bai-mudan.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '60g (12x5g)',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-baimudan',
+        name: { zh: '特級白牡丹', en: 'Premium Baimudan White Tea' },
+        description: { zh: '特級白牡丹，花香濃郁，滋味醇厚', en: 'Premium Baimudan White Tea, rich floral aroma, mellow flavor' },
+        price: 428,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baimudan'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-baimudan',
+        name: { zh: '一級白牡丹', en: 'Superior Baimudan White Tea' },
+        description: { zh: '一級白牡丹，花香持久，回甘明顯', en: 'Superior Baimudan White Tea, lasting floral aroma, obvious aftertaste' },
+        price: 298,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baimudan'],
+        isFeatured: false
+      },
+      {
+        id: 'baimudan-small',
+        name: { zh: '白牡丹', en: 'Baimudan White Tea' },
+        description: { zh: '白牡丹小包裝，方便攜帶', en: 'Baimudan White Tea, convenient small package' },
+        price: 108,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
         },
         stock: 45,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['baimudan', 'small-package'],
         isFeatured: false
       },
       {
-        id: 'shoumei',
-        name: { zh: '壽眉', en: 'Shoumei' },
-        description: { zh: '福建白茶，滋味醇和，回甘清甜', en: 'Fujian white tea, mellow flavor, sweet aftertaste' },
-        price: 120,
+        id: 'premium-shoumei',
+        name: { zh: '特級壽眉', en: 'Premium Shoumei White Tea' },
+        description: { zh: '特級壽眉，陳香濃郁，滋味醇厚', en: 'Premium Shoumei White Tea, rich aged aroma, mellow flavor' },
+        price: 368,
         originalPrice: undefined,
-        thumbnail: '/images/shoumei.jpg',
-        images: ['/images/shoumei.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '200g',
+          weight: '250g',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
         },
-        stock: 60,
+        stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['shoumei'],
         isFeatured: false
+      },
+      {
+        id: 'superior-shoumei',
+        name: { zh: '一級壽眉', en: 'Superior Shoumei White Tea' },
+        description: { zh: '一級壽眉，陳香持久，回甘明顯', en: 'Superior Shoumei White Tea, lasting aged aroma, obvious aftertaste' },
+        price: 248,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['shoumei'],
+        isFeatured: false
+      },
+      {
+        id: 'shoumei-small',
+        name: { zh: '壽眉', en: 'Shoumei White Tea' },
+        description: { zh: '壽眉小包裝，方便攜帶', en: 'Shoumei White Tea, convenient small package' },
+        price: 98,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['shoumei', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-gongmei',
+        name: { zh: '特級貢眉', en: 'Premium Gongmei White Tea' },
+        description: { zh: '特級貢眉，清香持久，滋味醇厚', en: 'Premium Gongmei White Tea, lasting fresh aroma, mellow flavor' },
+        price: 318,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-gongmei',
+        name: { zh: '一級貢眉', en: 'Superior Gongmei White Tea' },
+        description: { zh: '一級貢眉，品質優良，香氣持久', en: 'Superior Gongmei White Tea, excellent quality, lasting aroma' },
+        price: 218,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei'],
+        isFeatured: false
+      },
+      {
+        id: 'gongmei-small',
+        name: { zh: '貢眉', en: 'Gongmei White Tea' },
+        description: { zh: '貢眉小包裝，方便攜帶', en: 'Gongmei White Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-baihao-yinzhen',
+        name: { zh: '稀有特級白毫銀針', en: 'Rare Premium Baihao Yinzhen White Tea' },
+        description: { zh: '稀有特級白毫銀針，極品中的極品', en: 'Rare Premium Baihao Yinzhen White Tea, the finest of the finest' },
+        price: 4800,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '150g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
       }
     ]
   },
@@ -110,73 +341,303 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'baihao-yinzhen',
-        name: { zh: '白毫銀針', en: 'Baihao Yinzhen' },
-        description: { zh: '福建福鼎白毫銀針，芽頭肥壯，毫香顯著', en: 'Fuding Baihao Yinzhen from Fujian, plump buds, prominent silvery down aroma' },
-        price: 280,
+        id: 'premium-baihao-yinzhen',
+        name: { zh: '特級白毫銀針', en: 'Premium Baihao Yinzhen White Tea' },
+        description: { zh: '特級白毫銀針，銀白如雪，清香高雅', en: 'Premium Baihao Yinzhen White Tea, silver-white like snow, elegant fresh aroma' },
+        price: 688,
         originalPrice: undefined,
-        thumbnail: '/images/baihao-yinzhen.jpg',
-        images: ['/images/baihao-yinzhen.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '50g',
+          weight: '250g',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: true
+      },
+      {
+        id: 'superior-baihao-yinzhen',
+        name: { zh: '一級白毫銀針', en: 'Superior Baihao Yinzhen White Tea' },
+        description: { zh: '一級白毫銀針，品質優良，香氣持久', en: 'Superior Baihao Yinzhen White Tea, excellent quality, lasting aroma' },
+        price: 468,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
-        isFeatured: true
+        isFeatured: false
       },
       {
-        id: 'bai-mudan',
-        name: { zh: '白牡丹', en: 'Bai Mudan' },
-        description: { zh: '福建福鼎白牡丹，一芽兩葉，清鮮醇爽', en: 'Fuding Bai Mudan from Fujian, one bud two leaves, fresh and mellow' },
-        price: 180,
+        id: 'baihao-yinzhen-small',
+        name: { zh: '白毫銀針', en: 'Baihao Yinzhen White Tea' },
+        description: { zh: '白毫銀針小包裝，方便攜帶', en: 'Baihao Yinzhen White Tea, convenient small package' },
+        price: 138,
         originalPrice: undefined,
-        thumbnail: '/images/bai-mudan.jpg',
-        images: ['/images/bai-mudan.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '60g (12x5g)',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-baimudan',
+        name: { zh: '特級白牡丹', en: 'Premium Baimudan White Tea' },
+        description: { zh: '特級白牡丹，花香濃郁，滋味醇厚', en: 'Premium Baimudan White Tea, rich floral aroma, mellow flavor' },
+        price: 428,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baimudan'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-baimudan',
+        name: { zh: '一級白牡丹', en: 'Superior Baimudan White Tea' },
+        description: { zh: '一級白牡丹，花香持久，回甘明顯', en: 'Superior Baimudan White Tea, lasting floral aroma, obvious aftertaste' },
+        price: 298,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baimudan'],
+        isFeatured: false
+      },
+      {
+        id: 'baimudan-small',
+        name: { zh: '白牡丹', en: 'Baimudan White Tea' },
+        description: { zh: '白牡丹小包裝，方便攜帶', en: 'Baimudan White Tea, convenient small package' },
+        price: 108,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
         },
         stock: 45,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['baimudan', 'small-package'],
         isFeatured: false
       },
       {
-        id: 'shoumei',
-        name: { zh: '壽眉', en: 'Shoumei' },
-        description: { zh: '福建白茶，滋味醇和，回甘清甜', en: 'Fujian white tea, mellow flavor, sweet aftertaste' },
-        price: 120,
+        id: 'premium-shoumei',
+        name: { zh: '特級壽眉', en: 'Premium Shoumei White Tea' },
+        description: { zh: '特級壽眉，陳香濃郁，滋味醇厚', en: 'Premium Shoumei White Tea, rich aged aroma, mellow flavor' },
+        price: 368,
         originalPrice: undefined,
-        thumbnail: '/images/shoumei.jpg',
-        images: ['/images/shoumei.jpg'],
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
         category: 'white-tea',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '200g',
+          weight: '250g',
           origin: 'Fujian, China',
           storage: 'Store in a cool, dry place',
-          expiryDate: 'Long-term aging'
+          expiryDate: '24 months'
         },
-        stock: 60,
+        stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['shoumei'],
         isFeatured: false
+      },
+      {
+        id: 'superior-shoumei',
+        name: { zh: '一級壽眉', en: 'Superior Shoumei White Tea' },
+        description: { zh: '一級壽眉，陳香持久，回甘明顯', en: 'Superior Shoumei White Tea, lasting aged aroma, obvious aftertaste' },
+        price: 248,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['shoumei'],
+        isFeatured: false
+      },
+      {
+        id: 'shoumei-small',
+        name: { zh: '壽眉', en: 'Shoumei White Tea' },
+        description: { zh: '壽眉小包裝，方便攜帶', en: 'Shoumei White Tea, convenient small package' },
+        price: 98,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['shoumei', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-gongmei',
+        name: { zh: '特級貢眉', en: 'Premium Gongmei White Tea' },
+        description: { zh: '特級貢眉，清香持久，滋味醇厚', en: 'Premium Gongmei White Tea, lasting fresh aroma, mellow flavor' },
+        price: 318,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-gongmei',
+        name: { zh: '一級貢眉', en: 'Superior Gongmei White Tea' },
+        description: { zh: '一級貢眉，品質優良，香氣持久', en: 'Superior Gongmei White Tea, excellent quality, lasting aroma' },
+        price: 218,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei'],
+        isFeatured: false
+      },
+      {
+        id: 'gongmei-small',
+        name: { zh: '貢眉', en: 'Gongmei White Tea' },
+        description: { zh: '貢眉小包裝，方便攜帶', en: 'Gongmei White Tea, convenient small package' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '60g (12x5g)',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['gongmei', 'small-package'],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-baihao-yinzhen',
+        name: { zh: '稀有特級白毫銀針', en: 'Rare Premium Baihao Yinzhen White Tea' },
+        description: { zh: '稀有特級白毫銀針，極品中的極品', en: 'Rare Premium Baihao Yinzhen White Tea, the finest of the finest' },
+        price: 4800,
+        originalPrice: undefined,
+        thumbnail: '/images/white-tea.jpg',
+        images: ['/images/white-tea.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '150g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 8,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
       }
     ]
   }
@@ -259,83 +720,61 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <div className="relative h-64">
-            <Image
-              src={product.thumbnail}
-              alt={product.name.en}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="p-6">
-            <h3 className="text-xl font-semibold mb-2">{product.name.en}</h3>
-            <p className="text-gray-600 mb-4">{product.description.en}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold">${product.price}</span>
-              <Link
-                href={`/products/${product.category}/${product.id}`}
-                className="bg-darkgreen-600 text-white px-4 py-2 rounded hover:bg-darkgreen-700 transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+    <div className="container mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-12">精選白茶產品</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} language={language} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function WhiteTeaPage() {
-  const [language, setLanguage] = useState<Language>('en');
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
+  const [language] = useState<Language>('zh');
+  const { heroSection, products } = content[language];
 
   return (
-    <main className="min-h-screen">
-      <motion.div
-        style={{ opacity, scale }}
-        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+    <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative h-96 flex items-center justify-center overflow-hidden"
       >
-        <FloatingLeaf
-          className="top-1/4 left-1/4"
-          color={content[language].heroSection.leafColor}
+        <Image
+          src={heroSection.bgImage}
+          alt="White Tea Hero"
+          fill
+          priority
+          className="object-cover opacity-70"
         />
-        <FloatingLeaf
-          className="top-1/3 right-1/4"
-          color={content[language].heroSection.leafColor}
-          opacity={0.2}
-        />
-        <FloatingLeaf
-          className="bottom-1/4 left-1/3"
-          color={content[language].heroSection.leafColor}
-          opacity={0.15}
-        />
-      </motion.div>
-
-      <HeroSection section={content[language].heroSection} />
-
-      <section id="products" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            {language === 'en' ? 'Our White Tea Collection' : '我們的白茶系列'}
-          </h2>
-          <ProductGrid products={content[language].products} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent z-10" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-20 text-center text-white p-4"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+            {heroSection.headline}
+          </h1>
+          <p className="text-xl md:text-2xl font-light opacity-90">
+            {heroSection.subheadline}
+          </p>
+        </motion.div>
+      </motion.section>
+      
+      {/* Products Section */}
+      <section id="products">
+        <ProductGrid products={products} />
       </section>
-    </main>
+    </div>
   );
 } 
  

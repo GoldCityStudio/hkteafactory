@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -389,50 +390,22 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-        >
-          <div className="relative h-48">
-            <Image
-              src={product.thumbnail}
-              alt={product.name.en}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="p-6">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{product.name.en}</h3>
-            <p className="text-gray-600 mb-4">{product.description.en}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-2xl font-bold text-emerald-600">${product.price}</span>
-              <Link
-                href={`/products/${product.id}`}
-                className="bg-emerald-600 text-white px-4 py-2 rounded-full hover:bg-emerald-700 transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+    <div className="container mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-12">精選清茶烏龍產品</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} language={language} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function QingchaOolongPage() {
-  const heroSectionRef = useRef<HTMLDivElement[]>([]);
-  const setHeroSectionRef = (el: HTMLDivElement | null, idx: number) => {
-    if (el) heroSectionRef.current[idx] = el;
-  };
-
-  const [language, setLanguage] = useState<Language>('en');
+  const [language] = useState<Language>('zh');
   const { heroSection, products } = content[language];
 
   return (
@@ -445,7 +418,7 @@ export default function QingchaOolongPage() {
         className="relative h-96 flex items-center justify-center overflow-hidden"
       >
         <Image
-          src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?q=80&w=2070"
+          src={heroSection.bgImage}
           alt="Qingcha Oolong Hero"
           fill
           priority
@@ -459,87 +432,18 @@ export default function QingchaOolongPage() {
           className="relative z-20 text-center text-white p-4"
         >
           <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
-            清茶烏龍
+            {heroSection.headline}
           </h1>
           <p className="text-xl md:text-2xl font-light opacity-90">
-            清新淡雅，回味甘醇
+            {heroSection.subheadline}
           </p>
         </motion.div>
       </motion.section>
-
-      <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white p-8 rounded-lg shadow-xl"
-        >
-          <div className="space-y-8 text-lg text-gray-700 leading-relaxed">
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              清茶烏龍以其清新淡雅的風味和豐富的口感層次而聞名。我們的清茶烏龍精選來自各大名茶產區的優質茶葉，為您帶來最純正的烏龍茶體驗。
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.0 }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8"
-            >
-              <div className="space-y-4">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">產品特色</h2>
-                <ul className="list-disc list-inside space-y-2">
-                  <li>
-                    <span className="font-semibold text-gray-900">嚴選茶葉：</span>
-                    精選各大名茶產區的優質茶葉
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">傳統工藝：</span>
-                    採用傳統製茶工藝，保留茶葉原味
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">品質保證：</span>
-                    嚴格把控每個環節，確保茶葉品質
-                  </li>
-                  <li>
-                    <span className="font-semibold text-gray-900">多樣選擇：</span>
-                    提供多種烏龍茶品種，滿足不同口味需求
-                  </li>
-                </ul>
-              </div>
-              <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
-                  alt="Qingcha Oolong Collection"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-              className="text-center mt-12"
-            >
-              <p className="font-semibold text-xl text-emerald-700 mb-4">
-                立即選購，體驗「烘茶源」的優質清茶烏龍！
-              </p>
-              <p className="text-lg text-gray-600">
-                電話：(852) 1234 5678 | 電郵：info@hkteafactory.com
-              </p>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-
-      <div className="container mx-auto px-4 py-16">
+      
+      {/* Products Section */}
+      <section id="products">
         <ProductGrid products={products} />
-      </div>
+      </section>
     </div>
   );
 } 

@@ -530,16 +530,10 @@ function VideoCarousel() {
 
   const videos = [
     {
-      src: '/1.mp4',
+      src: '/videos/banner.mp4',
       type: 'video/mp4',
       fallback: '/images/hero-1.jpg',
-      duration: 8000 // 8 seconds in milliseconds
-    },
-    {
-      src: '/2.mp4',
-      type: 'video/mp4',
-      fallback: '/images/hero-2.jpg',
-      duration: 8000 // 8 seconds in milliseconds
+      duration: 15000 // Increased to 15 seconds for much slower playback
     }
   ];
 
@@ -567,9 +561,22 @@ function VideoCarousel() {
   };
 
   const loadNextVideo = () => {
+    // Since we only have one video, we'll restart it instead of loading next
     setIsVideoLoaded(false);
     setVideoError(false);
-    setCurrentVideo((prev) => (prev + 1) % videos.length);
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch((e) => {
+        console.error('Video restart failed:', e);
+        setVideoError(true);
+      });
+    }
+    if (backgroundVideoRef.current) {
+      backgroundVideoRef.current.currentTime = 0;
+      backgroundVideoRef.current.play().catch((e) => {
+        console.error('Background video restart failed:', e);
+      });
+    }
   };
 
   useEffect(() => {
@@ -595,10 +602,10 @@ function VideoCarousel() {
     };
 
     const handleVideoEnd = () => {
-      console.log('Video ended, loading next:', videos[currentVideo].src);
-      // Add a small delay to ensure the video has fully ended before loading next
+      console.log('Video ended, restarting:', videos[currentVideo].src);
+      // Add a small delay to ensure the video has fully ended before restarting
       setTimeout(() => {
-        loadNextVideo();
+        loadNextVideo(); // This now restarts the same video
       }, 500); // 500ms buffer to ensure smooth transition
     };
 
@@ -617,150 +624,46 @@ function VideoCarousel() {
     };
   }, [currentVideo, hasUserInteracted]);
 
-  // Auto-advance videos based on actual video duration if no user interaction
+  // Auto-restart video based on actual video duration if no user interaction
   useEffect(() => {
     if (!hasUserInteracted) {
       const currentVideoDuration = videos[currentVideo].duration || 8000;
       const interval = setInterval(() => {
-        loadNextVideo();
+        loadNextVideo(); // This now restarts the same video
       }, currentVideoDuration + 1000); // Add 1 second buffer to ensure full playback
       return () => clearInterval(interval);
     }
   }, [currentVideo, hasUserInteracted]);
 
   return (
-    <div className="relative w-full h-[90vh] overflow-hidden">
-      {/* Background Video/Image with Blur */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 backdrop-blur-[10px] bg-black/30">
-            {!videoError ? (
-              <video
-                ref={backgroundVideoRef}
-                key={`bg-${currentVideo}`}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="absolute top-0 left-0 w-full h-full object-cover scale-110"
-                style={{ 
-                  filter: 'blur(10px)',
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.3s ease-out'
-                }}
-              >
-                <source 
-                  src={videos[currentVideo].src} 
-                  type={videos[currentVideo].type} 
-                />
-              </video>
-            ) : (
-              <Image
-                src={videos[currentVideo].fallback}
-                alt="Background"
-                fill
-                className="absolute top-0 left-0 w-full h-full object-cover scale-110"
-                style={{ 
-                  filter: 'blur(10px)',
-                  transform: 'scale(1.1)',
-                  transition: 'transform 0.3s ease-out'
-                }}
-                priority
-              />
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Video/Image Overlay */}
-      <div className="absolute inset-0 z-10">
-        {!videoError ? (
-          <video
-            ref={videoRef}
-            key={`video-${currentVideo}`}
-            autoPlay
-            muted
-            playsInline
-            preload="metadata"
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{
-              transform: 'scale(0.8)',
-              transition: 'transform 0.3s ease-out'
-            }}
-          >
-            <source 
-              src={videos[currentVideo].src} 
-              type={videos[currentVideo].type} 
-            />
-            您的瀏覽器不支持視頻播放。
-          </video>
-        ) : (
-          <Image
-            src={videos[currentVideo].fallback}
-            alt="Hero"
-            fill
-            className="absolute top-0 left-0 w-full h-full object-cover"
-            style={{
-              transform: 'scale(0.8)',
-              transition: 'transform 0.3s ease-out'
-            }}
-            priority
-          />
-        )}
-      </div>
-
-      {/* Loading Indicator */}
-      {!isVideoLoaded && !videoError && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/50">
-          <div className="w-16 h-16 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
-
-
-      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50 z-20" />
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
-        className="relative z-30 h-full flex items-center justify-center text-center px-4"
-      >
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="max-w-5xl relative"
+    <div className="relative w-full h-[90vh] overflow-hidden bg-black">
+      {/* Clean Video Display - No Effects */}
+      {!videoError ? (
+        <video
+          ref={videoRef}
+          key={`video-${currentVideo}`}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="absolute top-0 left-0 w-full h-full object-contain"
         >
-          <div className="relative w-64 h-20 mb-12 mx-auto">
-            <h1 className="text-5xl font-serif font-bold text-white tracking-wider relative z-10">
-              <span className="relative z-10" style={{ textShadow: '0 0 20px rgba(52, 211, 153, 0.5), 0 0 40px rgba(52, 211, 153, 0.3)' }}>
-                烘茶源
-              </span>
-            </h1>
-          </div>
-          <motion.p 
-            className="text-2xl md:text-3xl text-white/90 mb-16 font-light tracking-wider relative"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <span className="relative z-10" style={{ textShadow: '0 0 15px rgba(52, 211, 153, 0.4), 0 0 30px rgba(52, 211, 153, 0.2)' }}>
-              傳承茶道精髓，品味生活真諦
-            </span>
-          </motion.p>
-          <motion.button 
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={handleShopNow}
-            className="relative bg-white text-emerald-800 px-16 py-5 rounded-full text-xl font-medium hover:bg-emerald-50 transition-all duration-300 shadow-xl overflow-hidden"
-          >
-            <span className="relative z-10">
-              立即探索
-            </span>
-          </motion.button>
-        </motion.div>
-      </motion.div>
+          <source 
+            src={videos[currentVideo].src} 
+            type={videos[currentVideo].type} 
+          />
+          您的瀏覽器不支持視頻播放。
+        </video>
+      ) : (
+        <Image
+          src={videos[currentVideo].fallback}
+          alt="Hero"
+          fill
+          className="absolute top-0 left-0 w-full h-full object-contain"
+          priority
+        />
+      )}
     </div>
   );
 }
@@ -891,9 +794,22 @@ export default function Home() {
   const [isMuted, setIsMuted] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [activeSection, setActiveSection] = useState('hero');
+  const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
+  };
+
+  const handleSlideChange = (slideIndex: number) => {
+    setCurrentSlide(slideIndex);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % 4);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + 4) % 4);
   };
 
   useEffect(() => {
@@ -920,11 +836,295 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Auto-play functionality
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % 4);
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <main className="min-h-screen">
       <div className="relative">
         {/* Video Carousel Section */}
         <VideoCarousel />
+
+        {/* Content Slider Section */}
+        <section className="py-20 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative overflow-hidden">
+          {/* Background Decorative Elements */}
+          <div className="absolute inset-0 opacity-10">
+            <div className="absolute top-10 left-10 w-32 h-32 bg-emerald-200 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-10 right-10 w-40 h-40 bg-green-200 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-teal-200 rounded-full blur-3xl"></div>
+          </div>
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            {/* Section Header */}
+            <div className="text-center mb-16">
+              <motion.h2 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="text-5xl font-serif font-bold text-gray-900 mb-6"
+              >
+                我們的特色服務
+              </motion.h2>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-xl text-gray-600 max-w-3xl mx-auto"
+              >
+                探索烘茶源的獨特魅力，體驗傳統與現代的完美結合
+              </motion.p>
+            </div>
+
+            <div className="relative">
+              {/* Slider Content */}
+              <div className="overflow-hidden rounded-3xl shadow-2xl bg-white/80 backdrop-blur-sm">
+                <div 
+                  className="flex transition-transform duration-700 ease-out"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {/* Slide 1 - Premium Tea Selection */}
+                  <div className="w-full flex-shrink-0">
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      <div className="p-16 pl-24 pr-24 flex flex-col justify-center space-y-8">
+                        <div className="space-y-6">
+                          <div className="inline-flex items-center px-4 py-2 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium mb-4">
+                            <span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
+                            精選系列
+                          </div>
+                          <h3 className="text-5xl font-serif font-bold text-gray-900 leading-tight">
+                            精選優質茶葉
+                          </h3>
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            嚴選來自中國各大茶區的頂級茶葉，每一片茶葉都經過精心挑選，為您帶來最純正的茶香體驗。
+                          </p>
+                          <div className="grid grid-cols-2 gap-4 pt-4">
+                            <div className="flex items-center space-x-3 p-4 bg-emerald-50 rounded-xl">
+                              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">有機認證</span>
+                            </div>
+                            <div className="flex items-center space-x-3 p-4 bg-emerald-50 rounded-xl">
+                              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">品質保證</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative h-full min-h-[500px] bg-gradient-to-br from-emerald-100 to-green-100 flex items-center justify-center">
+                        <div className="relative w-80 h-80 rounded-full bg-gradient-to-br from-emerald-200 to-green-200 shadow-2xl overflow-hidden">
+                          <Image
+                            src="/images/placeholder.png"
+                            alt="Premium Tea Selection"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-emerald-300 rounded-full opacity-20"></div>
+                        <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-green-300 rounded-full opacity-20"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slide 2 - Traditional Craftsmanship */}
+                  <div className="w-full flex-shrink-0">
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      <div className="p-16 pl-24 pr-24 flex flex-col justify-center space-y-8">
+                        <div className="space-y-6">
+                          <div className="inline-flex items-center px-4 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-medium mb-4">
+                            <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
+                            傳統工藝
+                          </div>
+                          <h3 className="text-5xl font-serif font-bold text-gray-900 leading-tight">
+                            傳統工藝傳承
+                          </h3>
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            傳承千年茶道精髓，結合現代科技，每一道工序都嚴格把關，確保茶葉的最佳品質和風味。
+                          </p>
+                          <div className="grid grid-cols-2 gap-4 pt-4">
+                            <div className="flex items-center space-x-3 p-4 bg-amber-50 rounded-xl">
+                              <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">手工製作</span>
+                            </div>
+                            <div className="flex items-center space-x-3 p-4 bg-amber-50 rounded-xl">
+                              <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">古法工藝</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative h-full min-h-[500px] bg-gradient-to-br from-amber-100 to-orange-100 flex items-center justify-center">
+                        <div className="relative w-80 h-80 rounded-full bg-gradient-to-br from-amber-200 to-orange-200 shadow-2xl overflow-hidden">
+                          <Image
+                            src="/images/placeholder.png"
+                            alt="Traditional Craftsmanship"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-amber-300 rounded-full opacity-20"></div>
+                        <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-orange-300 rounded-full opacity-20"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slide 3 - Gift Collections */}
+                  <div className="w-full flex-shrink-0">
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      <div className="p-16 pl-24 pr-24 flex flex-col justify-center space-y-8">
+                        <div className="space-y-6">
+                          <div className="inline-flex items-center px-4 py-2 bg-rose-100 text-rose-800 rounded-full text-sm font-medium mb-4">
+                            <span className="w-2 h-2 bg-rose-500 rounded-full mr-2"></span>
+                            禮盒系列
+                          </div>
+                          <h3 className="text-5xl font-serif font-bold text-gray-900 leading-tight">
+                            精美禮盒系列
+                          </h3>
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            為您量身定制獨一無二的茶葉禮盒，無論是送禮還是自用，都能感受到我們的用心與誠意。
+                          </p>
+                          <div className="grid grid-cols-2 gap-4 pt-4">
+                            <div className="flex items-center space-x-3 p-4 bg-rose-50 rounded-xl">
+                              <div className="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">個性定制</span>
+                            </div>
+                            <div className="flex items-center space-x-3 p-4 bg-rose-50 rounded-xl">
+                              <div className="w-10 h-10 bg-rose-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">精美包裝</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative h-full min-h-[500px] bg-gradient-to-br from-rose-100 to-pink-100 flex items-center justify-center">
+                        <div className="relative w-80 h-80 rounded-full bg-gradient-to-br from-rose-200 to-pink-200 shadow-2xl overflow-hidden">
+                          <Image
+                            src="/images/placeholder.png"
+                            alt="Gift Collections"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-rose-300 rounded-full opacity-20"></div>
+                        <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-pink-300 rounded-full opacity-20"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Slide 4 - Tea Culture Experience */}
+                  <div className="w-full flex-shrink-0">
+                    <div className="grid lg:grid-cols-2 gap-0">
+                      <div className="p-16 pl-24 pr-24 flex flex-col justify-center space-y-8">
+                        <div className="space-y-6">
+                          <div className="inline-flex items-center px-4 py-2 bg-indigo-100 text-indigo-800 rounded-full text-sm font-medium mb-4">
+                            <span className="w-2 h-2 bg-indigo-500 rounded-full mr-2"></span>
+                            文化體驗
+                          </div>
+                          <h3 className="text-5xl font-serif font-bold text-gray-900 leading-tight">
+                            茶文化體驗
+                          </h3>
+                          <p className="text-xl text-gray-600 leading-relaxed">
+                            深入體驗中國傳統茶文化，從茶藝表演到茶道教學，讓您感受茶葉背後的深厚文化底蘊。
+                          </p>
+                          <div className="grid grid-cols-2 gap-4 pt-4">
+                            <div className="flex items-center space-x-3 p-4 bg-indigo-50 rounded-xl">
+                              <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">茶藝表演</span>
+                            </div>
+                            <div className="flex items-center space-x-3 p-4 bg-indigo-50 rounded-xl">
+                              <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center">
+                                <svg className="w-5 h-5 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                              <span className="font-medium text-gray-700">文化傳承</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="relative h-full min-h-[500px] bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center">
+                        <div className="relative w-80 h-80 rounded-full bg-gradient-to-br from-indigo-200 to-purple-200 shadow-2xl overflow-hidden">
+                          <Image
+                            src="/images/placeholder.png"
+                            alt="Tea Culture Experience"
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
+                        <div className="absolute -top-4 -right-4 w-24 h-24 bg-indigo-300 rounded-full opacity-20"></div>
+                        <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-purple-300 rounded-full opacity-20"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Enhanced Slider Navigation */}
+              <div className="flex justify-center mt-12 space-x-4">
+                {[0, 1, 2, 3].map((index) => (
+                  <button
+                    key={index}
+                    onClick={() => handleSlideChange(index)}
+                    className={`w-5 h-5 rounded-full transition-all duration-300 transform hover:scale-110 ${
+                      index === currentSlide 
+                        ? 'bg-emerald-600 scale-125 shadow-lg' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
+
+              {/* Enhanced Navigation Arrows */}
+              <button 
+                onClick={prevSlide}
+                className="absolute left-8 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white backdrop-blur-sm p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 border border-gray-200 z-20"
+              >
+                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button 
+                onClick={nextSlide}
+                className="absolute right-8 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white backdrop-blur-sm p-4 rounded-full shadow-xl transition-all duration-300 hover:scale-110 border border-gray-200 z-20"
+              >
+                <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
 
         {/* Featured Products Section */}
         <section id="featured-products" className="py-32 bg-gradient-to-b from-white to-emerald-50">

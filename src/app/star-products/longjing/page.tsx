@@ -31,9 +31,9 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     products: [
       {
         id: 'west-lake-longjing-supreme',
-        name: { zh: '特級西湖龍井', en: 'Supreme West Lake Longjing' },
-        description: { zh: '特級西湖龍井，扁平光滑，翠綠鮮潤', en: 'Supreme West Lake Longjing, flat and smooth, emerald green and fresh' },
-        price: 350,
+        name: { zh: '明前獅峰龍井', en: 'Premium Lion Peak Longjing Tea' },
+        description: { zh: '明前獅峰龍井，扁平光滑，翠綠鮮潤', en: 'Premium Lion Peak Longjing Tea, flat and smooth, emerald green and fresh' },
+        price: 1388,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea.jpg',
         images: ['/images/longjing-tea.jpg'],
@@ -41,7 +41,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -54,9 +54,9 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       },
       {
         id: 'west-lake-longjing-premium',
-        name: { zh: '一級西湖龍井', en: 'Premium West Lake Longjing' },
-        description: { zh: '一級西湖龍井，色澤綠潤，滋味醇厚', en: 'Premium West Lake Longjing, green and moist, mellow flavor' },
-        price: 280,
+        name: { zh: '明前龍井', en: 'Premium Longjing Tea' },
+        description: { zh: '明前龍井，色澤綠潤，滋味醇厚', en: 'Premium Longjing Tea, green and moist, mellow flavor' },
+        price: 880,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea-2.jpg',
         images: ['/images/longjing-tea-2.jpg'],
@@ -64,7 +64,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -76,10 +76,10 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         isFeatured: false
       },
       {
-        id: 'west-lake-longjing-jingqian',
-        name: { zh: '西湖龍井（雨前）', en: 'West Lake Longjing (Yuqian)' },
-        description: { zh: '雨前採摘，茶葉肥嫩，香氣更佳', en: 'Picked before Qingming, tender leaves, better aroma' },
-        price: 220,
+        id: 'longjing-superior',
+        name: { zh: '雨前龍井', en: 'Superior Longjing Tea' },
+        description: { zh: '雨前龍井，清香持久，回甘明顯', en: 'Superior Longjing Tea, lasting fresh aroma, obvious aftertaste' },
+        price: 498,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea-3.jpg',
         images: ['/images/longjing-tea-3.jpg'],
@@ -87,7 +87,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -97,6 +97,75 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
+      },
+      {
+        id: 'longjing-lion-peak',
+        name: { zh: '獅峰龍井', en: 'Lion Peak Longjing Tea' },
+        description: { zh: '獅峰龍井，茶湯清亮，香氣高雅', en: 'Lion Peak Longjing Tea, clear liquor, elegant aroma' },
+        price: 380,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-tea-4.jpg',
+        images: ['/images/longjing-tea-4.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'longjing-first-grade',
+        name: { zh: '一級龍井', en: 'First Grade Longjing Tea' },
+        description: { zh: '一級龍井，品質優良，價格實惠', en: 'First Grade Longjing Tea, excellent quality, affordable price' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-tea-5.jpg',
+        images: ['/images/longjing-tea-5.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-lion-peak',
+        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
+        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
+        price: 12800,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-rare.jpg',
+        images: ['/images/longjing-rare.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
       }
     ]
   },
@@ -112,9 +181,9 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     products: [
       {
         id: 'west-lake-longjing-supreme',
-        name: { zh: '特級西湖龍井', en: 'Supreme West Lake Longjing' },
-        description: { zh: '特級西湖龍井，扁平光滑，翠綠鮮潤', en: 'Supreme West Lake Longjing, flat and smooth, emerald green and fresh' },
-        price: 350,
+        name: { zh: '明前獅峰龍井', en: 'Premium Lion Peak Longjing Tea' },
+        description: { zh: '明前獅峰龍井，扁平光滑，翠綠鮮潤', en: 'Premium Lion Peak Longjing Tea, flat and smooth, emerald green and fresh' },
+        price: 1388,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea.jpg',
         images: ['/images/longjing-tea.jpg'],
@@ -122,7 +191,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -135,9 +204,9 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       },
       {
         id: 'west-lake-longjing-premium',
-        name: { zh: '一級西湖龍井', en: 'Premium West Lake Longjing' },
-        description: { zh: '一級西湖龍井，色澤綠潤，滋味醇厚', en: 'Premium West Lake Longjing, green and moist, mellow flavor' },
-        price: 280,
+        name: { zh: '明前龍井', en: 'Premium Longjing Tea' },
+        description: { zh: '明前龍井，色澤綠潤，滋味醇厚', en: 'Premium Longjing Tea, green and moist, mellow flavor' },
+        price: 880,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea-2.jpg',
         images: ['/images/longjing-tea-2.jpg'],
@@ -145,7 +214,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -157,10 +226,10 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         isFeatured: false
       },
       {
-        id: 'west-lake-longjing-jingqian',
-        name: { zh: '西湖龍井（雨前）', en: 'West Lake Longjing (Yuqian)' },
-        description: { zh: '雨前採摘，茶葉肥嫩，香氣更佳', en: 'Picked before Qingming, tender leaves, better aroma' },
-        price: 220,
+        id: 'longjing-superior',
+        name: { zh: '雨前龍井', en: 'Superior Longjing Tea' },
+        description: { zh: '雨前龍井，清香持久，回甘明顯', en: 'Superior Longjing Tea, lasting fresh aroma, obvious aftertaste' },
+        price: 498,
         originalPrice: undefined,
         thumbnail: '/images/longjing-tea-3.jpg',
         images: ['/images/longjing-tea-3.jpg'],
@@ -168,7 +237,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '100g',
+          weight: '250g',
           origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -178,6 +247,75 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
+      },
+      {
+        id: 'longjing-lion-peak',
+        name: { zh: '獅峰龍井', en: 'Lion Peak Longjing Tea' },
+        description: { zh: '獅峰龍井，茶湯清亮，香氣高雅', en: 'Lion Peak Longjing Tea, clear liquor, elegant aroma' },
+        price: 380,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-tea-4.jpg',
+        images: ['/images/longjing-tea-4.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'longjing-first-grade',
+        name: { zh: '一級龍井', en: 'First Grade Longjing Tea' },
+        description: { zh: '一級龍井，品質優良，價格實惠', en: 'First Grade Longjing Tea, excellent quality, affordable price' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-tea-5.jpg',
+        images: ['/images/longjing-tea-5.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: [],
+        isFeatured: false
+      },
+      {
+        id: 'rare-premium-lion-peak',
+        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
+        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
+        price: 12800,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-rare.jpg',
+        images: ['/images/longjing-rare.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
       }
     ]
   }

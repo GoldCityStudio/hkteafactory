@@ -40,6 +40,7 @@ const navItems = {
         { name: '白茶', href: '/products/white-tea' }
       ]
     },
+    { name: '價格表', href: '/price-list' },
     { name: '禮盒訂製', href: '/gift-customization', subItems: [ { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, { name: '宴會回禮', href: '/gift-customization/party-favors' }, { name: '散水禮物', href: '/gift-customization/water-gifts' } ] },
     { name: '公司資訊', href: '/company-info' },
   ],
@@ -76,6 +77,7 @@ const navItems = {
         { name: 'White Tea', href: '/products/white-tea' }
       ]
     },
+    { name: 'Price List', href: '/price-list' },
     { name: 'Gift Customization', href: '/gift-customization', subItems: [ { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, { name: 'Party Favors', href: '/gift-customization/party-favors' }, { name: 'Water Gifts', href: '/gift-customization/water-gifts' } ] },
     { name: 'Company Info', href: '/company-info' },
   ]

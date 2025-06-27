@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -28,64 +29,294 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'green-tea-bags',
-        name: { zh: '綠茶茶包', en: 'Green Tea Bags' },
-        description: { zh: '清新淡雅，回味甘醇', en: 'Fresh and mellow, sweet aftertaste' },
-        price: 45,
+        id: 'premium-longjing-bags',
+        name: { zh: '特級龍井茶包', en: 'Premium Longjing Tea Bags' },
+        description: { zh: '特級龍井茶包，方便沖泡，香氣持久', en: 'Premium Longjing Tea Bags, convenient brewing, lasting aroma' },
+        price: 68,
         originalPrice: undefined,
-        thumbnail: '/images/green-tea-bags.jpg',
-        images: ['/images/green-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
-          origin: 'China',
+          weight: '50 bags',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 100,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['premium'],
         isFeatured: true
       },
       {
-        id: 'black-tea-bags',
-        name: { zh: '紅茶茶包', en: 'Black Tea Bags' },
-        description: { zh: '醇厚濃郁，香氣四溢', en: 'Rich and aromatic, full-bodied flavor' },
-        price: 45,
+        id: 'superior-longjing-bags',
+        name: { zh: '一級龍井茶包', en: 'Superior Longjing Tea Bags' },
+        description: { zh: '一級龍井茶包，品質優良，香氣持久', en: 'Superior Longjing Tea Bags, excellent quality, lasting aroma' },
+        price: 48,
         originalPrice: undefined,
-        thumbnail: '/images/black-tea-bags.jpg',
-        images: ['/images/black-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
-          origin: 'China',
+          weight: '50 bags',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
-        stock: 100,
+        stock: 120,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
       },
       {
-        id: 'oolong-tea-bags',
-        name: { zh: '烏龍茶包', en: 'Oolong Tea Bags' },
-        description: { zh: '香氣持久，滋味醇厚', en: 'Long-lasting aroma, rich taste' },
-        price: 50,
+        id: 'premium-tieguanyin-bags',
+        name: { zh: '特級鐵觀音茶包', en: 'Premium Tieguanyin Tea Bags' },
+        description: { zh: '特級鐵觀音茶包，方便沖泡，香氣持久', en: 'Premium Tieguanyin Tea Bags, convenient brewing, lasting aroma' },
+        price: 78,
         originalPrice: undefined,
-        thumbnail: '/images/oolong-tea-bags.jpg',
-        images: ['/images/oolong-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
+          weight: '50 bags',
+          origin: 'Anxi, Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 80,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tieguanyin'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-tieguanyin-bags',
+        name: { zh: '一級鐵觀音茶包', en: 'Superior Tieguanyin Tea Bags' },
+        description: { zh: '一級鐵觀音茶包，品質優良，香氣持久', en: 'Superior Tieguanyin Tea Bags, excellent quality, lasting aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Anxi, Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tieguanyin'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-jasmine-bags',
+        name: { zh: '特級茉莉花茶包', en: 'Premium Jasmine Tea Bags' },
+        description: { zh: '特級茉莉花茶包，方便沖泡，花香濃郁', en: 'Premium Jasmine Tea Bags, convenient brewing, rich floral aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['jasmine'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-jasmine-bags',
+        name: { zh: '一級茉莉花茶包', en: 'Superior Jasmine Tea Bags' },
+        description: { zh: '一級茉莉花茶包，品質優良，花香持久', en: 'Superior Jasmine Tea Bags, excellent quality, lasting floral aroma' },
+        price: 48,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 110,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['jasmine'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-keemun-bags',
+        name: { zh: '特級祁門紅茶包', en: 'Premium Keemun Tea Bags' },
+        description: { zh: '特級祁門紅茶包，方便沖泡，香氣持久', en: 'Premium Keemun Tea Bags, convenient brewing, lasting aroma' },
+        price: 78,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Qimen, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 80,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['keemun'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-keemun-bags',
+        name: { zh: '一級祁門紅茶包', en: 'Superior Keemun Tea Bags' },
+        description: { zh: '一級祁門紅茶包，品質優良，香氣持久', en: 'Superior Keemun Tea Bags, excellent quality, lasting aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Qimen, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['keemun'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-dianhong-bags',
+        name: { zh: '特級滇紅茶包', en: 'Premium Dianhong Tea Bags' },
+        description: { zh: '特級滇紅茶包，方便沖泡，香氣持久', en: 'Premium Dianhong Tea Bags, convenient brewing, lasting aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dianhong'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-dianhong-bags',
+        name: { zh: '一級滇紅茶包', en: 'Superior Dianhong Tea Bags' },
+        description: { zh: '一級滇紅茶包，品質優良，香氣持久', en: 'Superior Dianhong Tea Bags, excellent quality, lasting aroma' },
+        price: 48,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 110,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dianhong'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-baihao-bags',
+        name: { zh: '特級白毫銀針茶包', en: 'Premium Baihao Yinzhen Tea Bags' },
+        description: { zh: '特級白毫銀針茶包，方便沖泡，香氣持久', en: 'Premium Baihao Yinzhen Tea Bags, convenient brewing, lasting aroma' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 70,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baihao'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-baihao-bags',
+        name: { zh: '一級白毫銀針茶包', en: 'Superior Baihao Yinzhen Tea Bags' },
+        description: { zh: '一級白毫銀針茶包，品質優良，香氣持久', en: 'Superior Baihao Yinzhen Tea Bags, excellent quality, lasting aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baihao'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-osmanthus-bags',
+        name: { zh: '特級桂花茶包', en: 'Premium Osmanthus Tea Bags' },
+        description: { zh: '特級桂花茶包，方便沖泡，桂花香濃郁', en: 'Premium Osmanthus Tea Bags, convenient brewing, rich osmanthus aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
           origin: 'China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -93,7 +324,30 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         stock: 100,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-osmanthus-bags',
+        name: { zh: '一級桂花茶包', en: 'Superior Osmanthus Tea Bags' },
+        description: { zh: '一級桂花茶包，品質優良，桂花香持久', en: 'Superior Osmanthus Tea Bags, excellent quality, lasting osmanthus aroma' },
+        price: 38,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 120,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
         isFeatured: false
       }
     ]
@@ -109,64 +363,294 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
     },
     products: [
       {
-        id: 'green-tea-bags',
-        name: { zh: '綠茶茶包', en: 'Green Tea Bags' },
-        description: { zh: '清新淡雅，回味甘醇', en: 'Fresh and mellow, sweet aftertaste' },
-        price: 45,
+        id: 'premium-longjing-bags',
+        name: { zh: '特級龍井茶包', en: 'Premium Longjing Tea Bags' },
+        description: { zh: '特級龍井茶包，方便沖泡，香氣持久', en: 'Premium Longjing Tea Bags, convenient brewing, lasting aroma' },
+        price: 68,
         originalPrice: undefined,
-        thumbnail: '/images/green-tea-bags.jpg',
-        images: ['/images/green-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
-          origin: 'China',
+          weight: '50 bags',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 100,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['premium'],
         isFeatured: true
       },
       {
-        id: 'black-tea-bags',
-        name: { zh: '紅茶茶包', en: 'Black Tea Bags' },
-        description: { zh: '醇厚濃郁，香氣四溢', en: 'Rich and aromatic, full-bodied flavor' },
-        price: 45,
+        id: 'superior-longjing-bags',
+        name: { zh: '一級龍井茶包', en: 'Superior Longjing Tea Bags' },
+        description: { zh: '一級龍井茶包，品質優良，香氣持久', en: 'Superior Longjing Tea Bags, excellent quality, lasting aroma' },
+        price: 48,
         originalPrice: undefined,
-        thumbnail: '/images/black-tea-bags.jpg',
-        images: ['/images/black-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
-          origin: 'China',
+          weight: '50 bags',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
-        stock: 100,
+        stock: 120,
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: [],
         isFeatured: false
       },
       {
-        id: 'oolong-tea-bags',
-        name: { zh: '烏龍茶包', en: 'Oolong Tea Bags' },
-        description: { zh: '香氣持久，滋味醇厚', en: 'Long-lasting aroma, rich taste' },
-        price: 50,
+        id: 'premium-tieguanyin-bags',
+        name: { zh: '特級鐵觀音茶包', en: 'Premium Tieguanyin Tea Bags' },
+        description: { zh: '特級鐵觀音茶包，方便沖泡，香氣持久', en: 'Premium Tieguanyin Tea Bags, convenient brewing, lasting aroma' },
+        price: 78,
         originalPrice: undefined,
-        thumbnail: '/images/oolong-tea-bags.jpg',
-        images: ['/images/oolong-tea-bags.jpg'],
-        category: 'tea',
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
         status: 'active',
         isNew: false,
         specifications: {
-          weight: '20 bags',
+          weight: '50 bags',
+          origin: 'Anxi, Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 80,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tieguanyin'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-tieguanyin-bags',
+        name: { zh: '一級鐵觀音茶包', en: 'Superior Tieguanyin Tea Bags' },
+        description: { zh: '一級鐵觀音茶包，品質優良，香氣持久', en: 'Superior Tieguanyin Tea Bags, excellent quality, lasting aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Anxi, Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tieguanyin'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-jasmine-bags',
+        name: { zh: '特級茉莉花茶包', en: 'Premium Jasmine Tea Bags' },
+        description: { zh: '特級茉莉花茶包，方便沖泡，花香濃郁', en: 'Premium Jasmine Tea Bags, convenient brewing, rich floral aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['jasmine'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-jasmine-bags',
+        name: { zh: '一級茉莉花茶包', en: 'Superior Jasmine Tea Bags' },
+        description: { zh: '一級茉莉花茶包，品質優良，花香持久', en: 'Superior Jasmine Tea Bags, excellent quality, lasting floral aroma' },
+        price: 48,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 110,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['jasmine'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-keemun-bags',
+        name: { zh: '特級祁門紅茶包', en: 'Premium Keemun Tea Bags' },
+        description: { zh: '特級祁門紅茶包，方便沖泡，香氣持久', en: 'Premium Keemun Tea Bags, convenient brewing, lasting aroma' },
+        price: 78,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Qimen, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 80,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['keemun'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-keemun-bags',
+        name: { zh: '一級祁門紅茶包', en: 'Superior Keemun Tea Bags' },
+        description: { zh: '一級祁門紅茶包，品質優良，香氣持久', en: 'Superior Keemun Tea Bags, excellent quality, lasting aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Qimen, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['keemun'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-dianhong-bags',
+        name: { zh: '特級滇紅茶包', en: 'Premium Dianhong Tea Bags' },
+        description: { zh: '特級滇紅茶包，方便沖泡，香氣持久', en: 'Premium Dianhong Tea Bags, convenient brewing, lasting aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dianhong'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-dianhong-bags',
+        name: { zh: '一級滇紅茶包', en: 'Superior Dianhong Tea Bags' },
+        description: { zh: '一級滇紅茶包，品質優良，香氣持久', en: 'Superior Dianhong Tea Bags, excellent quality, lasting aroma' },
+        price: 48,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 110,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dianhong'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-baihao-bags',
+        name: { zh: '特級白毫銀針茶包', en: 'Premium Baihao Yinzhen Tea Bags' },
+        description: { zh: '特級白毫銀針茶包，方便沖泡，香氣持久', en: 'Premium Baihao Yinzhen Tea Bags, convenient brewing, lasting aroma' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 70,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baihao'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-baihao-bags',
+        name: { zh: '一級白毫銀針茶包', en: 'Superior Baihao Yinzhen Tea Bags' },
+        description: { zh: '一級白毫銀針茶包，品質優良，香氣持久', en: 'Superior Baihao Yinzhen Tea Bags, excellent quality, lasting aroma' },
+        price: 68,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 90,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['baihao'],
+        isFeatured: false
+      },
+      {
+        id: 'premium-osmanthus-bags',
+        name: { zh: '特級桂花茶包', en: 'Premium Osmanthus Tea Bags' },
+        description: { zh: '特級桂花茶包，方便沖泡，桂花香濃郁', en: 'Premium Osmanthus Tea Bags, convenient brewing, rich osmanthus aroma' },
+        price: 58,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
           origin: 'China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
@@ -174,7 +658,30 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         stock: 100,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'superior-osmanthus-bags',
+        name: { zh: '一級桂花茶包', en: 'Superior Osmanthus Tea Bags' },
+        description: { zh: '一級桂花茶包，品質優良，桂花香持久', en: 'Superior Osmanthus Tea Bags, excellent quality, lasting osmanthus aroma' },
+        price: 38,
+        originalPrice: undefined,
+        thumbnail: '/images/tea-bags.jpg',
+        images: ['/images/tea-bags.jpg'],
+        category: 'tea-bags',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 120,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus'],
         isFeatured: false
       }
     ]
@@ -253,82 +760,60 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <div className="relative h-64">
-            <Image
-              src={product.thumbnail}
-              alt={product.name.en}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <div className="p-6">
-            <h3 className="text-xl font-semibold mb-2">{product.name.en}</h3>
-            <p className="text-gray-600 mb-4">{product.description.en}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold">${product.price}</span>
-              <Link
-                href={`/products/${product.category}/${product.id}`}
-                className="bg-darkgreen-600 text-white px-4 py-2 rounded hover:bg-darkgreen-700 transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+    <div className="container mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-12">精選茶包產品</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} language={language} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function TeaBagsPage() {
-  const [language, setLanguage] = useState<Language>('en');
-  const { scrollYProgress } = useScroll();
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.8]);
+  const [language] = useState<Language>('zh');
+  const { heroSection, products } = content[language];
 
   return (
-    <main className="min-h-screen">
-      <motion.div
-        style={{ opacity, scale }}
-        className="fixed top-0 left-0 w-full h-full pointer-events-none"
+    <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative h-96 flex items-center justify-center overflow-hidden"
       >
-        <FloatingLeaf
-          className="top-1/4 left-1/4"
-          color={content[language].heroSection.leafColor}
+        <Image
+          src={heroSection.bgImage}
+          alt="Tea Bags Hero"
+          fill
+          priority
+          className="object-cover opacity-70"
         />
-        <FloatingLeaf
-          className="top-1/3 right-1/4"
-          color={content[language].heroSection.leafColor}
-          opacity={0.2}
-        />
-        <FloatingLeaf
-          className="bottom-1/4 left-1/3"
-          color={content[language].heroSection.leafColor}
-          opacity={0.15}
-        />
-      </motion.div>
-
-      <HeroSection section={content[language].heroSection} />
-
-      <section id="products" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            {language === 'en' ? 'Our Tea Bags Collection' : '我們的茶包系列'}
-          </h2>
-          <ProductGrid products={content[language].products} />
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent z-10" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="relative z-20 text-center text-white p-4"
+        >
+          <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight mb-4 drop-shadow-lg">
+            {heroSection.headline}
+          </h1>
+          <p className="text-xl md:text-2xl font-light opacity-90">
+            {heroSection.subheadline}
+          </p>
+        </motion.div>
+      </motion.section>
+      
+      {/* Products Section */}
+      <section id="products">
+        <ProductGrid products={products} />
       </section>
-    </main>
+    </div>
   );
 } 
