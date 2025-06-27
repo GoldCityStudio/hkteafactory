@@ -522,9 +522,17 @@ function VideoCarousel() {
   const [videoError, setVideoError] = useState(false);
   const [videoLoading, setVideoLoading] = useState(true);
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [youtubeUrl, setYoutubeUrl] = useState('');
 
   const videoId = 'q_rAB87mXPY';
   const fallbackImage = '/images/hero-1.jpg';
+
+  // Set YouTube URL on client side to avoid SSR issues
+  useEffect(() => {
+    const origin = typeof window !== 'undefined' ? window.location.origin : '';
+    const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
+    setYoutubeUrl(url);
+  }, []);
 
   const handleVideoLoad = () => {
     setVideoLoading(false);
@@ -562,10 +570,10 @@ function VideoCarousel() {
       )}
       
       {/* YouTube Video Display */}
-      {!videoError ? (
+      {!videoError && youtubeUrl ? (
         <div className="absolute top-0 left-0 w-full h-full">
           <iframe
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
+            src={youtubeUrl}
             title="HK Tea Factory Banner"
             className="w-full h-full"
             frameBorder="0"
