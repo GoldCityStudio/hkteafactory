@@ -76,6 +76,10 @@ const nextConfig = {
             key: 'Content-Type',
             value: 'video/mp4',
           },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
         ],
       },
       {
@@ -95,6 +99,15 @@ const nextConfig = {
   },
   // Output configuration for better static optimization
   output: 'standalone',
+  // Increase the maximum payload size for video files
+  async rewrites() {
+    return [
+      {
+        source: '/videos/:path*',
+        destination: '/videos/:path*',
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig

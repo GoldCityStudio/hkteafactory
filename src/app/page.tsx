@@ -519,115 +519,65 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
 }
 
 function VideoCarousel() {
-  const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [videoError, setVideoError] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const backgroundVideoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoading, setVideoLoading] = useState(true);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
-  const videos = [
-    {
-      src: '/videos/banner.mp4',
-      type: 'video/mp4',
-      fallback: '/images/hero-1.jpg',
-      duration: 15000 // Increased to 15 seconds for much slower playback
-    }
-  ];
+  const videoId = 'q_rAB87mXPY';
+  const fallbackImage = '/images/hero-1.jpg';
 
-  const loadNextVideo = () => {
-    // Since we only have one video, we'll restart it instead of loading next
-    setVideoError(false);
-    if (videoRef.current) {
-      videoRef.current.currentTime = 0;
-      videoRef.current.play().catch((e) => {
-        console.error('Video restart failed:', e);
-        setVideoError(true);
-      });
-    }
-    if (backgroundVideoRef.current) {
-      backgroundVideoRef.current.currentTime = 0;
-      backgroundVideoRef.current.play().catch((e) => {
-        console.error('Background video restart failed:', e);
-      });
-    }
+  const handleVideoLoad = () => {
+    setVideoLoading(false);
+    setVideoLoaded(true);
+    console.log('YouTube video loaded successfully');
   };
 
-  useEffect(() => {
-    const video = videoRef.current;
-    const bgVideo = backgroundVideoRef.current;
-    if (!video || !bgVideo) return;
+  const handleVideoError = () => {
+    console.error('YouTube video error, switching to fallback');
+    setVideoError(true);
+    setVideoLoading(false);
+    setVideoLoaded(false);
+  };
 
-    const handleVideoLoad = () => {
-      // Only try to autoplay if user has interacted or if we're in a development environment
-      if (hasUserInteracted || process.env.NODE_ENV === 'development') {
-        video.play().catch((e) => {
-          console.error('Video play failed, switching to fallback:', e);
-          setVideoError(true);
-        });
+  // Fallback to image if video fails to load after 10 seconds
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (!videoLoaded && !videoError) {
+        console.log('Video loading timeout, switching to fallback');
+        setVideoError(true);
+        setVideoLoading(false);
       }
-      console.log('Video loaded:', videos[0].src);
-    };
+    }, 10000);
 
-    const handleVideoError = (e: Event) => {
-      console.error('Video error, switching to fallback:', e);
-      setVideoError(true);
-    };
-
-    const handleVideoEnd = () => {
-      console.log('Video ended, restarting:', videos[0].src);
-      // Add a small delay to ensure the video has fully ended before restarting
-      setTimeout(() => {
-        loadNextVideo(); // This now restarts the same video
-      }, 500); // 500ms buffer to ensure smooth transition
-    };
-
-    // Set up event listeners
-    video.addEventListener('loadeddata', handleVideoLoad);
-    video.addEventListener('error', handleVideoError);
-    video.addEventListener('ended', handleVideoEnd);
-    bgVideo.addEventListener('error', handleVideoError);
-
-    // Clean up event listeners
-    return () => {
-      video.removeEventListener('loadeddata', handleVideoLoad);
-      video.removeEventListener('error', handleVideoError);
-      video.removeEventListener('ended', handleVideoEnd);
-      bgVideo.removeEventListener('error', handleVideoError);
-    };
-  }, [hasUserInteracted]);
-
-  // Auto-restart video based on actual video duration if no user interaction
-  useEffect(() => {
-    if (!hasUserInteracted) {
-      const currentVideoDuration = videos[0].duration || 8000;
-      const interval = setInterval(() => {
-        loadNextVideo(); // This now restarts the same video
-      }, currentVideoDuration + 1000); // Add 1 second buffer to ensure full playback
-      return () => clearInterval(interval);
-    }
-  }, [hasUserInteracted]);
+    return () => clearTimeout(timeout);
+  }, [videoLoaded, videoError]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden bg-black">
-      {/* Clean Video Display - No Effects */}
+      {/* Loading state */}
+      {videoLoading && !videoError && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black z-10">
+          <div className="text-white text-lg">Loading video...</div>
+        </div>
+      )}
+      
+      {/* YouTube Video Display */}
       {!videoError ? (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          className="absolute top-0 left-0 w-full h-full object-contain"
-        >
-          <source 
-            src={videos[0].src} 
-            type={videos[0].type} 
+        <div className="absolute top-0 left-0 w-full h-full">
+          <iframe
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
+            title="HK Tea Factory Banner"
+            className="w-full h-full"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            onLoad={handleVideoLoad}
+            onError={handleVideoError}
           />
-          您的瀏覽器不支持視頻播放。
-        </video>
+        </div>
       ) : (
         <Image
-          src={videos[0].fallback}
+          src={fallbackImage}
           alt="Hero"
           fill
           className="absolute top-0 left-0 w-full h-full object-contain"
