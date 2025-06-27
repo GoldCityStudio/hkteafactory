@@ -1,14 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { User } from '@/lib/types/user';
-
-// Temporary in-memory storage for users
-declare global {
-  var users: (User & { password: string })[];
-}
-
-if (!global.users) {
-  global.users = [];
-}
 
 // This is a temporary solution for development
 // In production, you should use a proper database and secure this endpoint
@@ -45,7 +35,7 @@ export async function POST(request: NextRequest) {
         { status: 401 }
       );
     }
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }

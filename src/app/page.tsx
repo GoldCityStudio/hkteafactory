@@ -7,12 +7,10 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import type { Language } from '@/app/types';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/navigation';
 import { AnimatePresence } from 'framer-motion';
 import { useCart } from '@/app/context/CartContext';
 import Cart from '@/components/Cart';
 import type { Product } from '@/lib/types/product';
-import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 type HeroSectionType = {
   headline: string;
