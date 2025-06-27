@@ -530,24 +530,16 @@ function VideoCarousel() {
 
   const videos = [
     {
-      src: '/videos/tearotate.mp4',
+      src: '/1.mp4',
       type: 'video/mp4',
-      fallback: '/images/hero-1.jpg'
+      fallback: '/images/hero-1.jpg',
+      duration: 8000 // 8 seconds in milliseconds
     },
     {
-      src: '/videos/longjing.mp4',
+      src: '/2.mp4',
       type: 'video/mp4',
-      fallback: '/images/hero-2.jpg'
-    },
-    {
-      src: '/videos/tieguanyin.mp4',
-      type: 'video/mp4',
-      fallback: '/images/hero-3.jpg'
-    },
-    {
-      src: '/videos/honey.mp4',
-      type: 'video/mp4',
-      fallback: '/images/hero-4.jpg'
+      fallback: '/images/hero-2.jpg',
+      duration: 8000 // 8 seconds in milliseconds
     }
   ];
 
@@ -604,7 +596,10 @@ function VideoCarousel() {
 
     const handleVideoEnd = () => {
       console.log('Video ended, loading next:', videos[currentVideo].src);
-      loadNextVideo();
+      // Add a small delay to ensure the video has fully ended before loading next
+      setTimeout(() => {
+        loadNextVideo();
+      }, 500); // 500ms buffer to ensure smooth transition
     };
 
     // Set up event listeners
@@ -622,15 +617,16 @@ function VideoCarousel() {
     };
   }, [currentVideo, hasUserInteracted]);
 
-  // Auto-advance videos every 8 seconds if no user interaction
+  // Auto-advance videos based on actual video duration if no user interaction
   useEffect(() => {
     if (!hasUserInteracted) {
+      const currentVideoDuration = videos[currentVideo].duration || 8000;
       const interval = setInterval(() => {
         loadNextVideo();
-      }, 8000);
+      }, currentVideoDuration + 1000); // Add 1 second buffer to ensure full playback
       return () => clearInterval(interval);
     }
-  }, [hasUserInteracted]);
+  }, [currentVideo, hasUserInteracted]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden">
@@ -721,20 +717,6 @@ function VideoCarousel() {
         </div>
       )}
 
-      {/* Play Button for User Interaction */}
-      {!hasUserInteracted && !videoError && (
-        <div className="absolute inset-0 z-30 flex items-center justify-center bg-black/30">
-          <button
-            onClick={handleUserInteraction}
-            className="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full border border-white/30 hover:bg-white/30 transition-all duration-300 flex items-center gap-3"
-          >
-            <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-            </svg>
-            點擊播放視頻
-          </button>
-        </div>
-      )}
 
       <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/50 z-20" />
 
@@ -965,7 +947,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
                 className="bg-white rounded-lg shadow-lg overflow-hidden"
               >
                 <div className="relative h-64">
@@ -987,7 +969,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
                 className="bg-white rounded-lg shadow-lg overflow-hidden"
               >
                 <div className="relative h-64">
@@ -1009,7 +991,7 @@ export default function Home() {
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
                 className="bg-white rounded-lg shadow-lg overflow-hidden"
               >
                 <div className="relative h-64">

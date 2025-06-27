@@ -1,0 +1,4 @@
+id,name_zh,name_en,description_zh,description_en,price,original_price,category,status,stock,thumbnail,images,weight,origin,ingredients,storage,expiry_date,tags,is_new,is_featured
+longjing-premium,西湖龍井,West Lake Longjing,中國十大名茶之首,Top 10 Chinese Tea,180,,green-tea,active,50,/images/longjing-premium.jpg,/images/longjing-premium.jpg,100g,China,綠茶葉,Store in a cool dry place,24 months,premium,true,true
+tieguanyin-premium,鐵觀音,Tieguanyin,安溪鐵觀音 香高韻長,Anxi Tieguanyin high aroma and lasting aftertaste,220,,oolong-tea,active,50,/images/tieguanyin-premium.jpg,/images/tieguanyin-premium.jpg,100g,China,烏龍茶葉,Store in a cool dry place,24 months,premium,false,true
+honey-premium,蜂蜜茶,Honey Tea,天然蜂蜜茶 滋潤養生,Natural honey tea nourishing and moisturizing,150,,honey-product,active,80,/images/honey-premium.jpg,/images/honey-premium.jpg,250g,China,蜂蜜 茶葉,Store in a cool dry place,18 months,honey natural,true,false 
