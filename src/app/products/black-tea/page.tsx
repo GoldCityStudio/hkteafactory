@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
 import ProductCard from '@/components/ProductCard';
+import { useCart } from '@/app/context/CartContext';
 
 type HeroSectionType = {
   headline: string;

@@ -1,8 +1,8 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useCart } from '@/app/context/CartContext';
 import type { Language } from '@/app/types';
 
 interface PriceListProduct {

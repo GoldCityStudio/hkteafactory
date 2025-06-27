@@ -6,6 +6,7 @@ interface User {
   id: string;
   email: string;
   name: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -20,10 +21,10 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false); // Set to false since auth is not active
+  const [loading] = useState(false); // Set to false since auth is not active
   
   // No actual authentication logic as admin/auth routes are removed
-  const login = useCallback(async (email: string, password: string) => {
+  const login = useCallback(async (_email: string, _password: string) => {
     console.warn('Login functionality is disabled.');
     // Simulate failed login
     return { success: false, error: 'Login functionality is currently disabled.' };
@@ -31,10 +32,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = useCallback(async () => {
     console.warn('Logout functionality is disabled.');
+    // Simulate logout
     setUser(null);
   }, []);
 
-  const register = useCallback(async (name: string, email: string, password: string) => {
+  const register = useCallback(async (_name: string, _email: string, _password: string) => {
     console.warn('Register functionality is disabled.');
     // Simulate failed registration
     return { success: false, error: 'Registration functionality is currently disabled.' };
@@ -51,7 +53,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

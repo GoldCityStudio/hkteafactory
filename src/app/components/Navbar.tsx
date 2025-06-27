@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Language } from '@/app/types';
+import { useCart } from '@/app/context/CartContext';
 
 const navItems = {
   zh: [
@@ -85,8 +86,9 @@ const navItems = {
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const { totalItems } = useCart();
   const [language, setLanguage] = useState<Language>('zh');
 
   const toggleLanguage = () => {

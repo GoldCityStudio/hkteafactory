@@ -12,6 +12,7 @@ import { AnimatePresence } from 'framer-motion';
 import { useCart } from '@/app/context/CartContext';
 import Cart from '@/components/Cart';
 import type { Product } from '@/lib/types/product';
+import { FaPlay, FaPause, FaVolumeMute, FaVolumeUp, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 type HeroSectionType = {
   headline: string;
@@ -520,13 +521,10 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
 }
 
 function VideoCarousel() {
-  const [currentVideo, setCurrentVideo] = useState(0);
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const [videoError, setVideoError] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const backgroundVideoRef = useRef<HTMLVideoElement>(null);
-  const router = useRouter();
 
   const videos = [
     {
@@ -537,32 +535,8 @@ function VideoCarousel() {
     }
   ];
 
-  const handleShopNow = () => {
-    const featuredSection = document.getElementById('featured-products');
-    if (featuredSection) {
-      featuredSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleUserInteraction = () => {
-    setHasUserInteracted(true);
-    // Try to play video after user interaction
-    if (videoRef.current) {
-      videoRef.current.play().catch((e) => {
-        console.error('Video play failed after user interaction:', e);
-        setVideoError(true);
-      });
-    }
-    if (backgroundVideoRef.current) {
-      backgroundVideoRef.current.play().catch((e) => {
-        console.error('Background video play failed after user interaction:', e);
-      });
-    }
-  };
-
   const loadNextVideo = () => {
     // Since we only have one video, we'll restart it instead of loading next
-    setIsVideoLoaded(false);
     setVideoError(false);
     if (videoRef.current) {
       videoRef.current.currentTime = 0;
@@ -585,7 +559,6 @@ function VideoCarousel() {
     if (!video || !bgVideo) return;
 
     const handleVideoLoad = () => {
-      setIsVideoLoaded(true);
       // Only try to autoplay if user has interacted or if we're in a development environment
       if (hasUserInteracted || process.env.NODE_ENV === 'development') {
         video.play().catch((e) => {
@@ -593,7 +566,7 @@ function VideoCarousel() {
           setVideoError(true);
         });
       }
-      console.log('Video loaded:', videos[currentVideo].src);
+      console.log('Video loaded:', videos[0].src);
     };
 
     const handleVideoError = (e: Event) => {
@@ -602,7 +575,7 @@ function VideoCarousel() {
     };
 
     const handleVideoEnd = () => {
-      console.log('Video ended, restarting:', videos[currentVideo].src);
+      console.log('Video ended, restarting:', videos[0].src);
       // Add a small delay to ensure the video has fully ended before restarting
       setTimeout(() => {
         loadNextVideo(); // This now restarts the same video
@@ -622,18 +595,18 @@ function VideoCarousel() {
       video.removeEventListener('ended', handleVideoEnd);
       bgVideo.removeEventListener('error', handleVideoError);
     };
-  }, [currentVideo, hasUserInteracted]);
+  }, [hasUserInteracted]);
 
   // Auto-restart video based on actual video duration if no user interaction
   useEffect(() => {
     if (!hasUserInteracted) {
-      const currentVideoDuration = videos[currentVideo].duration || 8000;
+      const currentVideoDuration = videos[0].duration || 8000;
       const interval = setInterval(() => {
         loadNextVideo(); // This now restarts the same video
       }, currentVideoDuration + 1000); // Add 1 second buffer to ensure full playback
       return () => clearInterval(interval);
     }
-  }, [currentVideo, hasUserInteracted]);
+  }, [hasUserInteracted]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden bg-black">
@@ -641,7 +614,6 @@ function VideoCarousel() {
       {!videoError ? (
         <video
           ref={videoRef}
-          key={`video-${currentVideo}`}
           autoPlay
           muted
           loop
@@ -650,14 +622,14 @@ function VideoCarousel() {
           className="absolute top-0 left-0 w-full h-full object-contain"
         >
           <source 
-            src={videos[currentVideo].src} 
-            type={videos[currentVideo].type} 
+            src={videos[0].src} 
+            type={videos[0].type} 
           />
           您的瀏覽器不支持視頻播放。
         </video>
       ) : (
         <Image
-          src={videos[currentVideo].fallback}
+          src={videos[0].fallback}
           alt="Hero"
           fill
           className="absolute top-0 left-0 w-full h-full object-contain"
@@ -789,11 +761,6 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
-  const [isMuted, setIsMuted] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-  const [activeSection, setActiveSection] = useState('hero');
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const handleProductClick = (product: Product) => {
@@ -811,30 +778,6 @@ export default function Home() {
   const prevSlide = () => {
     setCurrentSlide((prev) => (prev - 1 + 4) % 4);
   };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + window.innerHeight / 2;
-      const sections = sectionRefs.current;
-
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (!section) continue;
-
-        const { top, bottom } = section.getBoundingClientRect();
-        const sectionTop = top + window.scrollY;
-        const sectionBottom = bottom + window.scrollY;
-
-        if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-          setActiveSection(section.id);
-          break;
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Auto-play functionality
   useEffect(() => {

@@ -1,4 +1,5 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
+import { importedProducts } from '@/lib/data/imported-products';
 import { Product } from '@/lib/types/product';
 
 // Temporary in-memory storage for products
@@ -11,17 +12,26 @@ if (!global.products) {
 }
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const product = global.products.find((p: Product) => p.id === params.id);
-  if (!product) {
+  try {
+    const product = importedProducts.find((p: Product) => p.id === params.id);
+
+    if (!product) {
+      return NextResponse.json(
+        { error: 'Product not found' },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(product);
+  } catch (error) {
     return NextResponse.json(
-      { message: 'Product not found' },
-      { status: 404 }
+      { error: 'Internal server error' },
+      { status: 500 }
     );
   }
-  return NextResponse.json(product);
 }
 
 export async function PUT(

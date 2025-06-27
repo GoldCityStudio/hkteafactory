@@ -91,7 +91,6 @@ const nextConfig = {
   },
   // Experimental features for better performance
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['framer-motion'],
   },
   // Output configuration for better static optimization
