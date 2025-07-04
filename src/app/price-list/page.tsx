@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useCart } from '@/app/context/CartContext';
 import type { Language } from '@/app/types';
 
@@ -134,9 +134,24 @@ const categoryNames: Record<string, { zh: string; en: string }> = {
   'tea-bags': { zh: '茶包', en: 'Tea Bags' },
 };
 
+const categoryIcons: Record<string, string> = {
+  'green-tea': '🍃',
+  'black-tea': '🫖',
+  'oolong-tea': '🌿',
+  'white-tea': '⚪',
+  'pu-erh': '🫘',
+  'taiwan-tea': '🏔️',
+  'honey': '🍯',
+  'gift-boxes': '🎁',
+  'tea-bags': '📦',
+};
+
 export default function PriceListPage() {
   const [language, setLanguage] = useState<Language>('zh');
   const [selectedCategory, setSelectedCategory] = useState<string>('green-tea');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortBy, setSortBy] = useState<'price' | 'name'>('name');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-HK', {
@@ -146,42 +161,68 @@ export default function PriceListPage() {
     }).format(price);
   };
 
+  const filteredAndSortedProducts = useMemo(() => {
+    let products = priceListData[selectedCategory] || [];
+    
+    // Filter by search term
+    if (searchTerm) {
+      products = products.filter(product => 
+        product.name[language].toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.id.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    // Sort products
+    products.sort((a, b) => {
+      let comparison = 0;
+      if (sortBy === 'price') {
+        comparison = a.price - b.price;
+      } else {
+        comparison = a.name[language].localeCompare(b.name[language]);
+      }
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
+    
+    return products;
+  }, [selectedCategory, searchTerm, sortBy, sortOrder, language]);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50">
-      {/* Header */}
-      <div className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      {/* Hero Header */}
+      <div className="relative bg-gradient-to-r from-emerald-600 to-teal-600 text-white">
+        <div className="absolute inset-0 bg-black opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="text-center"
           >
-            <h1 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+            <h1 className="text-5xl font-serif font-bold mb-6">
               {language === 'zh' ? '2025年價格表' : '2025 Price List'}
             </h1>
-            <p className="text-xl text-gray-600 mb-6">
+            <p className="text-xl mb-8 opacity-90">
               {language === 'zh' ? '探索烘茶源的完整產品系列' : 'Explore HK Tea Factory\'s Complete Product Range'}
             </p>
             
             {/* Language Toggle */}
-            <div className="flex justify-center space-x-4 mb-8">
+            <div className="flex justify-center space-x-4">
               <button
                 onClick={() => setLanguage('zh')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-6 py-3 rounded-full font-medium transition-all transform hover:scale-105 ${
                   language === 'zh'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-white text-emerald-600 shadow-lg'
+                    : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
                 }`}
               >
                 中文
               </button>
               <button
                 onClick={() => setLanguage('en')}
-                className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+                className={`px-6 py-3 rounded-full font-medium transition-all transform hover:scale-105 ${
                   language === 'en'
-                    ? 'bg-emerald-600 text-white'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-white text-emerald-600 shadow-lg'
+                    : 'bg-white bg-opacity-20 text-white hover:bg-opacity-30'
                 }`}
               >
                 English
@@ -192,27 +233,69 @@ export default function PriceListPage() {
       </div>
 
       {/* Category Navigation */}
-      <div className="bg-white border-b">
+      <div className="bg-white shadow-lg sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex overflow-x-auto space-x-1 py-4">
+          <div className="flex overflow-x-auto space-x-2 py-6 scrollbar-hide">
             {Object.entries(categoryNames).map(([key, name]) => (
-              <button
+              <motion.button
                 key={key}
                 onClick={() => setSelectedCategory(key)}
-                className={`flex-shrink-0 px-4 py-2 rounded-lg font-medium transition-all ${
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className={`flex-shrink-0 px-6 py-3 rounded-full font-medium transition-all ${
                   selectedCategory === key
                     ? 'bg-emerald-600 text-white shadow-lg'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
+                <span className="mr-2">{categoryIcons[key]}</span>
                 {name[language]}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Product List */}
+      {/* Search and Sort Controls */}
+      <div className="bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <input
+                type="text"
+                placeholder={language === 'zh' ? '搜尋產品...' : 'Search products...'}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              />
+              <svg className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+
+            {/* Sort Controls */}
+            <div className="flex gap-2">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value as 'price' | 'name')}
+                className="px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              >
+                <option value="name">{language === 'zh' ? '按名稱' : 'By Name'}</option>
+                <option value="price">{language === 'zh' ? '按價格' : 'By Price'}</option>
+              </select>
+              <button
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                className="px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+              >
+                {sortOrder === 'asc' ? '↑' : '↓'}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Product Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <motion.div
           key={selectedCategory}
@@ -220,74 +303,112 @@ export default function PriceListPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h2 className="text-3xl font-serif font-bold text-gray-900 mb-8 text-center">
-            {categoryNames[selectedCategory][language]}
-          </h2>
-          
-          <div className="grid gap-6">
-            {priceListData[selectedCategory]?.map((product, index) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center space-x-3 mb-2">
-                      <span className="text-sm font-medium text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                        {product.id}
-                      </span>
-                      {product.isNew && (
-                        <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded">
-                          {language === 'zh' ? '新品' : 'NEW'}
-                        </span>
-                      )}
-                      {product.isPremium && (
-                        <span className="text-xs font-medium text-white bg-amber-500 px-2 py-1 rounded">
-                          {language === 'zh' ? '極品' : 'PREMIUM'}
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-1">
-                      {product.name[language]}
-                    </h3>
-                    <p className="text-gray-600 text-sm">
-                      {language === 'zh' ? '重量' : 'Weight'}: {product.weight}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-emerald-600">
-                      {formatPrice(product.price)}
-                    </div>
-                    <button className="mt-2 bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm">
-                      {language === 'zh' ? '加入購物車' : 'Add to Cart'}
-                    </button>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+          <div className="text-center mb-8">
+            <h2 className="text-4xl font-serif font-bold text-gray-900 mb-2">
+              {categoryIcons[selectedCategory]} {categoryNames[selectedCategory][language]}
+            </h2>
+            <p className="text-gray-600">
+              {language === 'zh' 
+                ? `共 ${filteredAndSortedProducts.length} 個產品` 
+                : `${filteredAndSortedProducts.length} products available`
+              }
+            </p>
           </div>
+          
+          {filteredAndSortedProducts.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-center py-12"
+            >
+              <div className="text-gray-400 text-6xl mb-4">🔍</div>
+              <p className="text-gray-600 text-lg">
+                {language === 'zh' ? '沒有找到相關產品' : 'No products found'}
+              </p>
+            </motion.div>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <AnimatePresence>
+                {filteredAndSortedProducts.map((product, index) => (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                    whileHover={{ y: -5, scale: 1.02 }}
+                    className="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
+                  >
+                    {/* Product Header */}
+                    <div className="p-6">
+                      <div className="flex items-start justify-between mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center space-x-2 mb-3">
+                            <span className="text-sm font-medium text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full">
+                              {product.id}
+                            </span>
+                            {product.isNew && (
+                              <span className="text-xs font-medium text-white bg-red-500 px-2 py-1 rounded-full animate-pulse">
+                                {language === 'zh' ? '新品' : 'NEW'}
+                              </span>
+                            )}
+                            {product.isPremium && (
+                              <span className="text-xs font-medium text-white bg-amber-500 px-2 py-1 rounded-full">
+                                {language === 'zh' ? '極品' : 'PREMIUM'}
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="text-xl font-semibold text-gray-900 mb-2 group-hover:text-emerald-600 transition-colors">
+                            {product.name[language]}
+                          </h3>
+                          <p className="text-gray-600 text-sm flex items-center">
+                            <span className="mr-2">⚖️</span>
+                            {language === 'zh' ? '重量' : 'Weight'}: {product.weight}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Price and Action */}
+                      <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                        <div className="text-2xl font-bold text-emerald-600">
+                          {formatPrice(product.price)}
+                        </div>
+                        <button className="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition-colors transform hover:scale-105 font-medium">
+                          {language === 'zh' ? '加入購物車' : 'Add to Cart'}
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          )}
         </motion.div>
       </div>
 
       {/* Footer Note */}
       <div className="bg-gray-50 border-t">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center text-gray-600">
-            <p className="mb-2">
-              {language === 'zh' 
-                ? '所有價格均以港幣計算，如有查詢請聯絡我們。' 
-                : 'All prices are in Hong Kong Dollars. Please contact us for any inquiries.'
-              }
-            </p>
-            <p className="text-sm">
-              {language === 'zh' 
-                ? '價格如有變動，恕不另行通知。' 
-                : 'Prices are subject to change without notice.'
-              }
-            </p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="text-center">
+            <div className="bg-white rounded-2xl p-8 shadow-lg max-w-2xl mx-auto">
+              <h3 className="text-2xl font-serif font-bold text-gray-900 mb-4">
+                {language === 'zh' ? '價格說明' : 'Pricing Information'}
+              </h3>
+              <div className="space-y-3 text-gray-600">
+                <p>
+                  {language === 'zh' 
+                    ? '所有價格均以港幣計算，如有查詢請聯絡我們。' 
+                    : 'All prices are in Hong Kong Dollars. Please contact us for any inquiries.'
+                  }
+                </p>
+                <p className="text-sm">
+                  {language === 'zh' 
+                    ? '價格如有變動，恕不另行通知。' 
+                    : 'Prices are subject to change without notice.'
+                  }
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
