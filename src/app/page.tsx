@@ -40,95 +40,210 @@ const content: Record<Language, ContentType> = {
   zh: {
     products: [
       {
-        id: 'tea-machine',
-        name: { zh: '多功能茶機', en: 'Multifunctional Tea Machine' },
-        description: { zh: '買茶機送9盒茶', en: 'Buy Tea Machine Get 9 Boxes of Tea' },
-        price: 1999,
+        id: 'mingqian-lion-peak-longjing',
+        name: { zh: '明前獅峰龍井', en: 'Mingqian Lion Peak Longjing' },
+        description: { zh: '明前獅峰龍井，扁平光滑，翠綠鮮潤', en: 'Mingqian Lion Peak Longjing, flat and smooth, emerald green and fresh' },
+        price: 1388,
         originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
-        status: 'active' as const,
-        isNew: true,
-        specifications: {
-          weight: '1.5kg',
-          origin: 'China',
-          storage: 'Store in a cool, dry place',
-          expiryDate: '24 months'
-        },
-        stock: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
-      },
-      {
-        id: 'osmanthus-coix',
-        name: { zh: '桂花薏米茶', en: 'Osmanthus Coix Seed' },
-        description: { zh: '新品上市', en: 'New In' },
-        price: 119,
-        originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
-        status: 'active' as const,
-        isNew: true,
-        specifications: {
-          weight: '100g',
-          origin: 'China',
-          storage: 'Store in a cool, dry place',
-          expiryDate: '24 months'
-        },
-        stock: 50,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
-      },
-      {
-        id: 'anti-aging',
-        name: { zh: '凍齡茶', en: 'Freeze Your Age' },
-        description: { zh: '養顏抗衰老', en: 'Anti-aging Tea' },
-        price: 119,
-        originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
+        thumbnail: '/images/longjing-premium.jpg',
+        images: ['/images/longjing-premium.jpg'],
+        category: 'green-tea' as const,
         status: 'active' as const,
         isNew: false,
         specifications: {
-          weight: '100g',
-          origin: 'China',
+          weight: '250g',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
+        tags: ['premium', 'longjing'],
+        isFeatured: true
       },
       {
-        id: 'jasmine-pearl',
-        name: { zh: '茉莉龍珠', en: 'Dragon Pearl Jasmine' },
-        description: { zh: '清香怡人', en: 'Fragrant & Refreshing' },
-        price: 99,
+        id: 'yuqian-longjing',
+        name: { zh: '雨前龍井', en: 'Yuqian Longjing' },
+        description: { zh: '雨前龍井，清香持久，回甘明顯', en: 'Yuqian Longjing, lasting fresh aroma, obvious aftertaste' },
+        price: 498,
         originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
+        thumbnail: '/images/longjing-yuqian.jpg',
+        images: ['/images/longjing-yuqian.jpg'],
+        category: 'green-tea' as const,
         status: 'active' as const,
         isNew: false,
         specifications: {
-          weight: '100g',
-          origin: 'China',
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['longjing'],
+        isFeatured: false
+      },
+      {
+        id: 'taiwan-premium-ginseng-oolong',
+        name: { zh: '台灣頂級人蔘烏龍', en: 'Taiwan Premium Ginseng Oolong' },
+        description: { zh: '台灣頂級人蔘烏龍，香氣濃郁，滋味醇厚', en: 'Taiwan Premium Ginseng Oolong, rich aroma, mellow flavor' },
+        price: 880,
+        originalPrice: undefined,
+        thumbnail: '/images/taiwan-ginseng-oolong.jpg',
+        images: ['/images/taiwan-ginseng-oolong.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Taiwan',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'taiwan', 'ginseng'],
+        isFeatured: true
+      },
+      {
+        id: 'monkey-pick-tieguanyin',
+        name: { zh: '馬騮搣', en: 'Monkey Pick Tieguanyin' },
+        description: { zh: '馬騮搣鐵觀音，手工採摘，品質優良', en: 'Monkey Pick Tieguanyin, hand-picked, excellent quality' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/monkey-pick-tieguanyin.jpg',
+        images: ['/images/monkey-pick-tieguanyin.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Anxi, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 45,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['monkey-pick'],
+        isFeatured: false
+      },
+      {
+        id: 'snow-bud-silver-needle',
+        name: { zh: '雪芽銀針', en: 'Snow Bud Silver Needle' },
+        description: { zh: '雪芽銀針，白茶極品，清香淡雅', en: 'Snow Bud Silver Needle, premium white tea, light and elegant' },
+        price: 688,
+        originalPrice: undefined,
+        thumbnail: '/images/snow-bud-silver-needle.jpg',
+        images: ['/images/snow-bud-silver-needle.jpg'],
+        category: 'white-tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '100g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white-tea'],
+        isFeatured: true
+      },
+      {
+        id: 'phoenix-dancong-duck-shit',
+        name: { zh: '鳳凰單叢 鴨屎香', en: 'Phoenix Dancong Duck Shit Aroma' },
+        description: { zh: '鳳凰單叢鴨屎香，香氣獨特，韻味悠長', en: 'Phoenix Dancong Duck Shit Aroma, unique aroma, lasting aftertaste' },
+        price: 398,
+        originalPrice: undefined,
+        thumbnail: '/images/phoenix-dancong.jpg',
+        images: ['/images/phoenix-dancong.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Guangdong, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dancong', 'phoenix'],
+        isFeatured: false
+      },
+      {
+        id: 'arbor-pu-erh',
+        name: { zh: '喬木普洱', en: 'Arbor Pu-erh' },
+        description: { zh: '喬木普洱，陳香濃郁，滋味醇厚', en: 'Arbor Pu-erh, rich aged aroma, mellow flavor' },
+        price: 598,
+        originalPrice: undefined,
+        thumbnail: '/images/arbor-pu-erh.jpg',
+        images: ['/images/arbor-pu-erh.jpg'],
+        category: 'pu-erh' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '357g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['arbor', 'pu-erh'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-oolong-tea-bags',
+        name: { zh: '桂花烏龍茶包', en: 'Osmanthus Oolong Tea Bags' },
+        description: { zh: '桂花烏龍茶包，花香濃郁，方便沖泡', en: 'Osmanthus Oolong Tea Bags, rich floral aroma, convenient brewing' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/osmanthus-oolong-bags.jpg',
+        images: ['/images/osmanthus-oolong-bags.jpg'],
+        category: 'tea-bags' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tea-bags', 'osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'linden-honey',
+        name: { zh: '紫椴蜂蜜', en: 'Linden Honey' },
+        description: { zh: '紫椴蜂蜜，花香濃郁，營養豐富', en: 'Linden Honey, rich floral aroma, highly nutritious' },
+        price: 180,
+        originalPrice: undefined,
+        thumbnail: '/images/linden-honey.jpg',
+        images: ['/images/linden-honey.jpg'],
+        category: 'honey-product' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '500g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 70,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'linden'],
         isFeatured: false
       }
     ],
@@ -167,95 +282,210 @@ const content: Record<Language, ContentType> = {
   en: {
     products: [
       {
-        id: 'tea-machine',
-        name: { zh: '多功能茶機', en: 'Multifunctional Tea Machine' },
-        description: { zh: '買茶機送9盒茶', en: 'Buy Tea Machine Get 9 Boxes of Tea' },
-        price: 1999,
+        id: 'mingqian-lion-peak-longjing',
+        name: { zh: '明前獅峰龍井', en: 'Mingqian Lion Peak Longjing' },
+        description: { zh: '明前獅峰龍井，扁平光滑，翠綠鮮潤', en: 'Mingqian Lion Peak Longjing, flat and smooth, emerald green and fresh' },
+        price: 1388,
         originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
-        status: 'active' as const,
-        isNew: true,
-        specifications: {
-          weight: '1.5kg',
-          origin: 'China',
-          storage: 'Store in a cool, dry place',
-          expiryDate: '24 months'
-        },
-        stock: 0,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
-      },
-      {
-        id: 'osmanthus-coix',
-        name: { zh: '桂花薏米茶', en: 'Osmanthus Coix Seed' },
-        description: { zh: '新品上市', en: 'New In' },
-        price: 119,
-        originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
-        status: 'active' as const,
-        isNew: true,
-        specifications: {
-          weight: '100g',
-          origin: 'China',
-          storage: 'Store in a cool, dry place',
-          expiryDate: '24 months'
-        },
-        stock: 50,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
-      },
-      {
-        id: 'anti-aging',
-        name: { zh: '凍齡茶', en: 'Freeze Your Age' },
-        description: { zh: '養顏抗衰老', en: 'Anti-aging Tea' },
-        price: 119,
-        originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
+        thumbnail: '/images/longjing-premium.jpg',
+        images: ['/images/longjing-premium.jpg'],
+        category: 'green-tea' as const,
         status: 'active' as const,
         isNew: false,
         specifications: {
-          weight: '100g',
-          origin: 'China',
+          weight: '250g',
+          origin: 'Hangzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
-        isFeatured: false
+        tags: ['premium', 'longjing'],
+        isFeatured: true
       },
       {
-        id: 'jasmine-pearl',
-        name: { zh: '茉莉龍珠', en: 'Dragon Pearl Jasmine' },
-        description: { zh: '清香怡人', en: 'Fragrant & Refreshing' },
-        price: 99,
+        id: 'yuqian-longjing',
+        name: { zh: '雨前龍井', en: 'Yuqian Longjing' },
+        description: { zh: '雨前龍井，清香持久，回甘明顯', en: 'Yuqian Longjing, lasting fresh aroma, obvious aftertaste' },
+        price: 498,
         originalPrice: undefined,
-        thumbnail: '/images/placeholder.webp',
-        images: ['/images/placeholder.webp'],
-        category: 'tea' as const,
+        thumbnail: '/images/longjing-yuqian.jpg',
+        images: ['/images/longjing-yuqian.jpg'],
+        category: 'green-tea' as const,
         status: 'active' as const,
         isNew: false,
         specifications: {
-          weight: '100g',
-          origin: 'China',
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['longjing'],
+        isFeatured: false
+      },
+      {
+        id: 'taiwan-premium-ginseng-oolong',
+        name: { zh: '台灣頂級人蔘烏龍', en: 'Taiwan Premium Ginseng Oolong' },
+        description: { zh: '台灣頂級人蔘烏龍，香氣濃郁，滋味醇厚', en: 'Taiwan Premium Ginseng Oolong, rich aroma, mellow flavor' },
+        price: 880,
+        originalPrice: undefined,
+        thumbnail: '/images/taiwan-ginseng-oolong.jpg',
+        images: ['/images/taiwan-ginseng-oolong.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Taiwan',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'taiwan', 'ginseng'],
+        isFeatured: true
+      },
+      {
+        id: 'monkey-pick-tieguanyin',
+        name: { zh: '馬騮搣', en: 'Monkey Pick Tieguanyin' },
+        description: { zh: '馬騮搣鐵觀音，手工採摘，品質優良', en: 'Monkey Pick Tieguanyin, hand-picked, excellent quality' },
+        price: 268,
+        originalPrice: undefined,
+        thumbnail: '/images/monkey-pick-tieguanyin.jpg',
+        images: ['/images/monkey-pick-tieguanyin.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Anxi, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
         stock: 45,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: [],
+        tags: ['monkey-pick'],
+        isFeatured: false
+      },
+      {
+        id: 'snow-bud-silver-needle',
+        name: { zh: '雪芽銀針', en: 'Snow Bud Silver Needle' },
+        description: { zh: '雪芽銀針，白茶極品，清香淡雅', en: 'Snow Bud Silver Needle, premium white tea, light and elegant' },
+        price: 688,
+        originalPrice: undefined,
+        thumbnail: '/images/snow-bud-silver-needle.jpg',
+        images: ['/images/snow-bud-silver-needle.jpg'],
+        category: 'white-tea' as const,
+        status: 'active' as const,
+        isNew: true,
+        specifications: {
+          weight: '100g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white-tea'],
+        isFeatured: true
+      },
+      {
+        id: 'phoenix-dancong-duck-shit',
+        name: { zh: '鳳凰單叢 鴨屎香', en: 'Phoenix Dancong Duck Shit Aroma' },
+        description: { zh: '鳳凰單叢鴨屎香，香氣獨特，韻味悠長', en: 'Phoenix Dancong Duck Shit Aroma, unique aroma, lasting aftertaste' },
+        price: 398,
+        originalPrice: undefined,
+        thumbnail: '/images/phoenix-dancong.jpg',
+        images: ['/images/phoenix-dancong.jpg'],
+        category: 'oolong-tea' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Guangdong, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['dancong', 'phoenix'],
+        isFeatured: false
+      },
+      {
+        id: 'arbor-pu-erh',
+        name: { zh: '喬木普洱', en: 'Arbor Pu-erh' },
+        description: { zh: '喬木普洱，陳香濃郁，滋味醇厚', en: 'Arbor Pu-erh, rich aged aroma, mellow flavor' },
+        price: 598,
+        originalPrice: undefined,
+        thumbnail: '/images/arbor-pu-erh.jpg',
+        images: ['/images/arbor-pu-erh.jpg'],
+        category: 'pu-erh' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '357g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 40,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['arbor', 'pu-erh'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-oolong-tea-bags',
+        name: { zh: '桂花烏龍茶包', en: 'Osmanthus Oolong Tea Bags' },
+        description: { zh: '桂花烏龍茶包，花香濃郁，方便沖泡', en: 'Osmanthus Oolong Tea Bags, rich floral aroma, convenient brewing' },
+        price: 88,
+        originalPrice: undefined,
+        thumbnail: '/images/osmanthus-oolong-bags.jpg',
+        images: ['/images/osmanthus-oolong-bags.jpg'],
+        category: 'tea-bags' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '50 bags',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 100,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['tea-bags', 'osmanthus'],
+        isFeatured: false
+      },
+      {
+        id: 'linden-honey',
+        name: { zh: '紫椴蜂蜜', en: 'Linden Honey' },
+        description: { zh: '紫椴蜂蜜，花香濃郁，營養豐富', en: 'Linden Honey, rich floral aroma, highly nutritious' },
+        price: 180,
+        originalPrice: undefined,
+        thumbnail: '/images/linden-honey.jpg',
+        images: ['/images/linden-honey.jpg'],
+        category: 'honey-product' as const,
+        status: 'active' as const,
+        isNew: false,
+        specifications: {
+          weight: '500g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 70,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'linden'],
         isFeatured: false
       }
     ],
@@ -712,7 +942,7 @@ function ProductDetailPopup({
 }
 
 export default function Home() {
-  const [language, setLanguage] = useState<'en' | 'zh'>('en');
+  const [language, setLanguage] = useState<'en' | 'zh'>('zh');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
@@ -1036,78 +1266,65 @@ export default function Home() {
               className="text-center mb-20"
             >
               <h2 className="text-5xl font-serif font-bold text-gray-900 mb-8 tracking-wide">
-                精選產品
+                熱賣產品
               </h2>
               <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light tracking-wide">
                 探索我們精心挑選的優質茶葉和茶具系列
               </p>
             </motion.div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src="/images/placeholder.png"
-                    alt="精選茶葉"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">精選茶葉</h3>
-                  <p className="text-gray-600">
-                    嚴選優質茶葉，為您帶來最純正的茶香體驗。
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src="/images/placeholder.png"
-                    alt="有機蜂蜜"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">有機蜂蜜</h3>
-                  <p className="text-gray-600">
-                    100%純天然有機蜂蜜，營養豐富，口感醇厚。
-                  </p>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="bg-white rounded-lg shadow-lg overflow-hidden"
-              >
-                <div className="relative h-64">
-                  <Image
-                    src="/images/placeholder.png"
-                    alt="禮盒定制"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">禮盒定制</h3>
-                  <p className="text-gray-600">
-                    為您量身定制獨一無二的茶葉禮盒，傳遞心意。
-                  </p>
-                </div>
-              </motion.div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {content[language].products.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                >
+                  <div className="relative h-64 overflow-hidden">
+                    <motion.div
+                      className="w-full h-full"
+                      whileHover={{
+                        scale: 1.1,
+                      }}
+                      transition={{ duration: 0.5, ease: "easeOut" }}
+                    >
+                      <Image
+                        src={product.thumbnail}
+                        alt={product.name[language]}
+                        fill
+                        className="object-cover"
+                      />
+                    </motion.div>
+                    {product.isNew && (
+                      <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+                        {language === 'zh' ? '新品' : 'New'}
+                      </div>
+                    )}
+                    {product.isFeatured && (
+                      <div className="absolute top-4 right-4 bg-rose-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
+                        {language === 'zh' ? '熱賣' : 'Hot'}
+                      </div>
+                    )}
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{product.name[language]}</h3>
+                    <p className="text-gray-600 mb-4">{product.description[language]}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-2xl font-bold text-emerald-600">
+                        ${product.price}
+                      </span>
+                      <button
+                        onClick={() => handleProductClick(product)}
+                        className="bg-emerald-600 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-emerald-700 transition-colors duration-300"
+                      >
+                        {language === 'zh' ? '查看詳情' : 'View Details'}
+                      </button>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
             </div>
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
@@ -1137,10 +1354,10 @@ export default function Home() {
               className="text-center mb-20"
             >
               <h2 className="text-5xl font-serif font-bold text-gray-900 mb-8 tracking-wide">
-                六大茶類
+                產品類別總覽
               </h2>
               <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light tracking-wide">
-                深入了解中國傳統六大茶類，品味千年茶文化
+                深入了解中國傳統茶類，品味千年茶文化
               </p>
             </motion.div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
@@ -1153,12 +1370,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/green-tea.jpg"
-                    alt="綠茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/green-tea.jpg"
+                      alt="綠茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">綠茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">
@@ -1175,12 +1400,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/white-tea.jpg"
-                    alt="白茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/white-tea.jpg"
+                      alt="白茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">白茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">
@@ -1197,12 +1430,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/flower-tea.jpg"
-                    alt="花茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/flower-tea.jpg"
+                      alt="花茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">花茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">
@@ -1219,12 +1460,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/dark-tea.jpg"
-                    alt="紅茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/dark-tea.jpg"
+                      alt="紅茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">紅茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">
@@ -1241,12 +1490,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/blue-tea.jpg"
-                    alt="青茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/blue-tea.jpg"
+                      alt="青茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">青茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">
@@ -1263,12 +1520,20 @@ export default function Home() {
                 className="flex flex-col items-center text-center"
               >
                 <div className="relative w-full aspect-square mb-6 rounded-xl overflow-hidden shadow-lg">
-                  <Image
-                    src="/images/black-tea.jpg"
-                    alt="黑茶"
-                    fill
-                    className="object-cover"
-                  />
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src="/images/black-tea.jpg"
+                      alt="黑茶"
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
                 </div>
                 <h3 className="text-3xl font-serif font-bold text-gray-900 mb-4">黑茶</h3>
                 <p className="text-base text-gray-700 leading-relaxed">

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
 import { useScroll, useTransform } from 'framer-motion';
+import ProductSidebar from '@/components/ProductSidebar';
 
 type HeroSectionType = {
   headline: string;
@@ -823,13 +824,21 @@ function ProductGrid({ products }: { products: Product[] }) {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          <div className="relative h-64">
-            <Image
-              src={product.thumbnail}
-              alt={product.name.en}
-              fill
-              className="object-cover"
-            />
+          <div className="relative h-64 overflow-hidden">
+            <motion.div
+              className="w-full h-full"
+              whileHover={{
+                scale: 1.1,
+              }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+              <Image
+                src={product.thumbnail}
+                alt={product.name.en}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
           </div>
           <div className="p-6">
             <h3 className="text-xl font-semibold mb-2">{product.name.en}</h3>
@@ -880,14 +889,25 @@ export default function GreenTeaPage() {
 
       <HeroSection section={content[language].heroSection} />
 
-      <section id="products" className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            {language === 'en' ? 'Our Green Tea Collection' : '我們的綠茶系列'}
-          </h2>
-          <ProductGrid products={content[language].products} />
-        </div>
-      </section>
+      {/* Main Content with Sidebar */}
+      <div className="flex flex-col lg:flex-row">
+        {/* Sidebar Navigation */}
+        <ProductSidebar currentCategory="green-tea" />
+
+        {/* Main Content */}
+        <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <section id="products" className="py-20 bg-gray-50 rounded-lg">
+              <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-12">
+                  {language === 'en' ? 'Our Green Tea Collection' : '我們的綠茶系列'}
+                </h2>
+                <ProductGrid products={content[language].products} />
+              </div>
+            </section>
+          </div>
+        </main>
+      </div>
     </main>
   );
 } 

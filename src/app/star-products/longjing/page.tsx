@@ -26,9 +26,33 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       button: '立即探索',
       leafColor: '#388d54',
       bg: 'from-darkgreen-800 via-darkgreen-900 to-darkgreen-700',
-      bgImage: '/images/hero-1.jpg'
+      bgImage: '/images/hero-1.jpg',
+      bgVideo: '/videos/longjing.mp4'
     },
     products: [
+      {
+        id: 'rare-premium-lion-peak',
+        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
+        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
+        price: 12800,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-rare.jpg',
+        images: ['/images/longjing-rare.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
+      },
       {
         id: 'west-lake-longjing-supreme',
         name: { zh: '明前獅峰龍井', en: 'Premium Lion Peak Longjing Tea' },
@@ -145,27 +169,73 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         isFeatured: false
       },
       {
-        id: 'rare-premium-lion-peak',
-        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
-        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
-        price: 12800,
+        id: 'biluochun-superior',
+        name: { zh: '特級碧螺春', en: 'Superior Biluochun Tea' },
+        description: { zh: '特級碧螺春，清香持久，滋味鮮爽', en: 'Superior Biluochun Tea, lasting fresh aroma, refreshing taste' },
+        price: 580,
         originalPrice: undefined,
-        thumbnail: '/images/longjing-rare.jpg',
-        images: ['/images/longjing-rare.jpg'],
+        thumbnail: '/images/biluochun.jpg',
+        images: ['/images/biluochun.jpg'],
         category: 'green-tea',
         status: 'active',
-        isNew: true,
+        isNew: false,
         specifications: {
           weight: '250g',
-          origin: 'Hangzhou, China',
+          origin: 'Suzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
-        stock: 5,
+        stock: 25,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: ['rare', 'premium'],
-        isFeatured: true
+        tags: ['premium'],
+        isFeatured: false
+      },
+      {
+        id: 'maojian-premium',
+        name: { zh: '明前毛尖', en: 'Premium Maojian Tea' },
+        description: { zh: '明前毛尖，芽葉肥壯，香氣高揚', en: 'Premium Maojian Tea, plump buds, high aroma' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/maojian.jpg',
+        images: ['/images/maojian.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Xinyang, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: false
+      },
+      {
+        id: 'yunwu-green',
+        name: { zh: '雲霧綠茶', en: 'Yunwu Green Tea' },
+        description: { zh: '雲霧綠茶，產自高山，清香怡人', en: 'Yunwu Green Tea, grown in high mountains, refreshing aroma' },
+        price: 320,
+        originalPrice: undefined,
+        thumbnail: '/images/yunwu.jpg',
+        images: ['/images/yunwu.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Lushan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['mountain'],
+        isFeatured: false
       }
     ]
   },
@@ -176,9 +246,33 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       button: 'Explore Now',
       leafColor: '#388d54',
       bg: 'from-darkgreen-800 via-darkgreen-900 to-darkgreen-700',
-      bgImage: '/images/hero-longjing.jpg'
+      bgImage: '/images/hero-longjing.jpg',
+      bgVideo: '/videos/longjing.mp4'
     },
     products: [
+      {
+        id: 'rare-premium-lion-peak',
+        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
+        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
+        price: 12800,
+        originalPrice: undefined,
+        thumbnail: '/images/longjing-rare.jpg',
+        images: ['/images/longjing-rare.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '250g',
+          origin: 'Hangzhou, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rare', 'premium'],
+        isFeatured: true
+      },
       {
         id: 'west-lake-longjing-supreme',
         name: { zh: '明前獅峰龍井', en: 'Premium Lion Peak Longjing Tea' },
@@ -295,27 +389,73 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         isFeatured: false
       },
       {
-        id: 'rare-premium-lion-peak',
-        name: { zh: '稀有明前獅峰龍井', en: 'Rare Premium Lion Peak Longjing Tea' },
-        description: { zh: '稀有明前獅峰龍井，極品中的極品', en: 'Rare Premium Lion Peak Longjing Tea, the finest of the finest' },
-        price: 12800,
+        id: 'biluochun-superior',
+        name: { zh: '特級碧螺春', en: 'Superior Biluochun Tea' },
+        description: { zh: '特級碧螺春，清香持久，滋味鮮爽', en: 'Superior Biluochun Tea, lasting fresh aroma, refreshing taste' },
+        price: 580,
         originalPrice: undefined,
-        thumbnail: '/images/longjing-rare.jpg',
-        images: ['/images/longjing-rare.jpg'],
+        thumbnail: '/images/biluochun.jpg',
+        images: ['/images/biluochun.jpg'],
         category: 'green-tea',
         status: 'active',
-        isNew: true,
+        isNew: false,
         specifications: {
           weight: '250g',
-          origin: 'Hangzhou, China',
+          origin: 'Suzhou, China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
-        stock: 5,
+        stock: 25,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: ['rare', 'premium'],
-        isFeatured: true
+        tags: ['premium'],
+        isFeatured: false
+      },
+      {
+        id: 'maojian-premium',
+        name: { zh: '明前毛尖', en: 'Premium Maojian Tea' },
+        description: { zh: '明前毛尖，芽葉肥壯，香氣高揚', en: 'Premium Maojian Tea, plump buds, high aroma' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/maojian.jpg',
+        images: ['/images/maojian.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Xinyang, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium'],
+        isFeatured: false
+      },
+      {
+        id: 'yunwu-green',
+        name: { zh: '雲霧綠茶', en: 'Yunwu Green Tea' },
+        description: { zh: '雲霧綠茶，產自高山，清香怡人', en: 'Yunwu Green Tea, grown in high mountains, refreshing aroma' },
+        price: 320,
+        originalPrice: undefined,
+        thumbnail: '/images/yunwu.jpg',
+        images: ['/images/yunwu.jpg'],
+        category: 'green-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Lushan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 35,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['mountain'],
+        isFeatured: false
       }
     ]
   }
@@ -400,17 +540,25 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 function ProductGrid({ products }: { products: Product[] }) {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12">精選產品</h2>
+      <h2 className="text-3xl font-bold text-center mb-12">更多推介</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="relative h-64">
-              <Image
-                src={product.thumbnail}
-                alt={product.name.zh}
-                fill
-                className="object-cover"
-              />
+            <div className="relative h-64 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                whileHover={{
+                  scale: 1.1,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Image
+                  src={product.thumbnail}
+                  alt={product.name.zh}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{product.name.zh}</h3>
@@ -435,6 +583,8 @@ function ProductGrid({ products }: { products: Product[] }) {
 }
 
 function LongjingSeries({ language }: { language: Language }) {
+  // Always sort products by price descending before rendering
+  const sortedProducts = [...content[language].products].sort((a, b) => b.price - a.price);
   return (
     <motion.section 
       initial={{ opacity: 0 }}
@@ -446,101 +596,11 @@ function LongjingSeries({ language }: { language: Language }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-20"
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <h2 className="text-5xl font-serif font-bold text-gray-900 mb-8 tracking-wide">
-            西湖龍井系列
-          </h2>
-          <p className="text-2xl text-gray-600 max-w-3xl mx-auto font-light tracking-wide">
-            明前龍井，一芽一葉，清香持久，回甘生津
-          </p>
+          <ProductGrid products={sortedProducts} />
         </motion.div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {[
-            {
-              id: 'longjing-premium',
-              name: { en: 'Premium Longjing', zh: '特級龍井' },
-              description: { en: 'Pre-Qingming, One Bud One Leaf, Fresh and Lasting Aroma', zh: '明前採摘，一芽一葉，清香持久' },
-              price: 280,
-              originalPrice: undefined,
-              thumbnail: '/images/longjing-tea.jpg',
-              images: ['/images/longjing-tea.jpg'],
-              category: 'tea' as const,
-              status: 'active' as const,
-              isNew: false,
-              specifications: {
-                weight: '100g',
-                origin: 'Hangzhou, China',
-                storage: 'Store in a cool, dry place',
-                expiryDate: '24 months'
-              },
-              stock: 100,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              tags: [],
-              isFeatured: false
-            },
-            {
-              id: 'longjing-first',
-              name: { en: 'First Grade Longjing', zh: '一級龍井' },
-              description: { en: 'Early Spring Harvest, Fresh and Refreshing', zh: '早春採摘，清新怡人' },
-              price: 220,
-              originalPrice: undefined,
-              thumbnail: '/images/longjing-tea-2.jpg',
-              images: ['/images/longjing-tea-2.jpg'],
-              category: 'tea' as const,
-              status: 'active' as const,
-              isNew: false,
-              specifications: {
-                weight: '100g',
-                origin: 'Hangzhou, China',
-                storage: 'Store in a cool, dry place',
-                expiryDate: '24 months'
-              },
-              stock: 80,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              tags: [],
-              isFeatured: false
-            },
-            {
-              id: 'longjing-gift',
-              name: { en: 'Longjing Gift Set', zh: '龍井禮盒' },
-              description: { en: 'Premium Longjing + First Grade Longjing, Perfect Gift', zh: '特級龍井 + 一級龍井，送禮首選' },
-              price: 480,
-              originalPrice: undefined,
-              thumbnail: '/images/longjing-tea-3.jpg',
-              images: ['/images/longjing-tea-3.jpg'],
-              category: 'gift-sets' as const,
-              status: 'active' as const,
-              isNew: true,
-              specifications: {
-                weight: '200g',
-                origin: 'Hangzhou, China',
-                storage: 'Store in a cool, dry place',
-                expiryDate: '24 months'
-              },
-              stock: 50,
-              createdAt: new Date(),
-              updatedAt: new Date(),
-              tags: [],
-              isFeatured: false
-            }
-          ].map((product, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <ProductCard product={product} language={language} />
-            </motion.div>
-          ))}
-        </div>
       </div>
     </motion.section>
   );

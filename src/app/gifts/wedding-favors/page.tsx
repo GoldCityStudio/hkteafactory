@@ -68,13 +68,21 @@ export default function WeddingFavorsPage() {
             transition={{ delay: index * 0.2 }}
             className="bg-white rounded-lg shadow-lg overflow-hidden"
           >
-            <div className="relative h-64">
-              <Image
-                src={favor.image}
-                alt={favor.name}
-                fill
-                className="object-cover"
-              />
+            <div className="relative h-64 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                whileHover={{
+                  scale: 1.1,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Image
+                  src={favor.image}
+                  alt={favor.name}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </div>
             <div className="p-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-2">

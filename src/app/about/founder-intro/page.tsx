@@ -38,58 +38,147 @@ export default function FounderIntroPage() {
       </motion.section>
 
       <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        {/* Founder Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white p-8 rounded-lg shadow-xl"
+          className="bg-white p-8 rounded-lg shadow-xl mb-12"
         >
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-3xl font-bold text-gray-800 mb-8 text-center"
+          >
+            創辦人 - 郭小姐 Christina
+          </motion.h2>
+          
           <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
+              transition={{ duration: 0.8, delay: 1.0 }}
               className="flex-shrink-0"
             >
               <Image
-                src="/images/founder.jpg"
-                alt="Founder Mr. Chan"
+                src="/founder.jpg"
+                alt="Founder Ms. Christina Kwok"
                 width={300}
                 height={300}
                 className="rounded-full shadow-lg object-cover w-64 h-64 md:w-80 md:h-80 border-4 border-emerald-200"
               />
             </motion.div>
-            <div className="space-y-8 text-lg text-gray-700 leading-relaxed">
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
-              >
-                「烘茶源」的創辦人陳先生，自幼便與茶結下了不解之緣。他成長於一個世代茶農家庭，對茶葉的生長、採摘、製作過程耳濡目染。在香港這座國際都市，陳先生意識到雖然茶文化根深蒂固，但市場上缺乏真正能夠代表傳統與創新並存的優質茶品牌。
-              </motion.p>
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.2 }}
               >
-                懷揣著將家鄉好茶推廣至世界的願景，陳先生毅然投身茶葉行業，並在過去三十年間，將畢生精力投入到茶葉的深度研究與品質把控中。他堅信，一杯好茶不僅是味蕾的享受，更是心靈的滋養。他親自走訪各大茶山，與茶農深入交流，從源頭確保每一片茶葉的純淨與天然。
+                創辦人郭小姐Christina自小熱愛傳統中國文化，加上外祖父及母親從事茶葉生產的家庭背景，因此對傳統中式茶葉培養出濃厚興趣。
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.4 }}
               >
-                陳先生不僅繼承了家族世代相傳的製茶工藝，更積極學習和引進現代科技，將傳統與現代完美融合。他領導團隊不斷創新，開發出符合現代人生活節奏的便捷茶品，同時堅持傳統茶葉的純粹與品質。他始終相信，只有對茶葉充滿敬意，才能做出真正打動人心的好茶。
+                多年來認識到各類茶葉的特性、功效、沖泡方法、茶葉品質的辨別方法等知識，祈望透過烘茶源為顧客介紹更多優質茶葉和蜂蜜產品。
               </motion.p>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 1.6 }}
               >
-                如今，「烘茶源」已成為業界的佼佼者，這一切都離不開陳先生三十年如一日的堅持與付出。他不僅是品牌的靈魂人物，更是東方茶文化的傳承者與推廣者。他希望透過「烘茶源」，讓更多人愛上茶，享受茶帶來的健康與美好。
+                在母親賴女士的悉心指導下，Christina深入學習茶葉的各種知識，從茶葉的品種特性到沖泡技巧，從品質辨別到儲藏方法，她都掌握得十分透徹。她相信，只有真正了解茶葉，才能為顧客提供最優質的產品和服務。
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.8 }}
+              >
+                如今，Christina帶領「烘茶源」團隊，致力於為顧客搜羅最優質的茶葉和蜂蜜產品，讓更多人能夠品嚐到真正的好茶，感受傳統茶文化的魅力。
               </motion.p>
             </div>
           </div>
+        </motion.div>
+
+        {/* Mother Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.0 }}
+          className="bg-white p-8 rounded-lg shadow-xl"
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 1.2 }}
+            className="text-3xl font-bold text-gray-800 mb-8 text-center"
+          >
+            茶葉專家 - 賴女士 Ida
+          </motion.h2>
+          
+          <div className="flex flex-col md:flex-row-reverse items-center md:items-start gap-12">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 1.4 }}
+              className="flex-shrink-0"
+            >
+              <Image
+                src="/founder-mom.jpg"
+                alt="Founder's Mother Ms. Ida Lai"
+                width={300}
+                height={300}
+                className="rounded-full shadow-lg object-cover w-64 h-64 md:w-80 md:h-80 border-4 border-emerald-200"
+              />
+            </motion.div>
+            <div className="space-y-6 text-lg text-gray-700 leading-relaxed">
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.6 }}
+              >
+                創辦人的母親賴女士Ida從事茶葉生意三十多年，擁有多年對茶葉採購及銷售的經驗，對各種茶葉的品種、特性、儲藏方法、辨別茶葉品質的方法等十分熟悉。
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 1.8 }}
+              >
+                憑藉著豐富的茶葉知識和經驗，賴女士現致力為烘茶源搜羅優質的茶葉，為顧客提供具質素的茶葉產品。她的專業知識是「烘茶源」品質保證的重要基礎。
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 2.0 }}
+              >
+                賴女士不僅是茶葉專家，更是女兒Christina的良師益友。她將畢生所學的茶葉知識傳授給女兒，讓「烘茶源」能夠傳承家族對茶葉的熱愛和專業。
+              </motion.p>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 2.2 }}
+              >
+                在「烘茶源」，賴女士負責茶葉的品質把控和採購工作，確保每一款產品都符合最高標準，讓顧客能夠享受到真正優質的茶葉產品。
+              </motion.p>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Contact Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 2.4 }}
+          className="text-center mt-12"
+        >
+          <p className="font-semibold text-xl text-emerald-700 mb-4">
+            了解更多關於「烘茶源」的故事
+          </p>
+          <p className="text-lg text-gray-600">
+            電話：(852) 1234 5678 | 電郵：info@hkteafactory.com
+          </p>
         </motion.div>
       </div>
     </div>

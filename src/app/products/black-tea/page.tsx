@@ -7,6 +7,7 @@ import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
 import ProductCard from '@/components/ProductCard';
 import { useCart } from '@/app/context/CartContext';
+import ProductSidebar from '@/components/ProductSidebar';
 
 type HeroSectionType = {
   headline: string;
@@ -785,11 +786,21 @@ export default function BlackTeaPage() {
           </p>
         </motion.div>
       </motion.section>
-      
-      {/* Products Section */}
-      <section id="products">
-        <ProductGrid products={products} />
-      </section>
+
+      {/* Main Content with Sidebar */}
+      <div className="flex flex-col lg:flex-row">
+        {/* Sidebar Navigation */}
+        <ProductSidebar currentCategory="black-tea" />
+
+        {/* Main Content */}
+        <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <section id="products" className="py-20 bg-gray-50 rounded-lg">
+              <ProductGrid products={products} />
+            </section>
+          </div>
+        </main>
+      </div>
     </div>
   );
 } 

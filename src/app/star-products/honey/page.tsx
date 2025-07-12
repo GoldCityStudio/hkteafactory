@@ -14,6 +14,7 @@ type HeroSectionType = {
   leafColor: string;
   bg: string;
   bgImage: string;
+  bgVideo?: string;
 };
 
 const content: Record<Language, { heroSection: HeroSectionType; products: Product[] }> = {
@@ -24,31 +25,78 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       button: '立即探索',
       leafColor: '#5ba976',
       bg: 'from-darkgreen-700 via-darkgreen-900 to-darkgreen-800',
-      bgImage: '/images/hero-3.jpg'
+      bgImage: '/images/hero-3.jpg',
+      bgVideo: '/videos/honey.mp4'
     },
     products: [
       {
-        id: 'honey-acacia',
-        name: { zh: '洋槐蜂蜜', en: 'Acacia Honey' },
-        description: { zh: '清甜潤喉，不易結晶', en: 'Sweet and smooth, resistant to crystallization' },
-        price: 150,
+        id: 'honey-manuka',
+        name: { zh: '麥盧卡蜂蜜', en: 'Manuka Honey' },
+        description: { zh: '紐西蘭特產，抗菌功效強，營養價值極高', en: 'New Zealand specialty, strong antibacterial properties, highly nutritious' },
+        price: 580,
         originalPrice: undefined,
-        thumbnail: '/images/honey-acacia.jpg',
-        images: ['/images/honey-acacia.jpg'],
+        thumbnail: '/images/honey-manuka.jpg',
+        images: ['/images/honey-manuka.jpg'],
         category: 'honey-product',
         status: 'active',
-        isNew: true,
+        isNew: false,
         specifications: {
-          weight: '500g',
+          weight: '250g',
+          origin: 'New Zealand',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'manuka'],
+        isFeatured: true
+      },
+      {
+        id: 'honey-royal-jelly',
+        name: { zh: '蜂王漿', en: 'Royal Jelly' },
+        description: { zh: '蜂王漿，營養豐富，增強免疫力', en: 'Royal jelly, highly nutritious, boosts immunity' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-royal-jelly.jpg',
+        images: ['/images/honey-royal-jelly.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in refrigerator',
+          expiryDate: '12 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'royal-jelly'],
+        isFeatured: false
+      },
+      {
+        id: 'honey-propolis',
+        name: { zh: '蜂膠', en: 'Propolis' },
+        description: { zh: '天然蜂膠，抗菌消炎，保健功效佳', en: 'Natural propolis, antibacterial and anti-inflammatory' },
+        price: 380,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-propolis.jpg',
+        images: ['/images/honey-propolis.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
           origin: 'China',
           storage: 'Store in a cool, dry place',
           expiryDate: '24 months'
         },
-        stock: 60,
+        stock: 30,
         createdAt: new Date(),
         updatedAt: new Date(),
-        tags: ['pure', 'natural'],
-        isFeatured: true
+        tags: ['premium', 'propolis'],
+        isFeatured: false
       },
       {
         id: 'honey-linden',
@@ -72,19 +120,7 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         updatedAt: new Date(),
         tags: ['premium', 'linden'],
         isFeatured: false
-      }
-    ]
-  },
-  en: {
-    heroSection: {
-      headline: 'Natural Honey',
-      subheadline: 'Carefully selected high-quality honey, pure and natural.',
-      button: 'Explore Honey',
-      leafColor: '#5ba976',
-      bg: 'from-darkgreen-700 via-darkgreen-900 to-darkgreen-800',
-      bgImage: '/images/hero-4.jpg'
-    },
-    products: [
+      },
       {
         id: 'honey-acacia',
         name: { zh: '洋槐蜂蜜', en: 'Acacia Honey' },
@@ -106,7 +142,181 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: ['pure', 'natural'],
+        isFeatured: false
+      },
+      {
+        id: 'flower-tea-blend',
+        name: { zh: '花茶', en: 'Flower Tea Blend' },
+        description: { zh: '精選花茶，香氣怡人，美容養顏', en: 'Selected flower tea blend, pleasant aroma, beauty benefits' },
+        price: 120,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea-blend.jpg',
+        images: ['/images/flower-tea-blend.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['flower', 'beauty'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-tea',
+        name: { zh: '金桂花', en: 'Osmanthus Tea' },
+        description: { zh: '金桂花茶，香氣濃郁，回甘持久', en: 'Osmanthus tea, rich aroma, lasting aftertaste' },
+        price: 95,
+        originalPrice: undefined,
+        thumbnail: '/images/osmanthus-tea.jpg',
+        images: ['/images/osmanthus-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus', 'fragrant'],
+        isFeatured: false
+      },
+      {
+        id: 'rose-tea',
+        name: { zh: '粉紅玫瑰', en: 'Pink Rose Tea' },
+        description: { zh: '粉紅玫瑰茶，美容養顏，香氣怡人', en: 'Pink rose tea, beauty benefits, pleasant aroma' },
+        price: 85,
+        originalPrice: undefined,
+        thumbnail: '/images/rose-tea.jpg',
+        images: ['/images/rose-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 55,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose', 'beauty'],
+        isFeatured: false
+      },
+      {
+        id: 'chrysanthemum-king',
+        name: { zh: '胎菊王', en: 'Chrysanthemum King' },
+        description: { zh: '胎菊王，清熱明目，香氣清雅', en: 'Chrysanthemum King, clears heat and brightens eyes, elegant aroma' },
+        price: 75,
+        originalPrice: undefined,
+        thumbnail: '/images/chrysanthemum-king.jpg',
+        images: ['/images/chrysanthemum-king.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum', 'clear-heat'],
+        isFeatured: false
+      }
+    ]
+  },
+  en: {
+    heroSection: {
+      headline: 'Natural Honey',
+      subheadline: 'Carefully selected high-quality honey, pure and natural.',
+      button: 'Explore Honey',
+      leafColor: '#5ba976',
+      bg: 'from-darkgreen-700 via-darkgreen-900 to-darkgreen-800',
+      bgImage: '/images/hero-4.jpg',
+      bgVideo: '/videos/honey.mp4'
+    },
+    products: [
+      {
+        id: 'honey-manuka',
+        name: { zh: '麥盧卡蜂蜜', en: 'Manuka Honey' },
+        description: { zh: '紐西蘭特產，抗菌功效強，營養價值極高', en: 'New Zealand specialty, strong antibacterial properties, highly nutritious' },
+        price: 580,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-manuka.jpg',
+        images: ['/images/honey-manuka.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'New Zealand',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'manuka'],
         isFeatured: true
+      },
+      {
+        id: 'honey-royal-jelly',
+        name: { zh: '蜂王漿', en: 'Royal Jelly' },
+        description: { zh: '蜂王漿，營養豐富，增強免疫力', en: 'Royal jelly, highly nutritious, boosts immunity' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-royal-jelly.jpg',
+        images: ['/images/honey-royal-jelly.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in refrigerator',
+          expiryDate: '12 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'royal-jelly'],
+        isFeatured: false
+      },
+      {
+        id: 'honey-propolis',
+        name: { zh: '蜂膠', en: 'Propolis' },
+        description: { zh: '天然蜂膠，抗菌消炎，保健功效佳', en: 'Natural propolis, antibacterial and anti-inflammatory' },
+        price: 380,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-propolis.jpg',
+        images: ['/images/honey-propolis.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'propolis'],
+        isFeatured: false
       },
       {
         id: 'honey-linden',
@@ -129,6 +339,121 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: ['premium', 'linden'],
+        isFeatured: false
+      },
+      {
+        id: 'honey-acacia',
+        name: { zh: '洋槐蜂蜜', en: 'Acacia Honey' },
+        description: { zh: '清甜潤喉，不易結晶', en: 'Sweet and smooth, resistant to crystallization' },
+        price: 150,
+        originalPrice: undefined,
+        thumbnail: '/images/honey-acacia.jpg',
+        images: ['/images/honey-acacia.jpg'],
+        category: 'honey-product',
+        status: 'active',
+        isNew: true,
+        specifications: {
+          weight: '500g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['pure', 'natural'],
+        isFeatured: false
+      },
+      {
+        id: 'flower-tea-blend',
+        name: { zh: '花茶', en: 'Flower Tea Blend' },
+        description: { zh: '精選花茶，香氣怡人，美容養顏', en: 'Selected flower tea blend, pleasant aroma, beauty benefits' },
+        price: 120,
+        originalPrice: undefined,
+        thumbnail: '/images/flower-tea-blend.jpg',
+        images: ['/images/flower-tea-blend.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 50,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['flower', 'beauty'],
+        isFeatured: false
+      },
+      {
+        id: 'osmanthus-tea',
+        name: { zh: '金桂花', en: 'Osmanthus Tea' },
+        description: { zh: '金桂花茶，香氣濃郁，回甘持久', en: 'Osmanthus tea, rich aroma, lasting aftertaste' },
+        price: 95,
+        originalPrice: undefined,
+        thumbnail: '/images/osmanthus-tea.jpg',
+        images: ['/images/osmanthus-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 45,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['osmanthus', 'fragrant'],
+        isFeatured: false
+      },
+      {
+        id: 'rose-tea',
+        name: { zh: '粉紅玫瑰', en: 'Pink Rose Tea' },
+        description: { zh: '粉紅玫瑰茶，美容養顏，香氣怡人', en: 'Pink rose tea, beauty benefits, pleasant aroma' },
+        price: 85,
+        originalPrice: undefined,
+        thumbnail: '/images/rose-tea.jpg',
+        images: ['/images/rose-tea.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 55,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['rose', 'beauty'],
+        isFeatured: false
+      },
+      {
+        id: 'chrysanthemum-king',
+        name: { zh: '胎菊王', en: 'Chrysanthemum King' },
+        description: { zh: '胎菊王，清熱明目，香氣清雅', en: 'Chrysanthemum King, clears heat and brightens eyes, elegant aroma' },
+        price: 75,
+        originalPrice: undefined,
+        thumbnail: '/images/chrysanthemum-king.jpg',
+        images: ['/images/chrysanthemum-king.jpg'],
+        category: 'flower-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '100g',
+          origin: 'China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 60,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['chrysanthemum', 'clear-heat'],
         isFeatured: false
       }
     ]
@@ -168,13 +493,26 @@ function HeroSection({ section }: { section: HeroSectionType }) {
   return (
     <div className={`relative h-[600px] flex items-center justify-center overflow-hidden ${section.bg}`}>
       <div className="absolute inset-0">
-        <Image
-          src={section.bgImage}
-          alt={section.headline}
-          fill
-          className="object-cover"
-          priority
-        />
+        {section.bgVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={section.bgVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          <Image
+            src={section.bgImage}
+            alt={section.headline}
+            fill
+            className="object-cover"
+            priority
+          />
+        )}
       </div>
       
       <div className="relative z-10 container mx-auto px-4 py-20">
@@ -214,17 +552,25 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 function ProductGrid({ products }: { products: Product[] }) {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12">精選產品</h2>
+      <h2 className="text-3xl font-bold text-center mb-12">更多推介</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="relative h-64">
-              <Image
-                src={product.thumbnail}
-                alt={product.name.zh}
-                fill
-                className="object-cover"
-              />
+            <div className="relative h-64 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                whileHover={{
+                  scale: 1.1,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Image
+                  src={product.thumbnail}
+                  alt={product.name.zh}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{product.name.zh}</h3>
@@ -248,6 +594,30 @@ function ProductGrid({ products }: { products: Product[] }) {
   );
 }
 
+function HoneySeries({ language }: { language: Language }) {
+  // Always sort products by price descending before rendering
+  const sortedProducts = [...content[language].products].sort((a, b) => b.price - a.price);
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="py-32 bg-gradient-to-b from-emerald-50 to-white"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <ProductGrid products={sortedProducts} />
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+}
+
 export default function HoneyPage() {
   const [language] = useState<Language>('zh');
   const { heroSection, products } = content[language];
@@ -255,7 +625,7 @@ export default function HoneyPage() {
   return (
     <main>
       <HeroSection section={heroSection} />
-      <ProductGrid products={products} />
+      <HoneySeries language={language} />
     </main>
   );
 } 

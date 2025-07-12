@@ -73,12 +73,20 @@ export default function GiftCustomizationPage() {
                 </Link>
               </div>
               <div className="relative h-64 rounded-lg overflow-hidden">
-                <Image
-                  src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2015"
-                  alt="Tea Gift Box"
-                  fill
-                  className="object-cover"
-                />
+                <motion.div
+                  className="w-full h-full"
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <Image
+                    src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2015"
+                    alt="Tea Gift Box"
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
               </div>
             </motion.div>
 
@@ -89,12 +97,20 @@ export default function GiftCustomizationPage() {
               className="grid grid-cols-1 md:grid-cols-2 gap-8"
             >
               <div className="relative h-64 rounded-lg overflow-hidden order-2 md:order-1">
-                <Image
-                  src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2015"
-                  alt="Party Favors"
-                  fill
-                  className="object-cover"
-                />
+                <motion.div
+                  className="w-full h-full"
+                  whileHover={{
+                    scale: 1.1,
+                  }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <Image
+                    src="https://images.unsplash.com/photo-1607083206968-13611e3d76db?q=80&w=2015"
+                    alt="Party Favors"
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
               </div>
               <div className="space-y-4 order-1 md:order-2">
                 <h2 className="text-3xl font-bold text-gray-800 mb-4">宴會回禮定制</h2>

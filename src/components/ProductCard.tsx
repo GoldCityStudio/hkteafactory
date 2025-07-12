@@ -89,21 +89,29 @@ export default function ProductCard({ product, language }: { product: ProductTyp
       className="group relative bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500"
     >
       {/* Image Container */}
-      <div className="relative aspect-square">
-        <Image
-          src={imageSrc}
-          alt={product.name[language]}
-          fill
-          className="object-cover"
-          onError={() => setImgError(true)}
-        />
+      <div className="relative aspect-square overflow-hidden">
+        <motion.div
+          className="w-full h-full"
+          animate={{
+            scale: isHovered ? 1.1 : 1,
+          }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <Image
+            src={imageSrc}
+            alt={product.name[language]}
+            fill
+            className="object-cover"
+            onError={() => setImgError(true)}
+          />
+        </motion.div>
         {product.isNew && (
-          <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+          <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
             New
           </div>
         )}
         {product.status === 'out_of_stock' && (
-          <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+          <div className="absolute inset-0 bg-black/50 flex items-center justify-center z-10">
             <span className="text-white text-lg font-medium">Sold Out</span>
           </div>
         )}

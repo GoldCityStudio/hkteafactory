@@ -1,11 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Language } from '@/app/types';
 import { useCart } from '@/app/context/CartContext';
+import { useAuth } from '@/lib/auth/AuthContext';
 
 const navItems = {
   zh: [
@@ -23,6 +24,7 @@ const navItems = {
       subItems: [
         { name: '龍井', href: '/star-products/longjing' },
         { name: '鐵觀音', href: '/star-products/tieguanyin' },
+        { name: '台灣烏龍', href: '/star-products/taiwan-oolong' },
         { name: '蜂蜜', href: '/star-products/honey' }
       ]
     },
@@ -31,19 +33,28 @@ const navItems = {
       href: '/products',
       subItems: [
         { name: '綠茶', href: '/products/green-tea' },
+        { name: '青茶(烏龍茶)', href: '/products/qingcha-oolong' },
         { name: '紅茶', href: '/products/black-tea' },
-        { name: '青茶/烏龍', href: '/products/qingcha-oolong' },
-        { name: '普洱', href: '/products/pu-erh' },
+        { name: '白茶', href: '/products/white-tea' },
+        { name: '黑茶', href: '/products/dark-tea' },
+        { name: '普洱茶', href: '/products/pu-erh' },
         { name: '花茶', href: '/products/flower-tea' },
         { name: '台灣茶', href: '/products/taiwanese-tea' },
+        { name: '精選茶葉', href: '/products/premium-tea' },
         { name: '茶包', href: '/products/tea-bags' },
+        { name: '茶餅', href: '/products/tea-cakes' },
         { name: '蜂蜜', href: '/products/honey-product' },
-        { name: '白茶', href: '/products/white-tea' }
+        { name: '茶具', href: '/products/tea-ware' }
       ]
     },
-    { name: '價格表', href: '/price-list' },
-    { name: '禮盒訂製', href: '/gift-customization', subItems: [ { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, { name: '宴會回禮', href: '/gift-customization/party-favors' }, { name: '散水禮物', href: '/gift-customization/water-gifts' } ] },
+    { name: '禮盒訂製', href: '/gift-customization', subItems: [ 
+      { name: '茶葉禮盒', href: '/gift-customization/tea-gift-box' }, 
+      { name: '宴會禮盒', href: '/gift-customization/party-favors' }, 
+      { name: '散水禮物', href: '/gift-customization/water-gifts' } 
+    ] },
     { name: '公司資訊', href: '/company-info' },
+    { name: '聯絡我們', href: '/contact' },
+    { name: '最新動向', href: '/news' },
   ],
   en: [
     { 
@@ -60,6 +71,7 @@ const navItems = {
       subItems: [
         { name: 'Longjing', href: '/star-products/longjing' },
         { name: 'Tieguanyin', href: '/star-products/tieguanyin' },
+        { name: 'Taiwan Oolong', href: '/star-products/taiwan-oolong' },
         { name: 'Honey', href: '/star-products/honey' }
       ]
     },
@@ -68,19 +80,28 @@ const navItems = {
       href: '/products',
       subItems: [
         { name: 'Green Tea', href: '/products/green-tea' },
+        { name: 'Oolong Tea', href: '/products/qingcha-oolong' },
         { name: 'Black Tea', href: '/products/black-tea' },
-        { name: 'Qingcha/Oolong', href: '/products/qingcha-oolong' },
-        { name: 'Pu-erh', href: '/products/pu-erh' },
+        { name: 'White Tea', href: '/products/white-tea' },
+        { name: 'Dark Tea', href: '/products/dark-tea' },
+        { name: 'Pu-erh Tea', href: '/products/pu-erh' },
         { name: 'Flower Tea', href: '/products/flower-tea' },
         { name: 'Taiwan Tea', href: '/products/taiwanese-tea' },
+        { name: 'Premium Tea', href: '/products/premium-tea' },
         { name: 'Tea Bags', href: '/products/tea-bags' },
+        { name: 'Tea Cakes', href: '/products/tea-cakes' },
         { name: 'Honey', href: '/products/honey-product' },
-        { name: 'White Tea', href: '/products/white-tea' }
+        { name: 'Tea Ware', href: '/products/tea-ware' }
       ]
     },
-    { name: 'Price List', href: '/price-list' },
-    { name: 'Gift Customization', href: '/gift-customization', subItems: [ { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, { name: 'Party Favors', href: '/gift-customization/party-favors' }, { name: 'Water Gifts', href: '/gift-customization/water-gifts' } ] },
+    { name: 'Gift Customization', href: '/gift-customization', subItems: [ 
+      { name: 'Tea Gift Box', href: '/gift-customization/tea-gift-box' }, 
+      { name: 'Party Gift Box', href: '/gift-customization/party-favors' }, 
+      { name: 'Water Gifts', href: '/gift-customization/water-gifts' } 
+    ] },
     { name: 'Company Info', href: '/company-info' },
+    { name: 'Contact Us', href: '/contact' },
+    { name: 'Latest News', href: '/news' },
   ]
 };
 
@@ -89,7 +110,13 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
+  const { user, logout } = useAuth();
   const [language, setLanguage] = useState<Language>('zh');
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const toggleLanguage = () => {
     setLanguage(language === 'zh' ? 'en' : 'zh');
@@ -109,7 +136,7 @@ export default function Navbar() {
           className="text-emerald-700 hover:text-emerald-900 font-semibold px-2 py-1 rounded transition-colors border border-emerald-200 bg-white/70"
           aria-label="切換語言"
         >
-          {language === 'zh' ? 'EN' : '中文'}
+          {isHydrated ? (language === 'zh' ? 'EN' : '中文') : 'EN'}
         </button>
         {/* Social Icons - Right */}
         <div className="flex space-x-4">
@@ -124,6 +151,9 @@ export default function Navbar() {
           </a>
           <a href="https://www.instagram.com/hkteafactory/" target="_blank" rel="noopener noreferrer" title="Instagram" className="hover:opacity-80">
             <Image src="/social-icons/instagram.svg" alt="Instagram" width={22} height={22} className="w-6 h-6" />
+          </a>
+          <a href="https://wa.me/85212345678" target="_blank" rel="noopener noreferrer" title="WhatsApp" className="hover:opacity-80">
+            <Image src="/social-icons/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="w-6 h-6" />
           </a>
         </div>
       </div>
@@ -166,7 +196,7 @@ export default function Navbar() {
                     if (parent) {
                       const fallback = document.createElement('div');
                       fallback.className = 'text-emerald-900 font-bold text-2xl relative z-10';
-                      fallback.textContent = language === 'zh' ? '烘茶源' : 'Hong Tea Factory';
+                      fallback.textContent = isHydrated && language === 'zh' ? '烘茶源' : 'Hong Tea Factory';
                       parent.appendChild(fallback);
                     }
                   }}
@@ -176,7 +206,7 @@ export default function Navbar() {
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
-              {navItems[language].map((item) => (
+              {isHydrated && navItems[language].map((item) => (
                 <motion.div
                   key={item.name}
                   whileHover={{ scale: 1.02 }}
@@ -222,6 +252,54 @@ export default function Navbar() {
                   </div>
                 </motion.div>
               ))}
+            </div>
+
+            {/* Auth Buttons */}
+            <div className="hidden md:flex items-center space-x-4">
+              {user ? (
+                <>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center space-x-2"
+                  >
+                    <span className="text-gray-700 font-medium">
+                      {isHydrated ? (language === 'zh' ? '歡迎' : 'Welcome') : 'Welcome'}, {user.name}
+                    </span>
+                    <button
+                      onClick={logout}
+                      className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
+                    >
+                      {isHydrated ? (language === 'zh' ? '登出' : 'Logout') : 'Logout'}
+                    </button>
+                  </motion.div>
+                </>
+              ) : (
+                <>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href="/auth/login"
+                      className="text-gray-700 hover:text-emerald-600 transition-colors font-medium"
+                    >
+                      {isHydrated ? (language === 'zh' ? '登入' : 'Login') : 'Login'}
+                    </Link>
+                  </motion.div>
+                  <motion.div
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href="/auth/register"
+                      className="bg-emerald-600 text-white px-4 py-2 rounded-md hover:bg-emerald-700 transition-colors font-medium"
+                    >
+                      {isHydrated ? (language === 'zh' ? '註冊' : 'Register') : 'Register'}
+                    </Link>
+                  </motion.div>
+                </>
+              )}
             </div>
 
             {/* Mobile Navigation Button */}
@@ -278,7 +356,7 @@ export default function Navbar() {
         <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-transparent via-white to-transparent blur-md" />
         <div className="absolute inset-x-0 top-0 h-[4px] bg-gradient-to-r from-transparent via-white/80 to-transparent blur-lg" />
         <div className="px-2 pt-2 pb-3 space-y-1">
-          {navItems[language].map((item) => (
+          {isHydrated && navItems[language].map((item) => (
             <div key={item.name}>
               <motion.div
                 whileHover={{ x: 10 }}
@@ -335,6 +413,94 @@ export default function Navbar() {
               )}
             </div>
           ))}
+          
+          {/* Mobile Auth Buttons */}
+          <div className="border-t border-gray-200 pt-4 mt-4">
+            {user ? (
+              <>
+                <motion.div
+                  whileHover={{ x: 10 }}
+                  className="block px-3 py-2 relative"
+                >
+                  <span className="text-gray-700 font-medium">
+                    {isHydrated ? (language === 'zh' ? '歡迎' : 'Welcome') : 'Welcome'}, {user.name}
+                  </span>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 10 }}
+                  className="block px-3 py-2 relative"
+                >
+                  <button
+                    onClick={logout}
+                    className="text-gray-700 hover:text-emerald-600 transition-colors relative group"
+                  >
+                    <motion.span
+                      className="absolute inset-0 bg-emerald-500/10 rounded-full blur-sm opacity-0 group-hover:opacity-100"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0, 0.5, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <span className="relative z-10">{isHydrated ? (language === 'zh' ? '登出' : 'Logout') : 'Logout'}</span>
+                  </button>
+                </motion.div>
+              </>
+            ) : (
+              <>
+                <motion.div
+                  whileHover={{ x: 10 }}
+                  className="block px-3 py-2 relative"
+                >
+                  <Link
+                    href="/auth/login"
+                    className="text-gray-700 hover:text-emerald-600 transition-colors relative group"
+                  >
+                    <motion.span
+                      className="absolute inset-0 bg-emerald-500/10 rounded-full blur-sm opacity-0 group-hover:opacity-100"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0, 0.5, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <span className="relative z-10">{isHydrated ? (language === 'zh' ? '登入' : 'Login') : 'Login'}</span>
+                  </Link>
+                </motion.div>
+                <motion.div
+                  whileHover={{ x: 10 }}
+                  className="block px-3 py-2 relative"
+                >
+                  <Link
+                    href="/auth/register"
+                    className="text-gray-700 hover:text-emerald-600 transition-colors relative group"
+                  >
+                    <motion.span
+                      className="absolute inset-0 bg-emerald-500/10 rounded-full blur-sm opacity-0 group-hover:opacity-100"
+                      animate={{
+                        scale: [1, 1.1, 1],
+                        opacity: [0, 0.5, 0],
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut"
+                      }}
+                    />
+                    <span className="relative z-10">{isHydrated ? (language === 'zh' ? '註冊' : 'Register') : 'Register'}</span>
+                  </Link>
+                </motion.div>
+              </>
+            )}
+          </div>
         </div>
       </motion.div>
     </motion.nav>

@@ -4,6 +4,103 @@ import React from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+const salesPoints = [
+  {
+    id: 'store-1',
+    name: '銷售點一',
+    address: '香港九龍區商場一樓101號舖',
+    englishAddress: 'Shop 101, 1/F, Shopping Mall, Kowloon, Hong Kong',
+    phone: '(852) 1234 5678',
+    hours: '10:00 - 22:00',
+    image: '/images/hero-1.jpg',
+    mapUrl: 'https://www.google.com/maps?q=Hong+Kong&output=embed'
+  },
+  {
+    id: 'store-2',
+    name: '銷售點二',
+    address: '香港港島區商場二樓201號舖',
+    englishAddress: 'Shop 201, 2/F, Shopping Mall, Hong Kong Island',
+    phone: '(852) 1234 5679',
+    hours: '10:00 - 22:00',
+    image: '/images/hero-2.jpg',
+    mapUrl: 'https://www.google.com/maps?q=Hong+Kong+Island&output=embed'
+  },
+  {
+    id: 'store-3',
+    name: '銷售點三',
+    address: '香港新界區商場三樓301號舖',
+    englishAddress: 'Shop 301, 3/F, Shopping Mall, New Territories, Hong Kong',
+    phone: '(852) 1234 5680',
+    hours: '10:00 - 22:00',
+    image: '/images/hero-3.jpg',
+    mapUrl: 'https://www.google.com/maps?q=New+Territories+Hong+Kong&output=embed'
+  }
+];
+
+const companyLocations = [
+  {
+    id: 'head-office',
+    name: '總部辦公室',
+    address: '香港辦公大樓',
+    englishAddress: 'Office Building, Hong Kong',
+    phone: '(852) 1234 5678',
+    email: 'info@company.com',
+    hours: '星期一至五 09:00 - 18:00',
+    image: '/images/hero-4.jpg',
+    mapUrl: 'https://www.google.com/maps?q=Hong+Kong&output=embed'
+  },
+  {
+    id: 'warehouse',
+    name: '倉庫及配送中心',
+    address: '香港工業區',
+    englishAddress: 'Industrial Area, Hong Kong',
+    phone: '(852) 1234 5681',
+    email: 'warehouse@company.com',
+    hours: '星期一至五 08:00 - 17:00',
+    image: '/images/tea-machine.jpg',
+    mapUrl: 'https://www.google.com/maps?q=Hong+Kong+Industrial&output=embed'
+  }
+];
+
+const latestNews = [
+  {
+    id: 'new-store-opening',
+    title: '新店開幕',
+    subtitle: '全新銷售點正式開業',
+    description: '我們很高興地宣佈，新的銷售點已經正式開業，為顧客提供更便捷的服務。',
+    image: '/images/hero-1.jpg',
+    date: '2024年1月',
+    status: '長期銷售點'
+  },
+  {
+    id: 'popup-store',
+    title: '快閃店活動',
+    subtitle: '限時快閃店現正進行中',
+    description: '在指定商場舉辦快閃店活動，展示最新茶葉產品，歡迎蒞臨參觀。',
+    image: '/images/hero-2.jpg',
+    date: '2024年2月',
+    status: '臨時銷售點'
+  },
+  {
+    id: 'seasonal-market',
+    title: '季節市集',
+    subtitle: '春季茶葉市集',
+    description: '參與春季茶葉市集，與其他茶葉愛好者分享茶文化，體驗不同茶葉品種。',
+    image: '/images/hero-3.jpg',
+    date: '2024年3月',
+    status: '臨時銷售點'
+  },
+  {
+    id: 'expansion',
+    title: '業務擴展',
+    subtitle: '新增銷售點計劃',
+    description: '我們正在積極擴展業務，計劃在更多地區開設銷售點，為更多顧客提供服務。',
+    image: '/images/hero-4.jpg',
+    date: '2024年4月',
+    status: '長期銷售點'
+  }
+];
+
 export default function CompanyInfoPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-emerald-50">
@@ -38,11 +135,12 @@ export default function CompanyInfoPage() {
       </motion.section>
 
       <div className="max-w-6xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        {/* Company Vision Section */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="bg-white p-8 rounded-lg shadow-xl"
+          className="bg-white p-8 rounded-lg shadow-xl mb-16"
         >
           <div className="space-y-8 text-lg text-gray-700 leading-relaxed">
             <motion.div
@@ -52,7 +150,7 @@ export default function CompanyInfoPage() {
             >
               <h2 className="text-3xl font-bold text-gray-800 mb-4">公司願景</h2>
               <p className="text-gray-600">
-                「烘茶源」致力於將傳統茶文化與現代生活完美融合，為顧客提供最優質的茶葉產品和服務。我們相信，每一杯茶都承載著深厚的文化底蘊，值得被悉心呵護與呈現。
+                致力於將傳統茶文化與現代生活完美融合，為顧客提供最優質的茶葉產品和服務。我們相信，每一杯茶都承載著深厚的文化底蘊，值得被悉心呵護與呈現。
               </p>
             </motion.div>
 
@@ -81,86 +179,241 @@ export default function CompanyInfoPage() {
                 </li>
               </ul>
             </motion.div>
+          </div>
+        </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.2 }}
-            >
-              <h2 className="text-3xl font-bold text-gray-800 mb-4">聯絡資訊</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div className="space-y-4">
-                  <p className="text-gray-600">
-                    <span className="font-semibold text-gray-900">地址：</span>
-                    香港尖沙咀金巴利道74-76號奇盛中心16樓B室<br/>
-                    Flat B, 16/F, Kee Shing Centre, 74-76 Kimberley Road, Tsim Sha Tsui, Hong Kong
-                  </p>
-                  <p className="text-gray-600">
-                    <span className="font-semibold text-gray-900">電話：</span>
-                    (852) 1234 5678
-                  </p>
-                  <p className="text-gray-600">
-                    <span className="font-semibold text-gray-900">電郵：</span>
-                    info@hkteafactory.com
-                  </p>
-                  <p className="text-gray-600">
-                    <span className="font-semibold text-gray-900">營業時間：</span>
-                    星期一至日 10:00 - 20:00
-                  </p>
+        {/* Latest News Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">最新動向</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {latestNews.map((news, index) => (
+              <motion.div
+                key={news.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src={news.image}
+                      alt={news.title}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                  <div className="absolute top-4 right-4 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    {news.status}
+                  </div>
+                  <div className="absolute bottom-4 left-4 bg-black/70 text-white px-3 py-1 rounded text-sm">
+                    {news.date}
+                  </div>
                 </div>
-                <div className="relative h-64 rounded-lg overflow-hidden">
-                  <Image
-                    src="https://images.unsplash.com/photo-1564890369478-c89ca6d9cde9?q=80&w=2070"
-                    alt="Company Location"
-                    fill
-                    className="object-cover"
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{news.title}</h3>
+                  <p className="text-emerald-600 font-medium mb-2">{news.subtitle}</p>
+                  <p className="text-gray-600 text-sm">{news.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Sales Points Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.0 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">銷售點</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {salesPoints.map((point, index) => (
+              <motion.div
+                key={point.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src={point.image}
+                      alt={point.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{point.name}</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p><span className="font-medium">地址：</span>{point.address}</p>
+                    <p className="text-xs text-gray-500">{point.englishAddress}</p>
+                    <p><span className="font-medium">電話：</span>{point.phone}</p>
+                    <p><span className="font-medium">營業時間：</span>{point.hours}</p>
+                  </div>
+                </div>
+                <div className="p-6 pt-0">
+                  <iframe
+                    src={point.mapUrl}
+                    width="100%"
+                    height="200"
+                    style={{ border: 0, borderRadius: '8px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
-            {/* Google Maps for Sales Point and Office */}
-            <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
-              <div className="flex-1 min-w-[260px]">
-                <div className="font-semibold text-emerald-700 mb-2">銷售點</div>
-                <iframe
-                  src="https://www.google.com/maps?q=又一城TASTE&output=embed"
-                  width="100%"
-                  height="220"
-                  style={{ border: 0, borderRadius: '12px', marginBottom: '1rem' }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
-              </div>
-              <div className="flex-1 min-w-[260px]">
-                <div className="font-semibold text-emerald-700 mb-2">辦公室</div>
-                <iframe
-                  src="https://www.google.com/maps?q=Kee+Shing+Centre,+74-76+Kimberley+Road,+Tsim+Sha+Tsui&output=embed"
-                  width="100%"
-                  height="220"
-                  style={{ border: 0, borderRadius: '12px' }}
-                  allowFullScreen
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                />
+        {/* Company Locations Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2 }}
+          className="mb-16"
+        >
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">公司地點</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {companyLocations.map((location, index) => (
+              <motion.div
+                key={location.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.2 }}
+                className="bg-white rounded-lg shadow-lg overflow-hidden"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <motion.div
+                    className="w-full h-full"
+                    whileHover={{
+                      scale: 1.1,
+                    }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                  >
+                    <Image
+                      src={location.image}
+                      alt={location.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </motion.div>
+                </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">{location.name}</h3>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    <p><span className="font-medium">地址：</span>{location.address}</p>
+                    <p className="text-xs text-gray-500">{location.englishAddress}</p>
+                    <p><span className="font-medium">電話：</span>{location.phone}</p>
+                    <p><span className="font-medium">電郵：</span>{location.email}</p>
+                    <p><span className="font-medium">辦公時間：</span>{location.hours}</p>
+                  </div>
+                </div>
+                <div className="p-6 pt-0">
+                  <iframe
+                    src={location.mapUrl}
+                    width="100%"
+                    height="200"
+                    style={{ border: 0, borderRadius: '8px' }}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Contact Information Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.4 }}
+          className="bg-white p-8 rounded-lg shadow-xl"
+        >
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-8">聯絡我們</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">一般查詢</h3>
+              <div className="space-y-3">
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">電話：</span>
+                  (852) 1234 5678
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">電郵：</span>
+                  info@company.com
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">傳真：</span>
+                  (852) 1234 5679
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">營業時間：</span>
+                  星期一至日 10:00 - 20:00
+                </p>
               </div>
             </div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1.4 }}
-              className="text-center mt-12"
-            >
-              <p className="font-semibold text-xl text-emerald-700 mb-4">
-                歡迎蒞臨「烘茶源」，體驗專業茶葉服務！
-              </p>
-              <p className="text-lg text-gray-600">
-                電話：(852) 1234 5678 | 電郵：info@hkteafactory.com
-              </p>
-            </motion.div>
+            <div className="space-y-4">
+              <h3 className="text-xl font-semibold text-gray-800 mb-4">專項服務</h3>
+              <div className="space-y-3">
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">企業採購：</span>
+                  corporate@company.com
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">定制服務：</span>
+                  custom@company.com
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">技術支援：</span>
+                  support@company.com
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-semibold text-gray-900">媒體查詢：</span>
+                  media@company.com
+                </p>
+              </div>
+            </div>
           </div>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6 }}
+            className="text-center mt-8"
+          >
+            <p className="font-semibold text-xl text-emerald-700 mb-4">
+              歡迎蒞臨，體驗專業茶葉服務！
+            </p>
+            <p className="text-lg text-gray-600">
+              電話：(852) 1234 5678 | 電郵：info@company.com
+            </p>
+          </motion.div>
         </motion.div>
       </div>
     </div>

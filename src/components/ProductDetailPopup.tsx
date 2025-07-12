@@ -57,16 +57,24 @@ export default function ProductDetailPopup({
               className="bg-white rounded-2xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="relative aspect-video">
-                <Image
-                  src={imgError ? '/placeholder.jpg' : product.thumbnail}
-                  alt={product.name[language]}
-                  fill
-                  className="object-cover"
-                  onError={() => setImgError(true)}
-                />
+              <div className="relative aspect-video overflow-hidden">
+                <motion.div
+                  className="w-full h-full"
+                  whileHover={{
+                    scale: 1.05,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <Image
+                    src={imgError ? '/placeholder.jpg' : product.thumbnail}
+                    alt={product.name[language]}
+                    fill
+                    className="object-cover"
+                    onError={() => setImgError(true)}
+                  />
+                </motion.div>
                 {product.originalPrice && (
-                  <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                  <div className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
                     {language === 'zh' ? '特價' : 'Sale'}
                   </div>
                 )}

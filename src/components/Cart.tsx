@@ -116,13 +116,21 @@ function CartItem({ item }: { item: CartItem }) {
   return (
     <div className="flex gap-4">
       {/* Product Image */}
-      <div className="relative w-24 h-24 flex-shrink-0">
-        <Image
-          src={item.img}
-          alt={item.name}
-          fill
-          className="object-cover rounded-lg"
-        />
+      <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">
+        <motion.div
+          className="w-full h-full"
+          whileHover={{
+            scale: 1.1,
+          }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
+        >
+          <Image
+            src={item.img}
+            alt={item.name}
+            fill
+            className="object-cover"
+          />
+        </motion.div>
       </div>
 
       {/* Product Info */}

@@ -14,6 +14,7 @@ type HeroSectionType = {
   leafColor: string;
   bg: string;
   bgImage: string;
+  bgVideo?: string;
 };
 
 const content: Record<Language, { heroSection: HeroSectionType; products: Product[] }> = {
@@ -24,7 +25,8 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       button: '立即探索',
       leafColor: '#c3e3ce',
       bg: 'from-orange-800 via-orange-900 to-orange-700',
-      bgImage: '/images/hero-2.jpg'
+      bgImage: '/images/hero-2.jpg',
+      bgVideo: '/videos/tieguanyin.mp4'
     },
     products: [
       {
@@ -186,6 +188,144 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: ['top-grade'],
+        isFeatured: false
+      },
+      {
+        id: 'shoumei-king',
+        name: { zh: '壽眉王', en: 'Shoumei King' },
+        description: { zh: '壽眉王，白茶極品，香氣清雅', en: 'Shoumei King, premium white tea, elegant aroma' },
+        price: 680,
+        originalPrice: undefined,
+        thumbnail: '/images/shoumei.jpg',
+        images: ['/images/shoumei.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white'],
+        isFeatured: false
+      },
+      {
+        id: 'baihao-yinzhen',
+        name: { zh: '白毫銀針', en: 'Baihao Yinzhen' },
+        description: { zh: '白毫銀針，白茶珍品，毫香顯著', en: 'Baihao Yinzhen, precious white tea, prominent pekoe' },
+        price: 880,
+        originalPrice: undefined,
+        thumbnail: '/images/baihao.jpg',
+        images: ['/images/baihao.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white'],
+        isFeatured: false
+      },
+      {
+        id: 'zhengshan-xiaozhong',
+        name: { zh: '正山小種', en: 'Zhengshan Xiaozhong' },
+        description: { zh: '正山小種，紅茶經典，煙香濃郁', en: 'Zhengshan Xiaozhong, classic black tea, smoky aroma' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/zhengshan.jpg',
+        images: ['/images/zhengshan.jpg'],
+        category: 'black-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['classic', 'black'],
+        isFeatured: false
+      },
+      {
+        id: 'jinjunmei',
+        name: { zh: '金駿眉', en: 'Jinjunmei' },
+        description: { zh: '金駿眉，紅茶精品，蜜香甘甜', en: 'Jinjunmei, premium black tea, honey sweet aroma' },
+        price: 580,
+        originalPrice: undefined,
+        thumbnail: '/images/jinjunmei.jpg',
+        images: ['/images/jinjunmei.jpg'],
+        category: 'black-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'black'],
+        isFeatured: false
+      },
+      {
+        id: 'qiaomu-puer',
+        name: { zh: '喬木普洱', en: 'Qiaomu Puer' },
+        description: { zh: '喬木普洱，生茶精品，回甘持久', en: 'Qiaomu Puer, premium raw puer, lasting aftertaste' },
+        price: 720,
+        originalPrice: undefined,
+        thumbnail: '/images/qiaomu.jpg',
+        images: ['/images/qiaomu.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 18,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'raw'],
+        isFeatured: false
+      },
+      {
+        id: 'gongting-puer',
+        name: { zh: '宮廷普洱', en: 'Gongting Puer' },
+        description: { zh: '宮廷普洱，熟茶極品，醇厚順滑', en: 'Gongting Puer, premium ripe puer, mellow and smooth' },
+        price: 920,
+        originalPrice: undefined,
+        thumbnail: '/images/gongting.jpg',
+        images: ['/images/gongting.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 12,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'ripe'],
         isFeatured: false
       }
     ]
@@ -197,7 +337,8 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
       button: 'Explore Now',
       leafColor: '#c3e3ce',
       bg: 'from-orange-800 via-orange-900 to-orange-700',
-      bgImage: '/images/hero-tieguanyin.jpg'
+      bgImage: '/images/hero-tieguanyin.jpg',
+      bgVideo: '/videos/tieguanyin.mp4'
     },
     products: [
       {
@@ -359,6 +500,144 @@ const content: Record<Language, { heroSection: HeroSectionType; products: Produc
         createdAt: new Date(),
         updatedAt: new Date(),
         tags: ['top-grade'],
+        isFeatured: false
+      },
+      {
+        id: 'shoumei-king',
+        name: { zh: '壽眉王', en: 'Shoumei King' },
+        description: { zh: '壽眉王，白茶極品，香氣清雅', en: 'Shoumei King, premium white tea, elegant aroma' },
+        price: 680,
+        originalPrice: undefined,
+        thumbnail: '/images/shoumei.jpg',
+        images: ['/images/shoumei.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 20,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white'],
+        isFeatured: false
+      },
+      {
+        id: 'baihao-yinzhen',
+        name: { zh: '白毫銀針', en: 'Baihao Yinzhen' },
+        description: { zh: '白毫銀針，白茶珍品，毫香顯著', en: 'Baihao Yinzhen, precious white tea, prominent pekoe' },
+        price: 880,
+        originalPrice: undefined,
+        thumbnail: '/images/baihao.jpg',
+        images: ['/images/baihao.jpg'],
+        category: 'white-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 15,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'white'],
+        isFeatured: false
+      },
+      {
+        id: 'zhengshan-xiaozhong',
+        name: { zh: '正山小種', en: 'Zhengshan Xiaozhong' },
+        description: { zh: '正山小種，紅茶經典，煙香濃郁', en: 'Zhengshan Xiaozhong, classic black tea, smoky aroma' },
+        price: 420,
+        originalPrice: undefined,
+        thumbnail: '/images/zhengshan.jpg',
+        images: ['/images/zhengshan.jpg'],
+        category: 'black-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 30,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['classic', 'black'],
+        isFeatured: false
+      },
+      {
+        id: 'jinjunmei',
+        name: { zh: '金駿眉', en: 'Jinjunmei' },
+        description: { zh: '金駿眉，紅茶精品，蜜香甘甜', en: 'Jinjunmei, premium black tea, honey sweet aroma' },
+        price: 580,
+        originalPrice: undefined,
+        thumbnail: '/images/jinjunmei.jpg',
+        images: ['/images/jinjunmei.jpg'],
+        category: 'black-tea',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Fujian, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 25,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'black'],
+        isFeatured: false
+      },
+      {
+        id: 'qiaomu-puer',
+        name: { zh: '喬木普洱', en: 'Qiaomu Puer' },
+        description: { zh: '喬木普洱，生茶精品，回甘持久', en: 'Qiaomu Puer, premium raw puer, lasting aftertaste' },
+        price: 720,
+        originalPrice: undefined,
+        thumbnail: '/images/qiaomu.jpg',
+        images: ['/images/qiaomu.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 18,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'raw'],
+        isFeatured: false
+      },
+      {
+        id: 'gongting-puer',
+        name: { zh: '宮廷普洱', en: 'Gongting Puer' },
+        description: { zh: '宮廷普洱，熟茶極品，醇厚順滑', en: 'Gongting Puer, premium ripe puer, mellow and smooth' },
+        price: 920,
+        originalPrice: undefined,
+        thumbnail: '/images/gongting.jpg',
+        images: ['/images/gongting.jpg'],
+        category: 'pu-erh',
+        status: 'active',
+        isNew: false,
+        specifications: {
+          weight: '250g',
+          origin: 'Yunnan, China',
+          storage: 'Store in a cool, dry place',
+          expiryDate: '24 months'
+        },
+        stock: 12,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        tags: ['premium', 'ripe'],
         isFeatured: false
       }
     ]
@@ -444,17 +723,25 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 function ProductGrid({ products }: { products: Product[] }) {
   return (
     <div className="container mx-auto px-4 py-16">
-      <h2 className="text-3xl font-bold text-center mb-12">精選產品</h2>
+      <h2 className="text-3xl font-bold text-center mb-12">更多推介</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {products.map((product) => (
           <div key={product.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="relative h-64">
-              <Image
-                src={product.thumbnail}
-                alt={product.name.zh}
-                fill
-                className="object-cover"
-              />
+            <div className="relative h-64 overflow-hidden">
+              <motion.div
+                className="w-full h-full"
+                whileHover={{
+                  scale: 1.1,
+                }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+              >
+                <Image
+                  src={product.thumbnail}
+                  alt={product.name.zh}
+                  fill
+                  className="object-cover"
+                />
+              </motion.div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold mb-2">{product.name.zh}</h3>
@@ -478,6 +765,30 @@ function ProductGrid({ products }: { products: Product[] }) {
   );
 }
 
+function TieguanyinSeries({ language }: { language: Language }) {
+  // Always sort products by price descending before rendering
+  const sortedProducts = [...content[language].products].sort((a, b) => b.price - a.price);
+  return (
+    <motion.section 
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.8 }}
+      className="py-32 bg-gradient-to-b from-emerald-50 to-white"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <ProductGrid products={sortedProducts} />
+        </motion.div>
+      </div>
+    </motion.section>
+  );
+}
+
 export default function TieguanyinPage() {
   const [language] = useState<Language>('zh');
   const { heroSection, products } = content[language];
@@ -485,7 +796,7 @@ export default function TieguanyinPage() {
   return (
     <main>
       <HeroSection section={heroSection} />
-      <ProductGrid products={products} />
+      <TieguanyinSeries language={language} />
     </main>
   );
 } 

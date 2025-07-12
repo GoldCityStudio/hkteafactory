@@ -57,6 +57,7 @@ export default function Footer() {
               <li><Link href="/star-products" className="text-emerald-200 hover:text-white transition-colors text-sm">皇牌產品</Link></li>
               <li><Link href="/gift-customization" className="text-emerald-200 hover:text-white transition-colors text-sm">禮金定製</Link></li>
               <li><Link href="/company-info" className="text-emerald-200 hover:text-white transition-colors text-sm">公司資訊</Link></li>
+              <li><Link href="/join-us" className="text-emerald-200 hover:text-white transition-colors text-sm">加入我們</Link></li>
             </ul>
           </div>
 
@@ -82,33 +83,7 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Google Maps for Sales Point and Office */}
-        <div className="flex flex-col md:flex-row gap-6 justify-center mt-8">
-          <div className="flex-1 min-w-[260px]">
-            <div className="font-semibold text-emerald-200 mb-2">銷售點</div>
-            <iframe
-              src="https://www.google.com/maps?q=又一城TASTE&output=embed"
-              width="100%"
-              height="220"
-              style={{ border: 0, borderRadius: '12px', marginBottom: '1rem' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-          <div className="flex-1 min-w-[260px]">
-            <div className="font-semibold text-emerald-200 mb-2">辦公室</div>
-            <iframe
-              src="https://www.google.com/maps?q=Kee+Shing+Centre,+74-76+Kimberley+Road,+Tsim+Sha+Tsui&output=embed"
-              width="100%"
-              height="220"
-              style={{ border: 0, borderRadius: '12px' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
-        </div>
+
         {/* Copyright at the very bottom */}
         <div className="pt-8 text-center">
           <p className="text-emerald-300 text-sm">&copy; {new Date().getFullYear()} 烘茶源. 版權所有.</p>

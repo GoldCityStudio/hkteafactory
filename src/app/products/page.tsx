@@ -83,12 +83,20 @@ function CategoryCard({ category, index }: { category: typeof categories[0]; ind
     >
       <Link href={category.href}>
         <div className="relative h-64">
-          <Image
-            src={category.image}
-            alt={category.name.zh}
-            fill
-            className="object-cover transition-transform duration-300 group-hover:scale-105"
-          />
+          <motion.div
+            className="w-full h-full"
+            whileHover={{
+              scale: 1.1,
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <Image
+              src={category.image}
+              alt={category.name.zh}
+              fill
+              className="object-cover"
+            />
+          </motion.div>
           <div className={`absolute inset-0 bg-gradient-to-t ${category.color} opacity-80`} />
           <div className="absolute inset-0 flex flex-col justify-end p-6 text-white">
             <h3 className="text-2xl font-bold mb-2">{category.name.zh}</h3>
@@ -139,30 +147,93 @@ export default function ProductsPage() {
         </motion.div>
       </motion.section>
 
-      {/* Categories Grid */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              精選茶葉系列
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              探索我們精心挑選的各種茶葉系列，每一款都代表著不同的風味與文化
-            </p>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
-              <CategoryCard key={category.id} category={category} index={index} />
-            ))}
+      {/* Main Content with Sidebar */}
+      <div className="flex flex-col lg:flex-row">
+        {/* Sidebar Navigation */}
+        <motion.aside
+          initial={{ opacity: 0, x: -50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="w-full lg:w-80 bg-white shadow-lg lg:shadow-xl p-6 lg:p-8"
+        >
+          <div className="sticky top-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">產品分類</h2>
+            <nav className="space-y-2">
+              {categories.map((category, index) => (
+                <motion.div
+                  key={category.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.8 + index * 0.1 }}
+                >
+                  <Link
+                    href={category.href}
+                    className="flex items-center p-3 rounded-lg hover:bg-emerald-50 hover:text-emerald-700 transition-all duration-200 group"
+                  >
+                    <div className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center mr-3 group-hover:bg-emerald-200 transition-colors">
+                      <span className="text-emerald-600 text-sm font-semibold">
+                        {category.name.zh.charAt(0)}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <div className="font-medium text-gray-900 group-hover:text-emerald-700">
+                        {category.name.zh}
+                      </div>
+                      <div className="text-sm text-gray-500 group-hover:text-emerald-600">
+                        {category.description.zh}
+                      </div>
+                    </div>
+                    <svg 
+                      className="w-4 h-4 text-gray-400 group-hover:text-emerald-600 transform group-hover:translate-x-1 transition-transform" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+
+            {/* Additional Info */}
+            <div className="mt-8 p-4 bg-emerald-50 rounded-lg">
+              <h3 className="font-semibold text-emerald-800 mb-2">購物須知</h3>
+              <ul className="text-sm text-emerald-700 space-y-1">
+                <li>• 全港免費送貨</li>
+                <li>• 7天退換保證</li>
+                <li>• 專業茶葉諮詢</li>
+                <li>• 會員專享優惠</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </section>
+        </motion.aside>
+
+        {/* Main Content */}
+        <main className="flex-1 py-16 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="text-center mb-12"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                精選茶葉系列
+              </h2>
+              <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                探索我們精心挑選的各種茶葉系列，每一款都代表著不同的風味與文化
+              </p>
+            </motion.div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {categories.map((category, index) => (
+                <CategoryCard key={category.id} category={category} index={index} />
+              ))}
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
   );
 } 
