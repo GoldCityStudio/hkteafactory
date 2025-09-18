@@ -8,17 +8,6 @@ import type { Language } from '@/app/types';
 import { useCart } from '@/app/context/CartContext';
 import type { Product as ProductType } from '@/lib/types/product';
 
-type Product = {
-  name: string;
-  img: string;
-  desc: string;
-  price: string;
-  salePrice?: string;
-  isNew?: boolean;
-  isSale?: boolean;
-  unit?: string;
-  soldOut?: boolean;
-};
 
 // Default placeholder image
 const DEFAULT_PLACEHOLDER = '/images/placeholder.png';
@@ -27,7 +16,7 @@ const FALLBACK_PLACEHOLDER = '/images/placeholder.jpg';
 export default function ProductCard({ product, language }: { product: ProductType; language: Language }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imgError, setImgError] = useState(false);
-  const [placeholderError, setPlaceholderError] = useState(false);
+  const [placeholderError] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const { addItem } = useCart();
 
@@ -75,7 +64,6 @@ export default function ProductCard({ product, language }: { product: ProductTyp
     return product.thumbnail;
   };
 
-  const imageSrc = getImageSrc();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-HK', {

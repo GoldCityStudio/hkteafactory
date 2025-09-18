@@ -108,7 +108,6 @@ const navItems = {
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const { totalItems } = useCart();
   const { user, logout } = useAuth();

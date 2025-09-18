@@ -523,17 +523,6 @@ const content: Record<Language, ContentType> = {
   }
 };
 
-// Lazy load the ProductCard component with a smaller loading placeholder
-const ProductCard = dynamic(() => import('@/components/ProductCard'), {
-  loading: () => <div className="w-full aspect-square bg-gray-100 animate-pulse rounded-xl" />,
-  ssr: false
-});
-
-// Lazy load the TechnologyFeature component with a smaller loading placeholder
-const TechnologyFeature = dynamic(() => import('@/components/TechnologyFeature'), {
-  loading: () => <div className="w-full h-64 bg-gray-100 animate-pulse rounded-xl" />,
-  ssr: false
-});
 
 function FloatingLeaf({ className, style, color = '#206e3a', opacity = 0.3 }: { className?: string; style?: React.CSSProperties; color?: string; opacity?: number }) {
   return (
@@ -553,61 +542,6 @@ function FloatingLeaf({ className, style, color = '#206e3a', opacity = 0.3 }: { 
   );
 }
 
-function AnimatedTitle({ text }: { text: string }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: '-20% 0px' });
-  const words = text.split(' ');
-
-  return (
-    <h1 ref={ref} className="text-5xl md:text-7xl font-bold tracking-tight mb-6 flex flex-wrap justify-center gap-x-2">
-      {words.map((word, i) => (
-        <motion.span
-          key={i}
-          initial={{ opacity: 0, y: 40, scale: 0.95 }}
-          animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-          transition={{ duration: 0.7, delay: 0.1 + i * 0.08, type: 'spring', bounce: 0.3 }}
-          className="inline-block relative"
-        >
-          <motion.span
-            className="absolute inset-0 blur-sm bg-emerald-400/30"
-            animate={{
-              opacity: [0.3, 0.5, 0.3],
-              scale: [1, 1.05, 1],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-            }}
-          />
-          <motion.span
-            className="relative z-10"
-            style={{
-              textShadow: '0 0 20px rgba(52, 211, 153, 0.3), 0 0 40px rgba(52, 211, 153, 0.2)',
-            }}
-          >
-            {word}
-          </motion.span>
-          <motion.span
-            className="absolute inset-0 blur-md bg-emerald-300/20"
-            animate={{
-              opacity: [0.2, 0.4, 0.2],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              repeatType: 'reverse',
-              ease: 'easeInOut',
-              delay: 0.5,
-            }}
-          />
-        </motion.span>
-      ))}
-    </h1>
-  );
-}
 
 type HeroSectionProps = {
   section: HeroSectionType;
@@ -1113,7 +1047,7 @@ function ProductDetailPopup({
 }
 
 export default function Home() {
-  const [language, setLanguage] = useState<'en' | 'zh'>('zh');
+  const [language] = useState<'en' | 'zh'>('zh');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isClient, setIsClient] = useState(false);
