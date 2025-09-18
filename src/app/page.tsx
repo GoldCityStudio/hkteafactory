@@ -857,20 +857,32 @@ function ImageSlider() {
 function VideoCarousel() {
   const [videoError, setVideoError] = useState(false);
   const [videoLoading, setVideoLoading] = useState(true);
+  const [currentVideoSrc, setCurrentVideoSrc] = useState('/videos/homepage-video.mp4');
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  const videoSrc = '/影片/首頁 Video烘茶源 (1920 x 1080 像素).mp4';
+  const videoSrc = '/videos/homepage-video.mp4';
+  const alternativeVideoSrc = '/videos/banner.mp4';
   const fallbackImage = '/images/hero-1.jpg';
 
   const handleVideoLoad = () => {
     setVideoLoading(false);
-    console.log('Local video loaded successfully');
+    console.log('Video loaded successfully:', currentVideoSrc);
   };
 
   const handleVideoError = () => {
-    console.error('Local video error, switching to fallback');
-    setVideoError(true);
-    setVideoLoading(false);
+    console.error('Video error for:', currentVideoSrc);
+    
+    if (currentVideoSrc === videoSrc) {
+      // Try alternative video source
+      console.log('Trying alternative video source:', alternativeVideoSrc);
+      setCurrentVideoSrc(alternativeVideoSrc);
+      setVideoLoading(true);
+    } else {
+      // Both videos failed, use fallback image
+      console.log('All video sources failed, using fallback image');
+      setVideoError(true);
+      setVideoLoading(false);
+    }
   };
 
   const handleVideoCanPlay = () => {
@@ -903,8 +915,9 @@ function VideoCarousel() {
       {!videoError ? (
         <div className="absolute top-0 left-0 w-full h-full">
           <video
+            key={currentVideoSrc}
             ref={videoRef}
-            src={videoSrc}
+            src={currentVideoSrc}
             className="w-full h-full object-cover"
             autoPlay
             muted
