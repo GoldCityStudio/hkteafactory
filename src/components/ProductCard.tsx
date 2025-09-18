@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 import type { Language } from '@/app/types';
 import { useCart } from '@/app/context/CartContext';
@@ -27,6 +28,7 @@ export default function ProductCard({ product, language }: { product: ProductTyp
   const [isHovered, setIsHovered] = useState(false);
   const [imgError, setImgError] = useState(false);
   const [placeholderError, setPlaceholderError] = useState(false);
+  const [addedToCart, setAddedToCart] = useState(false);
   const { addItem } = useCart();
 
   // Function to get a placeholder image based on product name
@@ -58,7 +60,22 @@ export default function ProductCard({ product, language }: { product: ProductTyp
     return DEFAULT_PLACEHOLDER;
   };
 
-  const imageSrc = imgError ? getPlaceholderImage(product.name[language]) : product.thumbnail;
+  // Get the appropriate image based on hover state and availability
+  const getImageSrc = () => {
+    if (imgError) {
+      return getPlaceholderImage(product.name[language]);
+    }
+    
+    // If hovering and there's a second image available, use it
+    if (isHovered && product.images && product.images.length > 1) {
+      return product.images[1];
+    }
+    
+    // Otherwise use the thumbnail
+    return product.thumbnail;
+  };
+
+  const imageSrc = getImageSrc();
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('zh-HK', {
@@ -76,6 +93,10 @@ export default function ProductCard({ product, language }: { product: ProductTyp
       price: formatPrice(product.price),
       img: product.thumbnail
     });
+    
+    // Show success feedback
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 2000);
   };
 
   return (
@@ -97,13 +118,41 @@ export default function ProductCard({ product, language }: { product: ProductTyp
           }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Image
-            src={imageSrc}
-            alt={product.name[language]}
-            fill
-            className="object-cover"
-            onError={() => setImgError(true)}
-          />
+          {/* Main Image */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{
+              opacity: isHovered && product.images && product.images.length > 1 ? 0 : 1,
+            }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <Image
+              src={product.thumbnail}
+              alt={product.name[language]}
+              fill
+              className="object-cover"
+              onError={() => setImgError(true)}
+            />
+          </motion.div>
+          
+          {/* Hover Image (second image) */}
+          {product.images && product.images.length > 1 && (
+            <motion.div
+              className="absolute inset-0"
+              animate={{
+                opacity: isHovered ? 1 : 0,
+              }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <Image
+                src={product.images[1]}
+                alt={`${product.name[language]} - Hover view`}
+                fill
+                className="object-cover"
+                onError={() => setImgError(true)}
+              />
+            </motion.div>
+          )}
         </motion.div>
         {product.isNew && (
           <div className="absolute top-4 left-4 bg-emerald-500 text-white px-3 py-1 rounded-full text-sm font-medium z-10">
@@ -159,14 +208,30 @@ export default function ProductCard({ product, language }: { product: ProductTyp
             </div>
             
             {product.status !== 'out_of_stock' && (
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-emerald-600 text-white text-sm font-medium py-3 hover:bg-emerald-700 transition-colors duration-300 shadow-md hover:shadow-lg"
-                onClick={handleAddToCart}
-              >
-                {language === 'zh' ? '立即選購' : 'Shop Now'}
-              </motion.button>
+              <div className="flex gap-2">
+                <Link
+                  href={`/products/${product.category}/${product.id}`}
+                  className="flex-1 bg-gray-100 text-gray-700 text-sm font-medium py-3 px-4 rounded hover:bg-gray-200 transition-colors duration-300 text-center"
+                >
+                  {language === 'zh' ? '查看詳情' : 'View Details'}
+                </Link>
+                <motion.button
+                  whileHover={{ scale: addedToCart ? 1 : 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex-1 text-sm font-medium py-3 px-4 rounded transition-colors duration-300 shadow-md hover:shadow-lg ${
+                    addedToCart 
+                      ? 'bg-green-600 text-white' 
+                      : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                  }`}
+                  onClick={handleAddToCart}
+                  disabled={addedToCart}
+                >
+                  {addedToCart 
+                    ? (language === 'zh' ? '✓ 已加入' : '✓ Added') 
+                    : (language === 'zh' ? '加入購物車' : 'Add to Cart')
+                  }
+                </motion.button>
+              </div>
             )}
           </div>
         </div>

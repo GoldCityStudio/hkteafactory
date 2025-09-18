@@ -748,39 +748,205 @@ function HeroSection({ section, idx, sectionRef }: HeroSectionProps) {
   );
 }
 
+function ImageSlider() {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isClient, setIsClient] = useState(false);
+
+  // Carousel images from the 走馬燈圖片 folder
+  const carouselImages = [
+    '/走馬燈圖片/1.png',
+    '/走馬燈圖片/2.png',
+    '/走馬燈圖片/3.png',
+    '/走馬燈圖片/4.png',
+    '/走馬燈圖片/5.png',
+    '/走馬燈圖片/6.png',
+    '/走馬燈圖片/7.png',
+    '/走馬燈圖片/8.png',
+    '/走馬燈圖片/9.png',
+  ];
+
+  // Ensure client-side rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isClient) return;
+    
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [carouselImages.length, isClient]);
+
+  const nextImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % carouselImages.length);
+  };
+
+  const prevImage = () => {
+    setCurrentImageIndex((prevIndex) => (prevIndex - 1 + carouselImages.length) % carouselImages.length);
+  };
+
+  const goToImage = (index: number) => {
+    setCurrentImageIndex(index);
+  };
+
+  // Show loading state during SSR
+  if (!isClient) {
+    return (
+      <section className="py-16 bg-gradient-to-r from-emerald-50 to-green-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="relative h-96 bg-gray-100 rounded-2xl overflow-hidden">
+            <Image
+              src={carouselImages[0]}
+              alt="Carousel Image"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="py-16 bg-gradient-to-r from-emerald-50 to-green-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl font-serif font-bold text-gray-900 mb-4">
+            精選茶品展示
+          </h2>
+          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+            探索我們精心挑選的優質茶葉系列，每一款都承載著深厚的文化底蘊
+          </p>
+        </motion.div>
+
+        <div className="relative">
+          {/* Main Image Display */}
+          <div className="relative h-96 md:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <motion.div
+              key={currentImageIndex}
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="w-full h-full"
+            >
+              <Image
+                src={carouselImages[currentImageIndex]}
+                alt={`Carousel Image ${currentImageIndex + 1}`}
+                fill
+                className="object-cover"
+                priority
+              />
+            </motion.div>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevImage}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white backdrop-blur-sm p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 border border-gray-200 z-10"
+              aria-label="Previous image"
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white backdrop-blur-sm p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 border border-gray-200 z-10"
+              aria-label="Next image"
+            >
+              <svg className="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            {/* Image Counter */}
+            <div className="absolute bottom-4 right-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-medium backdrop-blur-sm">
+              {currentImageIndex + 1} / {carouselImages.length}
+            </div>
+          </div>
+
+          {/* Thumbnail Navigation */}
+          <div className="flex justify-center mt-8 space-x-3">
+            {carouselImages.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => goToImage(index)}
+                className={`relative w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden transition-all duration-300 transform hover:scale-110 ${
+                  index === currentImageIndex
+                    ? 'ring-4 ring-emerald-500 shadow-lg scale-110'
+                    : 'ring-2 ring-gray-200 hover:ring-emerald-300'
+                }`}
+                aria-label={`Go to image ${index + 1}`}
+              >
+                <Image
+                  src={image}
+                  alt={`Thumbnail ${index + 1}`}
+                  fill
+                  className="object-cover"
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* Dots Navigation */}
+          <div className="flex justify-center mt-6 space-x-2">
+            {carouselImages.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => goToImage(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentImageIndex
+                    ? 'bg-emerald-600 scale-125'
+                    : 'bg-gray-300 hover:bg-gray-400'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function VideoCarousel() {
   const [videoError, setVideoError] = useState(false);
   const [videoLoading, setVideoLoading] = useState(true);
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [youtubeUrl, setYoutubeUrl] = useState('');
+  const videoRef = useRef<HTMLVideoElement>(null);
 
-  const videoId = 'q_rAB87mXPY';
+  const videoSrc = '/影片/首頁 Video烘茶源 (1920 x 1080 像素).mp4';
   const fallbackImage = '/images/hero-1.jpg';
-
-  // Set YouTube URL on client side to avoid SSR issues
-  useEffect(() => {
-    const origin = typeof window !== 'undefined' ? window.location.origin : '';
-    const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(origin)}`;
-    setYoutubeUrl(url);
-  }, []);
 
   const handleVideoLoad = () => {
     setVideoLoading(false);
-    setVideoLoaded(true);
-    console.log('YouTube video loaded successfully');
+    console.log('Local video loaded successfully');
   };
 
   const handleVideoError = () => {
-    console.error('YouTube video error, switching to fallback');
+    console.error('Local video error, switching to fallback');
     setVideoError(true);
     setVideoLoading(false);
-    setVideoLoaded(false);
+  };
+
+  const handleVideoCanPlay = () => {
+    setVideoLoading(false);
   };
 
   // Fallback to image if video fails to load after 10 seconds
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (!videoLoaded && !videoError) {
+      if (videoLoading && !videoError) {
         console.log('Video loading timeout, switching to fallback');
         setVideoError(true);
         setVideoLoading(false);
@@ -788,7 +954,7 @@ function VideoCarousel() {
     }, 10000);
 
     return () => clearTimeout(timeout);
-  }, [videoLoaded, videoError]);
+  }, [videoLoading, videoError]);
 
   return (
     <div className="relative w-full h-[90vh] overflow-hidden bg-black">
@@ -799,19 +965,24 @@ function VideoCarousel() {
         </div>
       )}
       
-      {/* YouTube Video Display */}
-      {!videoError && youtubeUrl ? (
+      {/* Local Video Display */}
+      {!videoError ? (
         <div className="absolute top-0 left-0 w-full h-full">
-          <iframe
-            src={youtubeUrl}
-            title="HK Tea Factory Banner"
-            className="w-full h-full"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            onLoad={handleVideoLoad}
+          <video
+            ref={videoRef}
+            src={videoSrc}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            onLoadedData={handleVideoLoad}
+            onCanPlay={handleVideoCanPlay}
             onError={handleVideoError}
-          />
+            onLoadStart={() => setVideoLoading(true)}
+          >
+            Your browser does not support the video tag.
+          </video>
         </div>
       ) : (
         <Image
@@ -945,9 +1116,15 @@ export default function Home() {
   const [language, setLanguage] = useState<'en' | 'zh'>('zh');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const { totalItems } = useCart();
   const sectionRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  // Ensure client-side rendering
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const handleProductClick = (product: Product) => {
     setSelectedProduct(product);
@@ -974,11 +1151,34 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  // Show loading state during SSR
+  if (!isClient) {
+    return (
+      <main className="min-h-screen">
+        <div className="relative">
+          {/* Video Carousel Section - SSR Safe */}
+          <div className="relative w-full h-[90vh] overflow-hidden bg-black">
+            <Image
+              src="/images/hero-1.jpg"
+              alt="Hero"
+              fill
+              className="absolute top-0 left-0 w-full h-full object-contain"
+              priority
+            />
+          </div>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen">
       <div className="relative">
         {/* Video Carousel Section */}
         <VideoCarousel />
+
+        {/* Image Slider Section */}
+        <ImageSlider />
 
         {/* Content Slider Section */}
         <section className="py-20 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 relative overflow-hidden">

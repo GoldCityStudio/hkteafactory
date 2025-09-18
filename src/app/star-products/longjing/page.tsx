@@ -617,11 +617,6 @@ export default function LongjingPage() {
     <main className="min-h-screen">
       <HeroSection section={content[language].heroSection} />
       <LongjingSeries language={language} />
-      <section id="products" className="py-32 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <ProductGrid products={content[language].products} />
-        </div>
-      </section>
     </main>
   );
 } 
