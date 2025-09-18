@@ -857,39 +857,35 @@ function ImageSlider() {
 function VideoCarousel() {
   const [videoError, setVideoError] = useState(false);
   const [videoLoading, setVideoLoading] = useState(true);
-  const [currentVideoSrc, setCurrentVideoSrc] = useState('/videos/homepage-video.mp4');
+  const [useYouTube, setUseYouTube] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const videoSrc = '/videos/homepage-video.mp4';
-  const alternativeVideoSrc = '/videos/banner.mp4';
   const fallbackImage = '/images/hero-1.jpg';
+  const youtubeEmbedUrl = 'https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=1&loop=1&playlist=9bZkp7q19f0&controls=0&showinfo=0&rel=0';
 
   const handleVideoLoad = () => {
     setVideoLoading(false);
-    console.log('Video loaded successfully:', currentVideoSrc);
+    console.log('Video loaded successfully');
   };
 
   const handleVideoError = () => {
-    console.error('Video error for:', currentVideoSrc);
-    
-    if (currentVideoSrc === videoSrc) {
-      // Try alternative video source
-      console.log('Trying alternative video source:', alternativeVideoSrc);
-      setCurrentVideoSrc(alternativeVideoSrc);
-      setVideoLoading(true);
-    } else {
-      // Both videos failed, use fallback image
-      console.log('All video sources failed, using fallback image');
-      setVideoError(true);
-      setVideoLoading(false);
-    }
+    console.error('Local video error, trying YouTube embed');
+    setUseYouTube(true);
+    setVideoLoading(false);
   };
 
   const handleVideoCanPlay = () => {
     setVideoLoading(false);
   };
 
-  // Fallback to image if video fails to load after 10 seconds
+  const handleYouTubeError = () => {
+    console.error('YouTube embed error, using fallback image');
+    setVideoError(true);
+    setVideoLoading(false);
+  };
+
+  // Fallback to image if everything fails after 10 seconds
   useEffect(() => {
     const timeout = setTimeout(() => {
       if (videoLoading && !videoError) {
@@ -911,27 +907,48 @@ function VideoCarousel() {
         </div>
       )}
       
-      {/* Local Video Display */}
-      {!videoError ? (
+      {/* YouTube Embed Fallback */}
+      {useYouTube && !videoError ? (
+        <div className="absolute top-0 left-0 w-full h-full">
+          <iframe
+            src={youtubeEmbedUrl}
+            className="w-full h-full"
+            style={{
+              border: 'none',
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
+            }}
+            onLoad={handleVideoLoad}
+            onError={handleYouTubeError}
+            allow="autoplay; fullscreen"
+            allowFullScreen
+            title="Homepage Video"
+          />
+        </div>
+      ) : !videoError ? (
+        /* Local Video Display */
         <div className="absolute top-0 left-0 w-full h-full">
           <video
-            key={currentVideoSrc}
             ref={videoRef}
-            src={currentVideoSrc}
+            src={videoSrc}
             className="w-full h-full object-cover"
             autoPlay
             muted
             loop
             playsInline
+            preload="auto"
             onLoadedData={handleVideoLoad}
             onCanPlay={handleVideoCanPlay}
             onError={handleVideoError}
             onLoadStart={() => setVideoLoading(true)}
           >
+            <source src={videoSrc} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
       ) : (
+        /* Fallback Image */
         <Image
           src={fallbackImage}
           alt="Hero"
