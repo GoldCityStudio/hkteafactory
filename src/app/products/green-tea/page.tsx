@@ -9,6 +9,7 @@ import type { Language } from '@/app/types';
 import type { Product } from '@/lib/types/product';
 import { useScroll, useTransform } from 'framer-motion';
 import ProductSidebar from '@/components/ProductSidebar';
+import ProductCard from '@/components/ProductCard';
 
 type HeroSectionType = {
   headline: string;
@@ -813,48 +814,16 @@ function HeroSection({ section }: { section: HeroSectionType }) {
 }
 
 function ProductGrid({ products }: { products: Product[] }) {
+  const [language] = useState<Language>('zh');
+  
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {products.map((product) => (
-        <motion.div
-          key={product.id}
-          className="bg-white rounded-lg shadow-lg overflow-hidden"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <div className="relative h-64 overflow-hidden">
-            <motion.div
-              className="w-full h-full"
-              whileHover={{
-                scale: 1.1,
-              }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
-            >
-              <Image
-                src={product.thumbnail}
-                alt={product.name.en}
-                fill
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
-          <div className="p-6">
-            <h3 className="text-xl font-semibold mb-2">{product.name.en}</h3>
-            <p className="text-gray-600 mb-4">{product.description.en}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold">${product.price}</span>
-              <Link
-                href={`/products/${product.category}/${product.id}`}
-                className="bg-darkgreen-600 text-white px-4 py-2 rounded hover:bg-darkgreen-700 transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+    <div className="container mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-12">精選綠茶產品</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} language={language} />
+        ))}
+      </div>
     </div>
   );
 }
