@@ -7,13 +7,20 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: '**',
+        port: '',
+        pathname: '/**',
       },
     ],
     // Optimize image loading
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    domains: ['images.unsplash.com'],
     unoptimized: false,
   },
   // Enable React strict mode for better development experience

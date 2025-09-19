@@ -862,7 +862,7 @@ function VideoCarousel() {
 
   const videoSrc = '/videos/homepage-video.mp4';
   const fallbackImage = '/images/hero-1.jpg';
-  const youtubeEmbedUrl = 'https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&mute=1&loop=1&playlist=9bZkp7q19f0&controls=0&showinfo=0&rel=0';
+  const youtubeEmbedUrl = 'https://www.youtube.com/embed/q_rAB87mXPY';
 
   const handleVideoLoad = () => {
     setVideoLoading(false);
